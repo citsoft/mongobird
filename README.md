@@ -1,7 +1,7 @@
 mongobird
 =========
 
-What is “Monad Management”?
+What is “Mongobird Management”?
 
 As a Service operations and management, Business Efficiency and Advancement
 
