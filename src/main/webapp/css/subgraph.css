@@ -1,0 +1,65 @@
+/*******************************************************************************
+ * "mongobird" is released under a dual license model designed to developers 
+ * and commercial deployment.
+ * 
+ * For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
+ * Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
+ * and another distributors, or for using include changed issue
+ * (modify / application), it must have to follow the Commercial License policy.
+ * To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
+ * (http://www.citsoft.net)
+ *  *
+ * If not using Commercial License (Academic research or personal research),
+ * it might to be under AGPL policy. To check the contents of the AGPL terms,
+ * please see "http://www.gnu.org/licenses/"
+ ******************************************************************************/
+@charset "utf-8";
+/* Default Type Selector */
+*{ margin:0; padding:0; font-size:12px; font-family:'돋움', Dotum, '굴림', Gulim, AppleGothic, Sans-serif;}
+a{ color:#004790;}
+img,
+fieldset{ border:none;}
+legend { display:none;}
+em{ font-style:normal; color:#258102;}
+strong{ color:#258102;}
+li{ list-style:none;}
+h1 {width:1200px; margin:17px 0 0 34px; padding-bottom:15px; border-bottom:1px solid #AEAEAE;}
+h2 {margin:25px 0 0 36px; padding-left:10px; background:url(../img/ico_dot.gif) 0 4px no-repeat; font-size:11px; font-weight:normal; color:#444;}
+h3 {margin:15px 0 15px 3px; padding-left:6px; background:url(../img/ico_square.gif) 0 3px no-repeat; color:#444;}
+h4 {margin-bottom:9px; color:#C53099;}
+h4.bar {padding-left:7px; background:url(../img/bg_status_slash.gif) 0 0 no-repeat;}
+h5 {margin:15px 0 0px 220px; margin-bottom:9px;}
+
+a.deco_none { text-decoration: none;}
+.txtRight{text-align:right;}
+
+/* Layout */
+#wrap{position:relative; overflow:hidden;}
+#header{border-top:2px solid #444;}
+#content{position:relative; width:1400px; padding:0; margin:0 0 0 34px;}
+
+.w586 {width:100%;}
+.popup_close {position:absolute; top:0; right:0;}
+.content_l {float:left; width:1000px;}
+
+/* 그래프 페이지 */
+#content_graph { position:relative; width:1280px; overflow:visible; margin:0 auto; margin-top:43px;}
+#menu_graph { position:relative; padding:20px; width:200px; float:left; }
+#menu_graph ul { margin:0; padding:0}
+#menu_graph li { width:190px; padding:5px; border-bottom:1px dotted #cfcfcf; list-style:none}
+#contents_graph { position:relative; padding:20px; width:1000px; float:left; background:url(../img/bg_graph_bar.gif) top left no-repeat; background-size:1px 100%;}
+
+.left_graph { position:relative; padding:5px; width:380px; float:left; }
+.left_graph span {display:block; padding-left:10px; padding-right:10px; text-align:left; color:#646464;}
+.left_graph span.demon_start {display:block; float:left; color:#C53099; width:30px; }
+.left_graph span.demon_start_date {display:block; float:left; width:150px;}
+.left_graph span.demon_end {display:block; float:left; color:#C53099;}
+.left_graph span.demon_end_date {display:block; float:left; }
+.center_graph { position:relative; padding:5px; width:250px; float:left;}
+.right_graph { position:relative; padding:5px; width:100px; float:left;}
+img.interval_graph {padding:5px;vertical-align:text-top;}
+.graph_area_graph {width:1000px; padding:5px; }
+
+.total_graph {width:1000px; margin:10px 0;}
+.total_graph input{vertical-align:text-top;}
+.total_graph img{vertical-align:middle;}

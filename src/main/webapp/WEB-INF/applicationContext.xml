@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  "mongobird" is released under a dual license model designed to developers 
+  and commercial deployment.
+  
+  For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
+  Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
+  and another distributors, or for using include changed issue
+  (modify / application), it must have to follow the Commercial License policy.
+  To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
+  (http://www.citsoft.net)
+   *
+  If not using Commercial License (Academic research or personal research),
+  it might to be under AGPL policy. To check the contents of the AGPL terms,
+  please see "http://www.gnu.org/licenses/"
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+                         
+<!-- 	<bean id="viewResolver" -->
+<!-- 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
+<!-- 		<property name="prefix" value="/" /> -->
+<!-- 		<property name="suffix" value=".jsp" /> -->
+<!-- 	</bean> -->
+</beans>

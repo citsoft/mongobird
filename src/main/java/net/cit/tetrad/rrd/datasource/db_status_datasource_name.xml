@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<DbStatusDatasourceName>   
+    <datasourceNames>
+		<dsName>dataSize</dsName>
+        <counterYn>0</counterYn>
+        <criticalYn>0</criticalYn>
+        <criticalName></criticalName>
+	</datasourceNames>  
+    <datasourceNames>
+		<dsName>indexSize</dsName>
+        <counterYn>0</counterYn>
+        <criticalYn>0</criticalYn>
+        <criticalName></criticalName>
+	</datasourceNames>    
+</DbStatusDatasourceName> 

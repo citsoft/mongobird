@@ -1,0 +1,22 @@
+/* datatable 네비게이션 */
+/* paging 영역에 대한 style */
+#list_paginate {float:left; width:1280px; margin:5px 0 10px 0; text-align:center;}
+/* first, previous, next, last 글자 공통  style */
+#list_paginate #list_first,#list_paginate #list_previous,#list_paginate #list_next,#list_paginate #list_last {cursor:pointer;display:-moz-inline-box;display:inline-block;_position:relative;margin-left:7px;margin-right:7px;padding:0 0 0 2px;color:#676767;font-family:'돋움', Dotum;font-size:11px;font-weight:bold;line-height:17px;text-decoration:none !important;}
+/* first, previous, next, last 가 링크가 없을 경우 커서 모양 */
+#list_paginate #list_first.paginate_button_disabled,#list_paginate #list_previous.paginate_button_disabled,#list_paginate #list_next.paginate_button_disabled,#list_paginate #list_last.paginate_button_disabled {cursor:auto;display:-moz-inline-box;display:inline-block;_position:relative;margin-left:7px;margin-right:7px;padding:0 0 0 2px;color:#676767;font-family:'돋움', Dotum;font-size:11px;font-weight:bold;line-height:17px;text-decoration:none !important;}
+/* 페이징 숫자 링크가 있는 경우 style */
+#list_paginate span span.paginate_button {cursor:pointer;display:inline-block; padding:0 7px 0 7px;  color:#676767; font-family:'돋움', Dotum; font-size:11px; font-weight:bold; line-height:normal;}
+/* 페이징 숫자 링크가 없는 경우 style */
+#list_paginate span span.paginate_active {cursor:auto;display:-moz-inline-box; display:inline-block; _position:relative; padding:0 7px 0 7px; border:1px solid #E742A8; color:#535353; font-family:'돋움', Dotum; font-size:11px; font-weight:bold;line-height:17px; text-decoration:none !important}
+
+/* paging 영역에 대한 style - 샤딩정보 */
+#collectionTB_paginate {float:left; width:480px; margin:5px 0 0 0; text-align:center;}
+/* first, previous, next, last 글자 공통  style */
+#collectionTB_paginate #collectionTB_first,#collectionTB_paginate #collectionTB_previous,#collectionTB_paginate #collectionTB_next,#collectionTB_paginate #collectionTB_last {cursor:pointer;display:-moz-inline-box;display:inline-block;_position:relative;margin-left:7px;margin-right:7px;padding:0 0 0 2px;color:#676767;font-family:'돋움', Dotum;font-size:11px;font-weight:bold;line-height:17px;text-decoration:none !important;}
+/* first, previous, next, last 가 링크가 없을 경우 커서 모양 */
+#collectionTB_paginate #collectionTB_first.paginate_button_disabled,#collectionTB_paginate #collectionTB_previous.paginate_button_disabled,#collectionTB_paginate #collectionTB_next.paginate_button_disabled,#collectionTB_paginate #collectionTB_last.paginate_button_disabled {cursor:auto;display:-moz-inline-box;display:inline-block;_position:relative;margin-left:7px;margin-right:7px;padding:0 0 0 2px;color:#676767;font-family:'돋움', Dotum;font-size:11px;font-weight:bold;line-height:17px;text-decoration:none !important;}
+/* 페이징 숫자 링크가 있는 경우 style */
+#collectionTB_paginate span span.paginate_button {cursor:pointer;display:inline-block; padding:0 7px 0 7px;  color:#676767; font-family:'돋움', Dotum; font-size:11px; font-weight:bold; line-height:normal;}
+/* 페이징 숫자 링크가 없는 경우 style */
+#collectionTB_paginate span span.paginate_active {cursor:auto;display:-moz-inline-box; display:inline-block; _position:relative; padding:0 7px 0 7px; border:1px solid #E742A8; color:#535353; font-family:'돋움', Dotum; font-size:11px; font-weight:bold;line-height:17px; text-decoration:none !important}

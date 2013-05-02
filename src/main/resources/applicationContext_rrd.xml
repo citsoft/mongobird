@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:context="http://www.springframework.org/schema/context"
+          xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+          xmlns:aop="http://www.springframework.org/schema/aop"
+          xsi:schemaLocation=
+          "http://www.springframework.org/schema/context
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd
+          http://www.springframework.org/schema/data/mongo
+          http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
+          http://www.springframework.org/schema/beans
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+          http://www.springframework.org/schema/aop
+          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+          
+    <import resource="classpath:applicationContext-mongo.xml" />
+    
+    <bean id="executionTimeCheck" class="net.cit.tetrad.aop.ExecutionTimeCheck" />
+    <aop:config>
+        <aop:aspect id="traceAspect" ref="executionTimeCheck">
+            <aop:pointcut id="publicMethod" expression="execution(public * net.cit.tetrad..*(..))" />
+            <aop:around pointcut-ref="publicMethod" method="trace" />
+        </aop:aspect>
+    </aop:config>  
+    
+    <bean id="tetradRrdInitializer" class="net.cit.tetrad.rrd.batch.TetradRrdInitializer">
+        <property name="tetradRrdDbService" ref="tetradRrdDbService" />
+        <property name="dataAccessObjectForMongo" ref="dataAccessObjectForMongo" />
+    </bean>
+    
+    <bean id="tetradRrdDbService" class="net.cit.tetrad.rrd.service.TetradRrdDbServiceImpl">
+        <property name="tetradRrdGraphDef" ref="tetradRrdGraphDef" />
+        <property name="mongoStatusToMonitor" ref="mongoStatusToMonitor" />
+        <property name="dataAccessObjectForMongo" ref="dataAccessObjectForMongo" />
+        <property name="criticalOperation" ref="criticalOperation" />
+        <property name="mailResource" ref="mailResource" />
+    </bean>
+    
+    <bean id="tetradRrdGraphDef" class="net.cit.tetrad.rrd.dao.TetradRrdGraphDefImpl" />
+    
+    <bean id="dataAccessObjectForMongo" class="net.cit.tetrad.rrd.dao.DataAccessObjectForMongoImpl">
+        <property name="operations" ref="operations" />
+        <property name="indexDao" ref="indexDao" />
+    </bean>       
+
+    <bean id="mongoStatusToMonitor" class="net.cit.tetrad.rrd.dao.MongoStatusToMonitorImpl" />
+    
+	<bean id="mainDao" class="net.cit.tetrad.dao.management.impl.MainDaoImpl">
+		<property name="monadService" ref="monadService" />
+	</bean>
+	
+	<bean id="deviceInMemory" class="net.cit.tetrad.rrd.batch.DeviceInMemory">
+		<property name="dataAccessObjectForMongo" ref="dataAccessObjectForMongo" />
+	</bean>
+	
+	<bean id="mongoInMemory" class="net.cit.tetrad.rrd.batch.MongoInMemory">
+		<property name="dataAccessObjectForMongo" ref="dataAccessObjectForMongo" />
+	</bean>
+	
+	<bean id="criticalOperation" class="net.cit.tetrad.rrd.dao.CriticalOperation">
+		<property name="daoForMongo" ref="dataAccessObjectForMongo" />
+	</bean>
+	
+	<bean id="indexDao" class="net.cit.tetrad.dao.management.impl.IndexDaoImpl">
+		<property name="monadService" ref="monadService" />
+	</bean>
+	<bean id="monadService" class="net.cit.tetrad.monad.impl.MonadServiceImpl">
+		<property name="operations" ref="operations" />
+	</bean>
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">    
+		<property name="host" value="${mail.host}"/>    
+		<property name="port" value="${mail.port}"/>    
+		<property name="username" value="${mail.username}"/>    
+		<property name="password" value="${mail.password}"/>    
+		<property name="defaultEncoding" value="${mail.defaultEncoding}"/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">${mail.starttles_enable}</prop>
+				<prop key="mail.smtp.auth">${mail.auth}</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+		<property name="velocityProperties">
+   			<value>
+    			resource.loader=class
+    			class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+   			</value>
+  		</property>
+	</bean>		
+	
+	<bean id="mailResource" class="net.cit.tetrad.resource.MailResource">
+		<property name="mailSender" ref="mailSender" />
+		<property name="velocityEngine" ref="velocityEngine" />
+		<property name="mainDao" ref="mainDao" />
+	</bean>
+	
+	<bean id="commandService" class="net.cit.tetrad.command.service.impl.TetradCommandServiceImpl">
+		<property name="mongoStatusToMonitor" ref="mongoStatusToMonitor" />
+	</bean>
+    
+  <!-- @PreDestroy -->
+<!-- 	<context:annotation-config /> -->
+<!-- 	<bean id="tetradThreadStop" class="net.cit.tetrad.rrd.batch.TetradThreadStop" destroy-method="destroy"/> -->
+</beans>

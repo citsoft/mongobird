@@ -1,0 +1,21 @@
+.loading-indicator {
+	height: 80px;
+	width: 80px;
+/* 	background: url( '/tetrad/img/loading.gif' ); */
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+.loading-indicator-overlay {
+	background-color: #ffffff;
+	opacity: 0;
+	filter: alpha(opacity = 60);
+}
+
+.loading-indicator-overlay-org {
+	background-color: #ffffff;
+	opacity: 0.6;
+	filter: alpha(opacity = 60);
+}
+
+#STATICMENU { margin: 0pt; padding: 0pt;  position: absolute; right: 0px; top: 0px;}

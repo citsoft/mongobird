@@ -1,0 +1,179 @@
+BODY {
+	TEXT-ALIGN: left; MARGIN: 0px
+}
+CAPTION {
+	TEXT-ALIGN: left; FONT-FAMILY: small-caption; WHITE-SPACE: nowrap; MARGIN-BOTTOM: 2px
+}
+TABLE {
+	MARGIN-BOTTOM: 0px
+}
+TH {
+	background:#448EAA; COLOR: #fcfff5; BORDER: 1px solid #36689B; VERTICAL-ALIGN: top; padding-left:5px; 
+}
+TD {
+	BORDER-BOTTOM: #d1dbbd 1px solid; BORDER-LEFT: #d1dbbd 1px solid; VERTICAL-ALIGN: top; BORDER-TOP: #d1dbbd 1px solid; BORDER-RIGHT: #d1dbbd 1px solid
+}
+PRE {
+	MARGIN-BOTTOM: 0px
+}
+A {
+	COLOR: #40e0d0; CURSOR: pointer; TEXT-DECORATION: underline
+}
+BUTTON {
+	WIDTH: 145px
+}
+#jsonInput {
+	BACKGROUND-COLOR: #3e606f; WIDTH: 90%; FONT-FAMILY: Consolas, monospace; COLOR: #fcfff5
+}
+#jsonSize {
+	FONT: caption
+}
+#jsonOutput * {
+	CURSOR: pointer
+}
+.PRETTY#jsonOutput {
+	FONT-FAMILY: Consolas, "Courier New", monospace
+}
+#menudiv {
+	display:none
+}
+/* HTML { */
+/* 	BACKGROUND-COLOR: #193441; COLOR: #fcfff5 */
+/* } */
+.ERR {
+	COLOR: #ff0000; FONT-WEIGHT: bold
+}
+.FUNC {
+	COLOR: #ff0000; FONT-WEIGHT: bold
+}
+.IDK {
+	COLOR: #ff0000; FONT-WEIGHT: bold
+}
+.KEY {
+	COLOR: #ffffff; FONT-WEIGHT: bold
+}
+.BOOL {
+	COLOR: #0000FF
+}
+.NUMBER {
+	COLOR: #008000
+}
+.DATE {
+	COLOR: #6495ed
+}
+.REGEXP {
+	COLOR: #deb887
+}
+/* .STRING { */
+/* 	COLOR: #d8ffb0 */
+/* } */
+.UNDEF {
+	FONT-STYLE: italic; COLOR: #91aa9d
+}
+.NULL {
+	FONT-STYLE: italic; COLOR: #91aa9d
+}
+.EMPTY {
+	FONT-STYLE: italic; COLOR: #91aa9d
+}
+.HTML SPAN.ARRAY {
+	FONT-STYLE: italic; COLOR: #91aa9d
+}
+.HTML SPAN.OBJ {
+	FONT-STYLE: italic; COLOR: #4169E1
+}
+/* TABLE.OBJ { */
+/* 	BACKGROUND-COLOR: #22353c */
+/* } */
+/* TABLE.ARRAY { */
+/* 	BACKGROUND-COLOR: #252c47 */
+/* } */
+.HIGHLIGHT {
+	POSITION: absolute; BACKGROUND-COLOR: #ff0000; border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px
+}
+.hover {
+	BACKGROUND-COLOR: #7b243e; CURSOR: pointer
+}
+.PRETTY #jsonSpace_label {
+	VISIBILITY: hidden
+}
+.PRETTY #jsonData_label {
+	VISIBILITY: hidden
+}
+
+@media Print    
+{
+H1 {
+	DISPLAY: none
+}
+H2 {
+	DISPLAY: none
+}
+H3 {
+	DISPLAY: none
+}
+MENU {
+	DISPLAY: none
+}
+footer {
+	DISPLAY: none
+}
+ADDRESS {
+	DISPLAY: none
+}
+P {
+	DISPLAY: none
+}
+TEXTAREA {
+	DISPLAY: none
+}
+output {
+	MARGIN: 0px; DISPLAY: block
+}
+HTML {
+	BACKGROUND-COLOR: #ffffff; COLOR: #000000
+}
+.ERR {
+	COLOR: #ff0000; FONT-WEIGHT: bold
+}
+.FUNC {
+	COLOR: #ff0000; FONT-WEIGHT: bold
+}
+.IDK {
+	COLOR: #ff0000; FONT-WEIGHT: bold
+}
+.KEY {
+	COLOR: #000000; FONT-WEIGHT: bold
+}
+.BOOL {
+	FONT-STYLE: italic; COLOR: #000000
+}
+.NUMBER {
+	COLOR: #000000
+}
+.DATE {
+	COLOR: #000000
+}
+.REGEXP {
+	COLOR: #000000
+}
+.STRING {
+	COLOR: #000000
+}
+.UNDEF {
+	FONT-STYLE: italic; COLOR: #000000
+}
+.NULL {
+	FONT-STYLE: italic; COLOR: #000000
+}
+.EMPTY {
+	FONT-STYLE: italic; COLOR: #000000
+}
+.HTML SPAN.ARRAY {
+	FONT-STYLE: italic; COLOR: #000000
+}
+.HTML SPAN.OBJ {
+	FONT-STYLE: italic; COLOR: #000000
+}
+
+}

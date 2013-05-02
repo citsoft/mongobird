@@ -1,0 +1,85 @@
+<!--
+"mongobird" is released under a dual license model designed to developers 
+and commercial deployment.
+
+For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
+Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
+and another distributors, or for using include changed issue
+(modify / application), it must have to follow the Commercial License policy.
+To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
+(http://www.citsoft.net)
+ *
+If not using Commercial License (Academic research or personal research),
+it might to be under AGPL policy. To check the contents of the AGPL terms,
+please see "http://www.gnu.org/licenses/"
+-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+ <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Flot Pie Examples</title>
+	<link rel="stylesheet" type="text/css" href="../css/jquery.flot.pie.css">
+	<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../js/excanvas.min.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="../js/jquery-latest.js"></script>
+	<script language="javascript" type="text/javascript" src="../js/jquery.flot.min.js"></script>
+    <script language="javascript" type="text/javascript" src="../js/jquery.flot.pie.js"></script>
+	
+	<script type="text/javascript">
+	$(function () {
+		// data
+		var data = [
+			{ label: "Series1",  data: 10.23},
+			{ label: "Series2",  data: 30.42},
+			{ label: "Series3",  data: 90},
+			{ label: "Series4",  data: 70},
+			{ label: "Series5",  data: 80},
+			{ label: "Series6",  data: 110}
+		];
+		/*var data = [
+			{ label: "Series1",  data: [[1,10]]},
+			{ label: "Series2",  data: [[1,30]]},
+			{ label: "Series3",  data: [[1,90]]},
+			{ label: "Series4",  data: [[1,70]]},
+			{ label: "Series5",  data: [[1,80]]},
+			{ label: "Series6",  data: [[1,0]]}
+		];*/
+
+		/*
+		var data = [];
+		var series = Math.floor(Math.random()*10)+1;
+		for( var i = 0; i<series; i++)
+		{
+			data[i] = { label: "Series"+(i+1), data: Math.floor(Math.random()*100)+1 }
+		}
+		*/
+
+		// DEFAULT
+		$.plot($("#default"), data, 
+		{
+			series: {
+				pie: { 
+					show: true,
+					label: {
+						show: true
+					}
+				}
+			},
+			legend: {
+				show: true
+			}
+
+		});
+
+
+	});
+
+	</script>
+	
+	</head>
+    <body>
+		<h1>Flot Pie Examples</h1>
+		<h2>Default with Legend</h2>
+		<div id="default" class="graph"></div>
+	</body>
+</html>
+

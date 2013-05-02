@@ -1,0 +1,12 @@
+.tooltip{
+	background-color:#000;
+	border:1px solid #fff;
+	padding:2px 2px;
+	width:auto;
+	display:none;
+	color:#fff;
+	text-align:left;
+	font-size:11px;
+	-moz-box-shadow:0 0 10px #000;
+	-webkit-box-shadow:0 0 10px #000;
+}

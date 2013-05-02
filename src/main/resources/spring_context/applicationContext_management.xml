@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<import resource="classpath:applicationContext-mongo.xml" />
+
+	<bean id="managementDao" class="net.cit.tetrad.dao.management.impl.ManagementDaoImpl"/>	
+	<bean id="loginDao" class="net.cit.tetrad.dao.management.impl.LoginDaoImpl"/>
+	<bean id="mainDao" class="net.cit.tetrad.dao.management.impl.MainDaoImpl">
+		<property name="monadService" ref="monadService" />
+	</bean>
+	<bean id="subDao" class="net.cit.tetrad.dao.management.impl.SubDaoImpl">
+		<property name="monadService" ref="monadService" />
+		<property name="mainDao" ref="mainDao" />
+	</bean>
+	<bean id="adminDao" class="net.cit.tetrad.dao.management.impl.AdminDaoImpl"/>
+	<bean id="indexDao" class="net.cit.tetrad.dao.management.impl.IndexDaoImpl">
+		<property name="monadService" ref="monadService" />
+	</bean>
+	<bean id="monadService" class="net.cit.tetrad.monad.impl.MonadServiceImpl">
+		<property name="operations" ref="operations" />
+	</bean>
+	<bean id="Pro" class="net.cit.tetrad.utility.code.Processor" />
+	
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+      <property name="basenames">
+          <list>
+              <value>properties.messagesource.messages</value>
+          </list>    
+      </property>
+  </bean>
+  <bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+  		<constructor-arg>
+   		<ref local="messageSource" />
+  		</constructor-arg>
+ 		</bean>
+ 
+ <bean id="message" class="net.cit.tetrad.utility.code.Message">
+  <property name="messageSourceAccessor">
+   <ref bean="messageSourceAccessor"/>
+  </property>
+ </bean>
+</beans>

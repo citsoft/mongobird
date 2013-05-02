@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div>
+   현재 운영 중인 시스템의 데몬에서 장애가 발생하였습니다.<br/>
+   장애 내용 확인하시고 최대한 빠른 조치를 부탁 드립니다.
+   <br/><br/>
+   장애발생 데몬명 : <b>${name}</b>    
+   <br/>
+   장애발생 데몬 장비 IP : <b>${ip}</b>    
+   <br/>
+   장애발생 데몬 장비 PORT : <b>${port}</b>    
+   <br/>
+   장애발생 시간 : ${time}
+</div>
+
+</body>
+</html>

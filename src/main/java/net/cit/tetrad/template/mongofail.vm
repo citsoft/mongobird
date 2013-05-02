@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div>
+   Failure has occurred in the daemon by monitoring.<br/>
+   Please check failure for more details.
+   <br/><br/>
+   Daemon Name : <b>${name}</b>    
+   <br/>
+   Daemon IP : <b>${ip}</b>    
+   <br/>
+   Daemon PORT : <b>${port}</b>    
+   <br/>
+   Date occurred : ${time}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+/*******************************************************************************
+ * "mongobird" is released under a dual license model designed to developers 
+ * and commercial deployment.
+ * 
+ * For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
+ * Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
+ * and another distributors, or for using include changed issue
+ * (modify / application), it must have to follow the Commercial License policy.
+ * To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
+ * (http://www.citsoft.net)
+ *  *
+ * If not using Commercial License (Academic research or personal research),
+ * it might to be under AGPL policy. To check the contents of the AGPL terms,
+ * please see "http://www.gnu.org/licenses/"
+ ******************************************************************************/
+@charset "utf-8";
+/* Default Type Selector */
+*{ margin:0; padding:0; font-size:12px; font-family:'돋움', Dotum, '굴림', Gulim, AppleGothic, Sans-serif;}
+a{ color:#004790; cursor:pointer;}
+img,
+fieldset{ border:none;}
+legend { display:none;}
+em{ font-style:normal; color:#258102;}
+strong{ color:#258102;}
+li{ list-style:none;}
+
+a.deco_none { text-decoration: none;}
+.hidden { display: none; }
+
+/* Layout */
+#wrap{position:relative; overflow:hidden;width:630px;}
+#wrap2{position:relative; width:630px;}
+#header{border-top:2px solid #444;}
+#content{position:relative; width:600px; padding:0; margin:20px 0 0 0;}
+#content2{position:relative; width:630px; padding:0; margin:0;}
+#chartcontainer{padding:0 30px; margin:0 0 0 15px; }
+
+.w586 {width:100%;}
+/* .content_l {float:left; width:600px; vertical-align:text-bottom;} */
+
+/*  데몬 별 상세 레이어 팝업 화면 */
+.demon_detail {position:relative; border-top:2px solid #444;}
+.demon_detail h3 {width:600px; margin:5px 0 5px 0px; }
+.demon_detail h2 {width:630px; margin:10px 0 10px 0px; }
+.demon_detail img {vertical-align:middle;}
+/* .demon_detail h3 {width:100%; margin:17px 0 14px 0; padding-bottom:17px; border-bottom:1px solid #C0C0C0;} */
+/* .demon_detail p {margin:0 0 12px 15px;} */
+.popup_close {position:absolute; top:0; right:0;}
+
+.demon_detail_margin {position:relative; border-top:2px solid #444; margin-bottom:25px;}
+.demon_detail_margin h3 {width:635px; margin:5px 0 5px 0px; }
+.demon_detail_margin h2 {width:630px; margin:7px 0 7px 0px; }
+.demon_detail_margin img {vertical-align:middle;}
+/* 그래프 페이지 */
+.graph_area_graph {width:630px; }
+.graph_area_graph img {padding:1px;vertical-align:text-top;}
+
+.dbgraph_area {width:630px;}
+.dbgraph_area img {padding:2px;vertical-align:text-top;}
+
+.tb_list_04 tbody td.row_selected{background:#F1F1F1; cursor:pointer; color:gray38;}
+
+.tb_list_04 {margin:0; width:600px; border-collapse:collapse;background:#448EAA; border-bottom:2px solid #448EAA; }
+.tb_list_04 thead {height:32px; text-align:center; color:#FFF;}
+.tb_list_04 thead tr th {height:32px; line-height:32px; border-right:1px solid #36689B; font-size:12px;} 
+.tb_list_04 tbody td {background:#FFF; border-bottom:1px solid #DFDFDF; height:24px; text-align:center; color:#4C4C4C;}
+.tb_list_04 tbody td.last {border-bottom:2px solid #448EAA; }
+.tb_list_04 tbody td a{font-size:12px; color:#4C4C4C;}
+.tb_list_04 tbody td.rb {border-right:1px solid #EFEFEF;}
+.tb_list_04 tbody td.lb {border-left:1px solid #EFEFEF;}
+.tb_list_04 tbody td.txt_o {color:#F05537;}
+.tb_list_04 tbody td.title {text-align:left; padding-left:5px;}
+.tb_list_04 tbody td.tableFigures { text-align:right; padding-right:10px; }
+.tb_list_04 tbody td.tableFiguresLeft { text-align:left; padding-left:10px; }
+.tb_list_04 tbody tr th {height:26px; line-height:26px; border-right:1px solid #36689B; font-size:12px; background:#448EAA; color:#fff;}
+

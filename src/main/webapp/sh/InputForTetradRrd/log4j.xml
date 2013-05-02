@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  "mongobird" is released under a dual license model designed to developers 
+  and commercial deployment.
+  
+  For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
+  Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
+  and another distributors, or for using include changed issue
+  (modify / application), it must have to follow the Commercial License policy.
+  To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
+  (http://www.citsoft.net)
+   *
+  If not using Commercial License (Academic research or personal research),
+  it might to be under AGPL policy. To check the contents of the AGPL terms,
+  please see "http://www.gnu.org/licenses/"
+-->
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+  <appender name="default" class="org.apache.log4j.ConsoleAppender">
+    <param name="target" value="System.out"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="[%p] %d{dd MMM hh:mm:ss.SSS aa} %t [%c] %m%n"/>
+    </layout>
+  </appender>
+
+  <appender name="LOGFILE-DAILY" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="file" value="/usr/local/logs/tetrad/InputForTetradRrd.log"/>
+    <param name="Append" value="true"/>
+    <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="[%p] %d{dd MMM hh:mm:ss.SSS aa} %t [%c] %m%n"/>
+    </layout>
+  </appender>
+  
+ <logger name="org.quartz">
+   <level value="info" />
+ </logger>
+
+  <root>
+    <level value="info" />
+    <appender-ref ref="default" />
+    <appender-ref ref="LOGFILE-DAILY" />
+  </root>
+
+  
+</log4j:configuration>

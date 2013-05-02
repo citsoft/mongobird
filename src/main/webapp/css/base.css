@@ -1,0 +1,135 @@
+/* BODY { */
+/* 	MARGIN: 10px */
+/* } */
+/* H1 { */
+/* 	FONT-SIZE: 138.5% */
+/* } */
+/* H2 { */
+/* 	FONT-SIZE: 123.1% */
+/* } */
+/* H3 { */
+/* 	FONT-SIZE: 108% */
+/* } */
+/* H1 { */
+/* 	MARGIN: 1em 0px */
+/* } */
+/* H2 { */
+/* 	MARGIN: 1em 0px */
+/* } */
+/* H3 { */
+/* 	MARGIN: 1em 0px */
+/* } */
+/* H1 { */
+/* 	FONT-WEIGHT: bold */
+/* } */
+/* H2 { */
+/* 	FONT-WEIGHT: bold */
+/* } */
+/* H3 { */
+/* 	FONT-WEIGHT: bold */
+/* } */
+/* H4 { */
+/* 	FONT-WEIGHT: bold */
+/* } */
+/* H5 { */
+/* 	FONT-WEIGHT: bold */
+/* } */
+/* H6 { */
+/* 	FONT-WEIGHT: bold */
+/* } */
+STRONG {
+	FONT-WEIGHT: bold
+}
+DT {
+	FONT-WEIGHT: bold
+}
+OPTGROUP {
+	FONT-WEIGHT: normal
+}
+ABBR {
+	BORDER-BOTTOM: #000 1px dotted; CURSOR: help
+}
+ACRONYM {
+	BORDER-BOTTOM: #000 1px dotted; CURSOR: help
+}
+EM {
+	FONT-STYLE: italic
+}
+DEL {
+	TEXT-DECORATION: line-through
+}
+BLOCKQUOTE {
+	MARGIN: 1em
+}
+UL {
+	MARGIN: 1em
+}
+OL {
+	MARGIN: 1em
+}
+DL {
+	MARGIN: 1em
+}
+OL {
+	MARGIN-LEFT: 2em
+}
+UL {
+	MARGIN-LEFT: 2em
+}
+DL {
+	MARGIN-LEFT: 2em
+}
+OL LI {
+	LIST-STYLE-POSITION: outside; LIST-STYLE-TYPE: decimal
+}
+UL LI {
+	LIST-STYLE-POSITION: outside; LIST-STYLE-TYPE: disc
+}
+DL DD {
+	MARGIN-LEFT: 1em
+}
+TH {
+	BORDER-BOTTOM: #000 1px solid; BORDER-LEFT: #000 1px solid; PADDING-BOTTOM: 0.5em; PADDING-LEFT: 0.5em; PADDING-RIGHT: 0.5em; BORDER-TOP: #000 1px solid; BORDER-RIGHT: #000 1px solid; PADDING-TOP: 0.5em
+}
+TD {
+	BORDER-BOTTOM: #000 1px solid; BORDER-LEFT: #000 1px solid; PADDING-BOTTOM: 0.5em; PADDING-LEFT: 0.5em; PADDING-RIGHT: 0.5em; BORDER-TOP: #000 1px solid; BORDER-RIGHT: #000 1px solid; PADDING-TOP: 0.5em
+}
+TH {
+	TEXT-ALIGN: left; FONT-WEIGHT: bold
+}
+CAPTION {
+	TEXT-ALIGN: center; MARGIN-BOTTOM: 0.5em
+}
+SUP {
+	VERTICAL-ALIGN: super
+}
+SUB {
+	VERTICAL-ALIGN: sub
+}
+P {
+	MARGIN-BOTTOM: 1em
+}
+FIELDSET {
+	MARGIN-BOTTOM: 1em
+}
+TABLE {
+	MARGIN-BOTTOM: 1em
+}
+PRE {
+	MARGIN-BOTTOM: 1em
+}
+BUTTON {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; PADDING-TOP: 1px
+}
+INPUT[type='checkbox'] {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; PADDING-TOP: 1px
+}
+INPUT[type='radio'] {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; PADDING-TOP: 1px
+}
+INPUT[type='reset'] {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; PADDING-TOP: 1px
+}
+INPUT[type='submit'] {
+	PADDING-BOTTOM: 1px; PADDING-LEFT: 1px; PADDING-RIGHT: 1px; PADDING-TOP: 1px
+}

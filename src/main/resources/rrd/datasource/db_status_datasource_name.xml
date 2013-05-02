@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<DbStatusDatasourceName>   
+    <datasourceNames>
+		<dsName>dataSize</dsName>
+        <dsType>GAUGE</dsType>
+	</datasourceNames>
+	<datasourceNames>
+        <dsName>indexSize</dsName>
+        <dsType>GAUGE</dsType>
+    </datasourceNames>
+    <datasourceNames>
+		<dsName>diff_dataSize</dsName>
+        <dsType>COUNTER</dsType>
+	</datasourceNames>
+	<datasourceNames>
+        <dsName>diff_indexSize</dsName>
+        <dsType>COUNTER</dsType>
+    </datasourceNames>
+	<datasourceNames>
+        <dsName>locks_timeLockedMicros_r</dsName>
+        <dsType>COUNTER</dsType>
+    </datasourceNames>
+    <datasourceNames>
+        <dsName>locks_timeLockedMicros_w</dsName>
+        <dsType>COUNTER</dsType>
+    </datasourceNames>
+</DbStatusDatasourceName> 

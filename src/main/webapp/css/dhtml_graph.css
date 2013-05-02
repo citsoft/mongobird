@@ -1,0 +1,48 @@
+@charset "utf-8";
+/* Default Type Selector */
+*{ margin:0; padding:0; font-size:12px; font-family:'돋움', Dotum, '굴림', Gulim, AppleGothic, Sans-serif;}
+
+img,
+fieldset{ border:none;}
+a.deco_none { text-decoration:underline; color:black;}
+/* h1 {width:1200px; margin:17px 0 0 34px; padding-bottom:15px; border-bottom:1px solid #AEAEAE;} */
+
+/* Layout */
+#wrap{position:relative; }
+#header{border-top:2px solid #444;}
+#header div.title {width:1200px; margin:17px 0 0 34px; padding-bottom:15px; border-bottom:1px solid #AEAEAE;}
+#header div h1 {font-size: 20px;}
+#content{position:relative; width:1400px; padding:0; margin:0 0 0 34px;}
+/* #dhtml_search {width:930px; margin-top: 3px;} */
+#dhtml_search {width:930px; margin: 3px 0 0 0; float:left; }
+#dhtml_search div.dhtml_layout {float:left; vertical-align:middle; margin-right: 10px;}
+#dhtml_search div.dhtml_layout span {vertical-align:top; }
+#dhtml_search div.dhtml_layout img.img_middle {padding:0 3px 5px 0;}
+#dhtml_search div.dhtml_layout_right {vertical-align:top; float:right; padding-right: 49px;}
+#dhtml_search div.dhtml_layout_right span  {vertical-align:top; }
+#dhtml_search div.dhtml_layout_right img.img_middle {padding:0 3px 5px 0;}
+
+/* #dhtml_search div.dhtml_layout span.right_option {padding-left:260px; padding-top: 3px;} */
+/* #dhtml_layout {float:left; vertical-align:middle; margin-right: 10px;border:1px solid #A4BED4;} */
+/* #dhtml_layout span {vertical-align:top; } */
+/* #dhtml_layout span.option {text-align: right; } */
+/* #dhtml_layout img.img_middle {padding:0 3px 5px 0; } */
+#g_slider_area {width:930px; margin: 38px 0 0 0; float:left; }
+#g_date_area {width:930px; margin: 10px 0 0 0; float:left; }
+#g_slider_area div.slider_bar{width:883px; float:left;}
+#g_slider_area div.slider_btn{width:40px; float:right;}
+#g_date_area div.g_slider_quickclick_area{float:left;}
+#g_date_area div.g_slider_date_area{float:right; padding-right: 49px;}
+
+/* border:1px solid #000000; */
+#chartHolder {width:930px; height:370px; margin: 5px 0 0 0; float:left; border:1px solid #A4BED4;}
+
+.w586 {width:100%;}
+.popup_close {position:absolute; top:0; right:0;}
+.dhx_tooltip{
+    font-family:Tahoma;
+    font-size:8pt;
+    background-color:white;
+    padding:2px 2px 2px 2px;
+    border:1px solid #ffcc00;
+}
