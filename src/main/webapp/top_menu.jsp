@@ -1,18 +1,3 @@
-<!--
-"mongobird" is released under a dual license model designed to developers 
-and commercial deployment.
-
-For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
-Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
-and another distributors, or for using include changed issue
-(modify / application), it must have to follow the Commercial License policy.
-To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
-(http://www.citsoft.net)
- *
-If not using Commercial License (Academic research or personal research),
-it might to be under AGPL policy. To check the contents of the AGPL terms,
-please see "http://www.gnu.org/licenses/"
--->
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -71,8 +56,11 @@ if (request.getRequestURL().indexOf("sub_page")>0){
 <div id="header">
 	<div class="top_area">
 		<ul class="logo">
-			<li class="first"><a href="mainView.do"><img src="${pageContext.request.contextPath}/img/mm_title<spring:message code="common.img"/>.png" alt="운영관리 시스템"></a></li>
+			<li class="first"><a href="http://mongobird.citsoft.net/"><img src="${pageContext.request.contextPath}/img/mm_title.png" alt="운영관리 시스템"></a></li>
 			<li><a href="http://www.mongodb.org/" target="_blank"><img src="./img/logo_mongoDB.png" width="96" height="35" alt="mongoDB"></a></li>
+		</ul>
+		<ul class="banner_area">
+			<li><div><iframe id="banner" frameborder="0" src="" align="left" scrolling="no"></iframe></div></li>
 		</ul>
 		<ul class="top_sign" style="height:60px;">
 				<li id="balancing" style="width:55px;" title="Balancing"><a href="subShardInfoView.do"><span id="shardingCheck" style="display:none;"><img id="mongos_img" src="./img/btn_balancing.gif" width="52" height="52"></span></a></li>

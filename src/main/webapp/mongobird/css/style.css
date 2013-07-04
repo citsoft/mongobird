@@ -1,0 +1,14 @@
+body { margin: 0; padding: 0; text-align:center;}
+#wrapper {
+    width: 100%; /* Replace the xxxx with the the width of your site (eg 800px)*/
+    height: 100%;
+    display:table; 
+    text-align:center;
+}
+#wrapper-center {
+    display:table-cell;
+    vertical-align:middle;
+    background-color: black;
+    color: green;
+    border:0px solid;
+}

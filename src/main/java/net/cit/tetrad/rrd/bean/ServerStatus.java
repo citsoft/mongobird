@@ -1,18 +1,18 @@
-/*******************************************************************************
- * "mongobird" is released under a dual license model designed to developers 
- * and commercial deployment.
- * 
- * For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
- * Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
- * and another distributors, or for using include changed issue
- * (modify / application), it must have to follow the Commercial License policy.
- * To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
- * (http://www.citsoft.net)
- *  *
- * If not using Commercial License (Academic research or personal research),
- * it might to be under AGPL policy. To check the contents of the AGPL terms,
- * please see "http://www.gnu.org/licenses/"
- ******************************************************************************/
+/**
+*    Copyright (C) 2012 Cardinal Info.Tech.Co.,Ltd.
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License, version 3,
+*    as published by the Free Software Foundation.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 package net.cit.tetrad.rrd.bean;
 
 import java.util.List;
@@ -133,6 +133,39 @@ public class ServerStatus extends Object {
 	
 	private double recordStats_accessesNotInMemory;
 	private double recordStats_pageFaultExceptionsThrown;
+	
+	private double metrics_document_deleted;
+	private double metrics_document_inserted;
+	private double metrics_document_returned;
+	private double metrics_document_updated;
+	private double metrics_getLastError_wtime_num;
+	private double metrics_getLastError_wtime_totalMillis;
+	private double metrics_getLastError_wtimeouts;
+	private double metrics_operation_fastmod;
+	private double metrics_operation_idhack;
+	private double metrics_operation_scanAndOrder;
+	private double metrics_queryExecutor_scanned;
+	private double metrics_record_moves;
+	private double metrics_repl_apply_batches_num;
+	private double metrics_repl_apply_batches_totalMillis;
+	private double metrics_repl_apply_ops;
+	private double metrics_repl_buffer_count;
+	private double metrics_repl_buffer_maxSizeBytes;
+	private double metrics_repl_buffer_sizeBytes;
+	private double metrics_repl_network_bytes;
+	private double metrics_repl_network_getmores_num;
+	private double metrics_repl_network_getmores_totalMillis;
+	private double metrics_repl_network_ops;
+	private double metrics_repl_network_readersCreated;
+	private double metrics_repl_oplog_insert_num;
+	private double metrics_repl_oplog_insert_totalMillis;
+	private double metrics_repl_oplog_insertBytes;
+	private double metrics_repl_preload_docs_num;
+	private double metrics_repl_preload_docs_totalMillis;
+	private double metrics_repl_preload_indexes_num;
+	private double metrics_repl_preload_indexes_totalMillis;
+	private double metrics_ttl_deletedDocuments;
+	private double metrics_ttl_passes;
 		
 	private double ok;
 	private List<DbStatus> dbInfos;
@@ -814,6 +847,217 @@ public class ServerStatus extends Object {
 	}
 	public void setDiff_dbIndexSize(double diff_dbIndexSize) {
 		this.diff_dbIndexSize = diff_dbIndexSize;
+	}
+	public double getMetrics_document_deleted() {
+		return metrics_document_deleted;
+	}
+	public void setMetrics_document_deleted(double metrics_document_deleted) {
+		this.metrics_document_deleted = metrics_document_deleted;
+	}
+	public double getMetrics_document_inserted() {
+		return metrics_document_inserted;
+	}
+	public void setMetrics_document_inserted(double metrics_document_inserted) {
+		this.metrics_document_inserted = metrics_document_inserted;
+	}
+	public double getMetrics_document_returned() {
+		return metrics_document_returned;
+	}
+	public void setMetrics_document_returned(double metrics_document_returned) {
+		this.metrics_document_returned = metrics_document_returned;
+	}
+	public double getMetrics_document_updated() {
+		return metrics_document_updated;
+	}
+	public void setMetrics_document_updated(double metrics_document_updated) {
+		this.metrics_document_updated = metrics_document_updated;
+	}
+	public double getMetrics_getLastError_wtime_num() {
+		return metrics_getLastError_wtime_num;
+	}
+	public void setMetrics_getLastError_wtime_num(
+			double metrics_getLastError_wtime_num) {
+		this.metrics_getLastError_wtime_num = metrics_getLastError_wtime_num;
+	}
+	public double getMetrics_getLastError_wtime_totalMillis() {
+		return metrics_getLastError_wtime_totalMillis;
+	}
+	public void setMetrics_getLastError_wtime_totalMillis(
+			double metrics_getLastError_wtime_totalMillis) {
+		this.metrics_getLastError_wtime_totalMillis = metrics_getLastError_wtime_totalMillis;
+	}
+	public double getMetrics_getLastError_wtimeouts() {
+		return metrics_getLastError_wtimeouts;
+	}
+	public void setMetrics_getLastError_wtimeouts(
+			double metrics_getLastError_wtimeouts) {
+		this.metrics_getLastError_wtimeouts = metrics_getLastError_wtimeouts;
+	}
+	public double getMetrics_operation_fastmod() {
+		return metrics_operation_fastmod;
+	}
+	public void setMetrics_operation_fastmod(double metrics_operation_fastmod) {
+		this.metrics_operation_fastmod = metrics_operation_fastmod;
+	}
+	public double getMetrics_operation_idhack() {
+		return metrics_operation_idhack;
+	}
+	public void setMetrics_operation_idhack(double metrics_operation_idhack) {
+		this.metrics_operation_idhack = metrics_operation_idhack;
+	}
+	public double getMetrics_operation_scanAndOrder() {
+		return metrics_operation_scanAndOrder;
+	}
+	public void setMetrics_operation_scanAndOrder(
+			double metrics_operation_scanAndOrder) {
+		this.metrics_operation_scanAndOrder = metrics_operation_scanAndOrder;
+	}
+	public double getMetrics_queryExecutor_scanned() {
+		return metrics_queryExecutor_scanned;
+	}
+	public void setMetrics_queryExecutor_scanned(
+			double metrics_queryExecutor_scanned) {
+		this.metrics_queryExecutor_scanned = metrics_queryExecutor_scanned;
+	}
+	public double getMetrics_record_moves() {
+		return metrics_record_moves;
+	}
+	public void setMetrics_record_moves(double metrics_record_moves) {
+		this.metrics_record_moves = metrics_record_moves;
+	}
+	public double getMetrics_repl_apply_batches_num() {
+		return metrics_repl_apply_batches_num;
+	}
+	public void setMetrics_repl_apply_batches_num(
+			double metrics_repl_apply_batches_num) {
+		this.metrics_repl_apply_batches_num = metrics_repl_apply_batches_num;
+	}
+	public double getMetrics_repl_apply_batches_totalMillis() {
+		return metrics_repl_apply_batches_totalMillis;
+	}
+	public void setMetrics_repl_apply_batches_totalMillis(
+			double metrics_repl_apply_batches_totalMillis) {
+		this.metrics_repl_apply_batches_totalMillis = metrics_repl_apply_batches_totalMillis;
+	}
+	public double getMetrics_repl_apply_ops() {
+		return metrics_repl_apply_ops;
+	}
+	public void setMetrics_repl_apply_ops(double metrics_repl_apply_ops) {
+		this.metrics_repl_apply_ops = metrics_repl_apply_ops;
+	}
+	public double getMetrics_repl_buffer_count() {
+		return metrics_repl_buffer_count;
+	}
+	public void setMetrics_repl_buffer_count(double metrics_repl_buffer_count) {
+		this.metrics_repl_buffer_count = metrics_repl_buffer_count;
+	}
+	public double getMetrics_repl_buffer_maxSizeBytes() {
+		return metrics_repl_buffer_maxSizeBytes;
+	}
+	public void setMetrics_repl_buffer_maxSizeBytes(
+			double metrics_repl_buffer_maxSizeBytes) {
+		this.metrics_repl_buffer_maxSizeBytes = metrics_repl_buffer_maxSizeBytes;
+	}
+	public double getMetrics_repl_buffer_sizeBytes() {
+		return metrics_repl_buffer_sizeBytes;
+	}
+	public void setMetrics_repl_buffer_sizeBytes(
+			double metrics_repl_buffer_sizeBytes) {
+		this.metrics_repl_buffer_sizeBytes = metrics_repl_buffer_sizeBytes;
+	}
+	public double getMetrics_repl_network_bytes() {
+		return metrics_repl_network_bytes;
+	}
+	public void setMetrics_repl_network_bytes(double metrics_repl_network_bytes) {
+		this.metrics_repl_network_bytes = metrics_repl_network_bytes;
+	}
+	public double getMetrics_repl_network_getmores_num() {
+		return metrics_repl_network_getmores_num;
+	}
+	public void setMetrics_repl_network_getmores_num(
+			double metrics_repl_network_getmores_num) {
+		this.metrics_repl_network_getmores_num = metrics_repl_network_getmores_num;
+	}
+	public double getMetrics_repl_network_getmores_totalMillis() {
+		return metrics_repl_network_getmores_totalMillis;
+	}
+	public void setMetrics_repl_network_getmores_totalMillis(
+			double metrics_repl_network_getmores_totalMillis) {
+		this.metrics_repl_network_getmores_totalMillis = metrics_repl_network_getmores_totalMillis;
+	}
+	public double getMetrics_repl_network_ops() {
+		return metrics_repl_network_ops;
+	}
+	public void setMetrics_repl_network_ops(double metrics_repl_network_ops) {
+		this.metrics_repl_network_ops = metrics_repl_network_ops;
+	}
+	public double getMetrics_repl_network_readersCreated() {
+		return metrics_repl_network_readersCreated;
+	}
+	public void setMetrics_repl_network_readersCreated(
+			double metrics_repl_network_readersCreated) {
+		this.metrics_repl_network_readersCreated = metrics_repl_network_readersCreated;
+	}
+	public double getMetrics_repl_oplog_insert_num() {
+		return metrics_repl_oplog_insert_num;
+	}
+	public void setMetrics_repl_oplog_insert_num(
+			double metrics_repl_oplog_insert_num) {
+		this.metrics_repl_oplog_insert_num = metrics_repl_oplog_insert_num;
+	}
+	public double getMetrics_repl_oplog_insert_totalMillis() {
+		return metrics_repl_oplog_insert_totalMillis;
+	}
+	public void setMetrics_repl_oplog_insert_totalMillis(
+			double metrics_repl_oplog_insert_totalMillis) {
+		this.metrics_repl_oplog_insert_totalMillis = metrics_repl_oplog_insert_totalMillis;
+	}
+	public double getMetrics_repl_oplog_insertBytes() {
+		return metrics_repl_oplog_insertBytes;
+	}
+	public void setMetrics_repl_oplog_insertBytes(
+			double metrics_repl_oplog_insertBytes) {
+		this.metrics_repl_oplog_insertBytes = metrics_repl_oplog_insertBytes;
+	}
+	public double getMetrics_repl_preload_docs_num() {
+		return metrics_repl_preload_docs_num;
+	}
+	public void setMetrics_repl_preload_docs_num(
+			double metrics_repl_preload_docs_num) {
+		this.metrics_repl_preload_docs_num = metrics_repl_preload_docs_num;
+	}
+	public double getMetrics_repl_preload_docs_totalMillis() {
+		return metrics_repl_preload_docs_totalMillis;
+	}
+	public void setMetrics_repl_preload_docs_totalMillis(
+			double metrics_repl_preload_docs_totalMillis) {
+		this.metrics_repl_preload_docs_totalMillis = metrics_repl_preload_docs_totalMillis;
+	}
+	public double getMetrics_repl_preload_indexes_num() {
+		return metrics_repl_preload_indexes_num;
+	}
+	public void setMetrics_repl_preload_indexes_num(
+			double metrics_repl_preload_indexes_num) {
+		this.metrics_repl_preload_indexes_num = metrics_repl_preload_indexes_num;
+	}
+	public double getMetrics_repl_preload_indexes_totalMillis() {
+		return metrics_repl_preload_indexes_totalMillis;
+	}
+	public void setMetrics_repl_preload_indexes_totalMillis(
+			double metrics_repl_preload_indexes_totalMillis) {
+		this.metrics_repl_preload_indexes_totalMillis = metrics_repl_preload_indexes_totalMillis;
+	}
+	public double getMetrics_ttl_deletedDocuments() {
+		return metrics_ttl_deletedDocuments;
+	}
+	public void setMetrics_ttl_deletedDocuments(double metrics_ttl_deletedDocuments) {
+		this.metrics_ttl_deletedDocuments = metrics_ttl_deletedDocuments;
+	}
+	public double getMetrics_ttl_passes() {
+		return metrics_ttl_passes;
+	}
+	public void setMetrics_ttl_passes(double metrics_ttl_passes) {
+		this.metrics_ttl_passes = metrics_ttl_passes;
 	}	
 	
 }

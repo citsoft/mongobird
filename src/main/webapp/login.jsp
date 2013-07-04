@@ -1,21 +1,23 @@
-<!--
-"mongobird" is released under a dual license model designed to developers 
-and commercial deployment.
-
-For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
-Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
-and another distributors, or for using include changed issue
-(modify / application), it must have to follow the Commercial License policy.
-To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
-(http://www.citsoft.net)
- *
-If not using Commercial License (Academic research or personal research),
-it might to be under AGPL policy. To check the contents of the AGPL terms,
-please see "http://www.gnu.org/licenses/"
--->
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+/**
+*    Copyright (C) 2012 Cardinal Info.Tech.Co.,Ltd.
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License, version 3,
+*    as published by the Free Software Foundation.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+-->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -63,7 +65,7 @@ please see "http://www.gnu.org/licenses/"
 </head>
 <body id="login" onload='init()'>
 <div id="wrap_login">
-	<h1 class="h1_login"><a href="#"><img src="./img/mm_loginTitle<spring:message code="common.img"/>.png" alt="<spring:message code="login.monadmanagementsystem"/>"></a></h1>
+	<h1 class="h1_login"><a href="#"><img src="./img/mm_loginTitle.png" alt="<spring:message code="login.monadmanagementsystem"/>"></a></h1>
 	<h2 class="h2_login"><img src="./img/logo_mongoDB_login.png" width="82" height="30" alt="mongoDB"></h2>
 	<form method="post" id="g_login" name="g_login" class="login_box">  
 		<fieldset>  

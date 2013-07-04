@@ -52,19 +52,19 @@ rrd.default_rrdPoolSize:4000
 rrd.graph_line_width:1
 rrd.syncPeriod:300
 
-mail.host:mail.yourdomain.com
+mail.host:yourmailhost.com
 mail.port:25
-mail.username:youremail
+mail.username:yournotimail
 mail.password:yourpassword
 mail.defaultEncoding:UTF-8
 mail.starttles_enable:true
 mail.auth:true
 
-mail.from:yourmail@mail.net
+mail.from:yournotimail@yourmailhost.com
 ######################################################
 log4j
 ######################################################
 log4jpath:/usr/local/temp/tetrad/log/tetrad.log
 log4jpath_rrd:/usr/local/temp/tetrad/log/tetrad_rrd.log
-log4jpath_convert:/home/hiso/Project/tetrad/logs/convert_rrd.log
-log4jpath_dhtmlx:/home/hiso/Project/tetrad/logs/tetrad_dhtmlx.log
+log4jpath_convert:/usr/local/temp/tetrad/log/convert_rrd.log
+log4jpath_dhtmlx:/usr/local/temp/tetrad/log/tetrad_dhtmlx.log

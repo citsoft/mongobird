@@ -1,23 +1,25 @@
-<!--
-"mongobird" is released under a dual license model designed to developers 
-and commercial deployment.
-
-For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
-Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
-and another distributors, or for using include changed issue
-(modify / application), it must have to follow the Commercial License policy.
-To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
-(http://www.citsoft.net)
- *
-If not using Commercial License (Academic research or personal research),
-it might to be under AGPL policy. To check the contents of the AGPL terms,
-please see "http://www.gnu.org/licenses/"
--->
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>  
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!--
+/**
+*    Copyright (C) 2012 Cardinal Info.Tech.Co.,Ltd.
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License, version 3,
+*    as published by the Free Software Foundation.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+-->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -264,7 +266,7 @@ if(session.getAttribute("loginAuth").equals(1)||session.getAttribute("loginAuth"
 			data : {"deviceCode" : deviceCode},
 			dataType:'html',
 			success:function(json,textStatus){
-				$("#listframe").contents().find('[id=jsonInput]').html(json);
+				$("#listframe").contents().find('[id=jsonInput]').val(json);
 				$("#listframe").contents().find('[id=cmdRender]').click();
 				autoResize("listframe");
 				$("#listframe")[0].contentWindow.clickAttach();
@@ -416,8 +418,8 @@ if(session.getAttribute("loginAuth").equals(1)||session.getAttribute("loginAuth"
 			</table>	
 			<iframe id="listdbframe" frameborder="0" src="" width="635" height="245" align="left"></iframe>
 			<iframe id="dbgraphframe" frameborder="0" src="" width="635" height="245" align="right"></iframe>
-			<iframe id="listframe" frameborder="0" src="" width="635"align="left"></iframe>
-			<iframe id="graphframe" frameborder="0" src="" width="635" height="500"align="right"></iframe>
+			<iframe id="listframe" frameborder="0" src="" width="635" align="left"></iframe>
+			<iframe id="graphframe" frameborder="0" src="" width="635" height="500" align="right"></iframe>
 		</div>
 		<!-- // content end -->
 		<div class="clear">

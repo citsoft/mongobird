@@ -1,18 +1,18 @@
-/*******************************************************************************
- * "mongobird" is released under a dual license model designed to developers 
- * and commercial deployment.
- * 
- * For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
- * Vendor), ISPs(Internet Service Provider), VARs(Value Added Resellers) 
- * and another distributors, or for using include changed issue
- * (modify / application), it must have to follow the Commercial License policy.
- * To check the Commercial License Policy, you need to contact Cardinal Info.Tech.Co., Ltd.
- * (http://www.citsoft.net)
- *  *
- * If not using Commercial License (Academic research or personal research),
- * it might to be under AGPL policy. To check the contents of the AGPL terms,
- * please see "http://www.gnu.org/licenses/"
- ******************************************************************************/
+/**
+*    Copyright (C) 2012 Cardinal Info.Tech.Co.,Ltd.
+*
+*    This program is free software: you can redistribute it and/or modify
+*    it under the terms of the GNU Affero General Public License, version 3,
+*    as published by the Free Software Foundation.
+*
+*    This program is distributed in the hope that it will be useful,
+*    but WITHOUT ANY WARRANTY; without even the implied warranty of
+*    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*    GNU Affero General Public License for more details.
+*
+*    You should have received a copy of the GNU Affero General Public License
+*    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 package net.cit.tetrad.resource;
 
 import static net.cit.tetrad.common.ColumnConstent.COLL_DASHBOARD;
@@ -49,6 +49,7 @@ import net.cit.tetrad.model.PersonJson;
 import net.cit.tetrad.rrd.bean.GraphDefInfo;
 import net.cit.tetrad.rrd.bean.ServerStatus;
 import net.cit.tetrad.rrd.bean.TotalInfo;
+import net.cit.tetrad.rrd.utils.StringUtil;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
@@ -299,18 +300,20 @@ public class MainResource extends DefaultResource{
 	public void getMyState(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String deviceLst = request.getParameter("myStateLst");
 		try{
-			String[] deviceCode = deviceLst.split(",");
-			Map<String, Object> fromMongo = new HashMap<String, Object>();
-			StringBuffer sb = new StringBuffer();
-			for(int i=0; i<deviceCode.length; i++){
-				fromMongo = comandService.insertCommand(Integer.parseInt(deviceCode[i]),MYSTATE);
-				sb.append(deviceCode[i]+":"+fromMongo.get("myState"));
-				if(i<deviceCode.length-1)sb.append(",");
+			if (!StringUtil.isNull(deviceLst)) {
+				String[] deviceCode = deviceLst.split(",");
+				Map<String, Object> fromMongo = new HashMap<String, Object>();
+				StringBuffer sb = new StringBuffer();
+				for(int i=0; i<deviceCode.length; i++){
+					fromMongo = comandService.insertCommand(Integer.parseInt(deviceCode[i]),MYSTATE);
+					sb.append(deviceCode[i]+":"+fromMongo.get("myState"));
+					if(i<deviceCode.length-1)sb.append(",");
+				}
+	
+				Writer writer = setResponse(response).getWriter();
+				writer.write(sb.toString());
+				writer.flush();
 			}
-
-			Writer writer = setResponse(response).getWriter();
-			writer.write(sb.toString());
-			writer.flush();
 		}catch(Exception e){
 			log.error(e, e);
 		}
