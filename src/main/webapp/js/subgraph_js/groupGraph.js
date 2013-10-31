@@ -20,8 +20,7 @@ function goSearch() {
 
 $(document).ready(function() {
 	setGraph();
-	
-	$('#frm_demon input:radio[name=groupCode]').change(function (event) {
+	$('#frm_demon input:radio[name=groupCodes]').change(function (event) {
 		goSearch();
 	});
 });

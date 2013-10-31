@@ -1,3 +1,4 @@
+<%@ page import="net.cit.tetrad.common.LicenseTypeEnum"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
@@ -7,6 +8,7 @@
 <script type="text/javascript">
 	window.location="${pageContext.request.contextPath}/";
 </script>
+
 <%
 		return;
 	}else{
@@ -53,6 +55,207 @@ if (request.getRequestURL().indexOf("sub_page")>0){
 	strStatusTitle = "그룹락";
 }
 %>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/aller.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kopub.css"/>
+
+<style>
+#nav ul {
+	display: none;
+	position: absolute;
+	top: 33px;
+	left: 0;
+}
+
+#nav ul ul {
+	top: 3px;
+	left: 144px;
+}
+
+<% String lo = request.getHeader("accept-language"); %>
+
+
+.menu {
+	<%
+	if(!lo.startsWith("ko")){
+%>
+	font-family: 'Aller Regular';
+<%}else{%>
+	font-family: 'Kopub Light';
+<%}%>
+	font-size: 1.25em;
+	font-weight: bold;
+	padding-top:7px;
+	text-align: center;
+	color: white;
+	height:25px;
+	width:100px;
+}
+
+
+.menu_gradient {
+background: #a9de00; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #a9de00 0%, #55ab02 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#a9de00), color-stop(100%,#55ab02)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* IE10+ */
+background: linear-gradient(135deg,  #a9de00 0%,#55ab02 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9de00', endColorstr='#55ab02',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+	<%
+	if(!lo.startsWith("ko")){
+%>
+	font-family: 'Aller Regular';
+<%}else{%>
+	font-family: 'Kopub Light';
+<%}%>
+font-size: 1.25em;
+font-weight: bold;
+padding-top:7px;
+text-align: center;
+color: white;
+height:25px;
+width:100px;
+}
+
+.menu_gradient_for_configuration {
+background: #a9de00; /* Old browsers */
+background: -moz-linear-gradient(-45deg,  #a9de00 0%, #55ab02 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#a9de00), color-stop(100%,#55ab02)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* IE10+ */
+background: linear-gradient(135deg,  #a9de00 0%,#55ab02 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9de00', endColorstr='#55ab02',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+	<%
+	if(!lo.startsWith("ko")){
+%>
+	font-family: 'Aller Regular';
+<%}else{%>
+	font-family: 'Kopub Light';
+<%}%>
+font-size: 1.25em;
+font-weight: bold;
+padding-top:7px;
+text-align: center;
+color: white;
+height:25px;
+width:120px;
+}
+
+.sub_menu {
+		<%
+	if(!lo.startsWith("ko")){
+%>
+	font-family: 'Aller Regular';
+<%}else{%>
+	font-family: 'Kopub Light';
+<%}%>
+	font-size: 1.17em;
+	font-weight: bold;
+	text-align: left;
+	background-color: #383838;
+	color: white;
+	height:21px;
+	width:132px;
+	padding-top:3px;
+	padding-left:13px;
+}
+
+.middle_menu_arrow{
+	<%
+	if(!lo.startsWith("ko")){
+%>
+	font-family: 'Aller Regular';
+<%}else{%>
+	font-family: 'Kopub Light';
+<%}%>
+	font-size: 1.10em;
+	text-align: left;
+	height:21px;
+	color: white;
+	margin 0px; border: 0px; padding: 0px;
+}
+
+.sub_menu_gradient {
+	background: #a9de00; /* Old browsers */
+	background: -moz-linear-gradient(-45deg,  #a9de00 0%, #55ab02 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#a9de00), color-stop(100%,#55ab02)); /* Chrome,Safari4+ */
+	
+	background: -webkit-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(-45deg,  #a9de00 0%,#55ab02 100%); /* IE10+ */
+	background: linear-gradient(135deg,  #a9de00 0%,#55ab02 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9de00', endColorstr='#55ab02',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+		<%
+	if(!lo.startsWith("ko")){
+%>
+	font-family: 'Aller Regular';
+<%}else{%>
+	font-family: 'Kopub Light';
+<%}%>
+	font-size: 1.17em;
+	font-weight: bold;
+	text-align: left;
+	color: white;
+	height:21px;
+	width:132px;
+	padding-top:3px;
+	padding-left:13px;
+}
+</style>
+
+<script>
+
+$(function(){
+	var lists = ['#sub_page','#ShardInfo','#normal_status','#_db','#_Lock',
+	             '#dsNameGraph','#multiGraph','#groupGraph','#deviceGraph'
+	             ,'#allDb','#deviceDb','#deviceLock','#dbLock','#groupLock'
+	             ,'#_user','#_instance','#_global','#_threshold'];
+	
+	for(var i in lists){
+		(function(){
+			var id = lists[i];
+			$(id).hover(function(){
+				mouserenter(id);
+			},function(){
+				mouseleave(id);
+			});	
+		})();
+}});
+
+var mouserenter=function(id){
+	mouseHover(id,'#7F5959');
+};
+
+var mouseleave = function(id){
+	mouseHover(id,'#383838');
+};
+
+var mouseHover = function(id,bgc){
+	var div = $(id);
+	<%
+	if(!lo.startsWith("ko")){
+	%>
+		div.css('font-family','Aller Regular');
+	<%}else{%>
+		div.css('font-family','Kopub Light');
+	<%}%>
+	div.css('font-size','1.17em');
+	div.css('font-weight','bold');
+	div.css('text-align','left');
+	div.css('background-color',bgc);
+	div.css('color','white');
+	div.css('height','21px');
+	div.css('width','132px');
+	div.css('padding-top','3px');
+	div.css('padding-left','13px');
+};
+</script>
+
 <div id="header">
 	<div class="top_area">
 		<ul class="logo">
@@ -67,53 +270,169 @@ if (request.getRequestURL().indexOf("sub_page")>0){
 				<li style="width:40px;"></li>
 				<li id="mongos" title="mongos"><a href="#"><img id="mongos_img" src="./img/btn_sign_01_gray.gif" width="52" height="52" alt="sign_01"></a></li>
 				<li id="mongod" title="mongod"><a href="#"><img id="mongod_img" src="./img/btn_sign_02_gray.gif" width="52" height="52" alt="sign_02"></a></li>
-				<li id="config" title="config" class="last"><a href="#"><img id="config_img" src="./img/btn_sign_03_gray.gif" width="52" height="52" alt="sign_03"></a></li>
+				<li id="config" title="config" class="last"><a href="#"><img id=	"config_img" src="./img/btn_sign_03_gray.gif" width="52" height="52" alt="sign_03"></a></li>
 		</ul>
 	</div>
-	<div class="gnb_area">
+	<div class="gnb_area" id="globalNavi">
 		<ul class="gnb" id="nav">
-			<li class="first"><a href="mainView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_01<%=request.getRequestURL().indexOf("main")>0?"_on":"" %><spring:message code="common.img"/>.gif" width="86" height="30" alt="대시보드"></a></li>
+			<li class="first">
+				<a href="mainView.do">
+					<div class="<%=request.getRequestURL().indexOf("main")>0?"menu_gradient":"menu" %>"><spring:message code="menu.dashboard"/></div>
+				</a>
+			</li>
 			<li>
-				<a href="subPageView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_02<%=request.getRequestURL().indexOf("sub_page")>0||request.getRequestURL().indexOf("ShardInfo")>0?"_on":"" %><spring:message code="common.img"/>.gif" height="30" alt="데몬"></a>
+				<a href="subPageView.do">
+					<div class="<%=request.getRequestURL().indexOf("sub_page")>0||request.getRequestURL().indexOf("ShardInfo")>0?"menu_gradient":"menu" %>"><spring:message code="menu.instance"/></div>
+				</a>
 				<ul>
-					<li><a href="subPageView.do"><img src="${pageContext.request.contextPath}/img/DaemonSub01_dspec<%=request.getRequestURL().indexOf("sub_page")>0?"_on":"" %><spring:message code="common.img"/>.png" ></a></li>
-					<li><a href="subShardInfoView.do"><img src="${pageContext.request.contextPath}/img/DaemonSub02_sharding<%=request.getRequestURL().indexOf("ShardInfo")>0?"_on":"" %><spring:message code="common.img"/>.png" ></a></li>
+					<li>
+						<a href="subPageView.do">
+								<div id="sub_page" class="<%=request.getRequestURL().indexOf("sub_page")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.status"/></div>
+						</a>
+					</li>
+					<li>
+						<a href="subShardInfoView.do">
+							<div id="ShardInfo" class="<%=request.getRequestURL().indexOf("ShardInfo")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.sharding"/></div>
+						</a>
+					</li>
 				</ul>
 			</li>
 			<li>
-				<a href="dsNameGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_graph<%=request.getRequestURL().indexOf("Graph")>0&&request.getRequestURL().indexOf("Lock")<0&&request.getRequestURL().indexOf("DbGraph")<0?"_on":"" %><spring:message code="common.img"/>.gif" width="72" height="30" alt="그래프"></a>
+				<a href="dsNameGraphView.do">  
+					<div class="<%=request.getRequestURL().indexOf("dsNameGraph")>0||request.getRequestURL().indexOf("multiGraph")>0
+ ||request.getRequestURL().indexOf("groupGraph")>0||request.getRequestURL().indexOf("deviceGraph")>0
+ ||request.getRequestURL().indexOf("allDb")>0||request.getRequestURL().indexOf("deviceDb")>0
+ ||request.getRequestURL().indexOf("deviceLock")>0||request.getRequestURL().indexOf("dbLock")>0
+ ||request.getRequestURL().indexOf("groupLock")>0?"menu_gradient":"menu" %>"><spring:message code="menu.graph"/></div>
+				</a>
 				<ul>
-					<li><a href="dsNameGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_subgnb_itemized<%=request.getRequestURL().indexOf("dsNameGraph")>0?"_on":"" %><spring:message code="common.img"/>.gif" ></a></li>
-					<li><a href="multiGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_subgnb_multi<%=request.getRequestURL().indexOf("multiGraph")>0?"_on":"" %><spring:message code="common.img"/>.gif" ></a></li>
-					<li><a href="groupGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_subgnb_group-specific<%=request.getRequestURL().indexOf("groupGraph")>0?"_on":"" %><spring:message code="common.img"/>.gif" ></a></li>
-					<li><a href="typeGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_subgnb_types<%=request.getRequestURL().indexOf("typeGraph")>0?"_on":"" %><spring:message code="common.img"/>.gif" ></a></li>
-					<li><a href="deviceGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_subgnb_equipment<%=request.getRequestURL().indexOf("deviceGraph")>0?"_on":"" %><spring:message code="common.img"/>.png" ></a></li>
+					<li>  
+						<a href="dsNameGraphView.do">
+							<div id='normal_status' class="<%=request.getRequestURL().indexOf("dsNameGraph")>0||request.getRequestURL().indexOf("multiGraph")>0
+  ||request.getRequestURL().indexOf("groupGraph")>0||request.getRequestURL().indexOf("deviceGraph")>0?"sub_menu_gradient":"sub_menu" %>">
+  							<table class="middle_menu_arrow">
+  								<tr>
+  									<td width="99%"><spring:message code="menu.normal_status"/></td>
+  									<td width="1%">></td>
+  								</tr>
+  							</table>
+  							</div>
+						</a>
+						<ul>
+							<li>
+								<a href="dsNameGraphView.do">
+									<div id="dsNameGraph" class="<%=request.getRequestURL().indexOf("dsNameGraph")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.single_item"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="multiGraphView.do">
+									<div id="multiGraph" class="<%=request.getRequestURL().indexOf("multiGraph")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.multi_item"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="groupGraphView.do">
+									<div id="groupGraph" class="<%=request.getRequestURL().indexOf("groupGraph")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.group"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="deviceGraphView.do">
+									<div id="deviceGraph" class="<%=request.getRequestURL().indexOf("deviceGraph")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.instance"/></div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="multiGraphView.do">
+							<div id='_db'class="<%=request.getRequestURL().indexOf("allDb")>0||request.getRequestURL().indexOf("deviceDb")>0?"sub_menu_gradient":"sub_menu" %>">
+							
+							<table class="middle_menu_arrow">
+  								<tr>
+  									<td width="99%"><spring:message code="menu.db"/></td>
+  									<td width="1%">></td>
+  								</tr>
+  							</table>
+  							</div>
+						</a>
+						<ul>
+							<li>
+								<a href="allDbGraphView.do">
+									<div id="allDb" class="<%=request.getRequestURL().indexOf("allDb")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.total_db_graph"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="deviceDbGraphView.do">
+									<div id="deviceDb" class="<%=request.getRequestURL().indexOf("deviceDb")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.instance"/></div>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="groupGraphView.do">
+							<div id='_Lock' class="<%=request.getRequestURL().indexOf("deviceLock")>0||request.getRequestURL().indexOf("dbLock")>0
+  ||request.getRequestURL().indexOf("groupLock")>0?"sub_menu_gradient":"sub_menu" %>">
+  							<table class="middle_menu_arrow">
+  								<tr>
+  									<td width="99%"><spring:message code="menu.lock"/></td>
+  									<td width="1%">></td>
+  								</tr>
+  							</table>
+  							</div>
+						</a>
+						<ul>
+							<li>
+								<a href="deviceLockGraphView.do">
+									<div id="deviceLock" class="<%=request.getRequestURL().indexOf("deviceLock")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.instance"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="dbLockGraphView.do">
+									<div id="dbLock" class="<%=request.getRequestURL().indexOf("dbLock")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.db"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="groupLockGraphView.do">
+									<div id="groupLock" class="<%=request.getRequestURL().indexOf("groupLock")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.group"/></div>
+								</a>
+							</li>
+						</ul>
+					</li>
 				</ul>
 			</li>
 			<li>
-				<a href="allDbGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_DBgraph<%=request.getRequestURL().indexOf("DbGraph")>0?"_on":"" %><spring:message code="common.img"/>.png" width="86" height="30" ></a>
-				<ul>
-					<li><a href="allDbGraphView.do"><img src="${pageContext.request.contextPath}/img/gnb_dbgraph_sub01_total<%=request.getRequestURL().indexOf("allDbGraph")>0?"_on":"" %><spring:message code="common.img"/>.png" ></a></li>
-					<li><a href="deviceDbGraphView.do"><img src="${pageContext.request.contextPath}/img/gnb_dbgraph_sub02_daemon<%=request.getRequestURL().indexOf("deviceDbGraph")>0?"_on":"" %><spring:message code="common.img"/>.png" ></a></li>
-				</ul>
+				<a href="subAlarmView.do?alarm=4">
+					<div class="<%=request.getRequestURL().indexOf("sub_alarm_page")>0?"menu_gradient":"menu" %>"><spring:message code="menu.event"/></div>
+				</a>
 			</li>
-	<%if(request.getAttribute("mongoVer").equals("2.2")){%>
-			<li>
-				<a href="deviceLockGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_lockgraph<%=request.getRequestURL().indexOf("Lock")>0?"_on":"" %><spring:message code="common.img"/>.png" height="30"></a>
-				<ul>
-					<li><a href="deviceLockGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_lockgraph_daemon<%=request.getRequestURL().indexOf("deviceLockGraph")>0?"_on":"" %><spring:message code="common.img"/>.png" height="30"></a><br></li>
-					<li><a href="dbLockGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_lockgraph_db<%=request.getRequestURL().indexOf("dbLockGraph")>0?"_on":"" %><spring:message code="common.img"/>.png" height="30"></a><br></li>
-					<li><a href="typeLockGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_lockgraph_types<%=request.getRequestURL().indexOf("typeLockGraph")>0?"_on":"" %><spring:message code="common.img"/>.png" height="30"></a><br></li>
-					<li><a href="groupLockGraphView.do"><img src="${pageContext.request.contextPath}/img/tab_gnb_lockgraph_group<%=request.getRequestURL().indexOf("groupLockGraph")>0?"_on":"" %><spring:message code="common.img"/>.png" height="30"></a><br></li>
-				</ul>
-			</li>
-	<%}%>
-			<li><a href="subAlarmView.do?alarm=4"><img src="${pageContext.request.contextPath}/img/tab_gnb_03<%=request.getRequestURL().indexOf("sub_alarm_page")>0?"_on":"" %><spring:message code="common.img"/>.gif" width="77" height="30" alt="이벤트"></a></li>
 			<%if(session.getAttribute("loginAuth").equals(1)||session.getAttribute("loginAuth").equals(2)){%>
-				<li><a href="listManagement.do?dival=0"><img src="${pageContext.request.contextPath}/img/tab_gnb_04<%=request.getRequestURL().indexOf("user.jsp")>0?"_on":"" %><spring:message code="common.img"/>.gif" width="104" height="30" alt="사용자 관리"></a></li>
-				<li><a href="listManagement.do?dival=1"><img src="${pageContext.request.contextPath}/img/tab_gnb_05<%=request.getRequestURL().indexOf("device.jsp")>0?"_on":"" %><spring:message code="common.img"/>.gif" width="94" height="30" alt="데몬 관리"></a></li>
-				<li><a href="listManagement.do?dival=2"><img src="${pageContext.request.contextPath}/img/tab_gnb_06<%=request.getRequestURL().indexOf("critical.jsp")>0?"_on":"" %><spring:message code="common.img"/>.gif" width="104" height="30" alt="임계값 관리"></a></li>
-				<li class="last"><a href="listManagement.do?dival=3"><img src="${pageContext.request.contextPath}/img/tab_gnb_07<%=request.getRequestURL().indexOf("global.jsp")>0?"_on":"" %><spring:message code="common.img"/>.gif" width="94" height="30" alt="전역 관리"></a></li>
+				<li class="last">
+					<a href="listManagement.do?dival=3">
+						
+						<div class="<%=request.getRequestURL().indexOf("user.jsp")>0||request.getRequestURL().indexOf("device.jsp")>0
+ ||request.getRequestURL().indexOf("global.jsp")>0||request.getRequestURL().indexOf("critical.jsp")>0?"menu_gradient_for_configuration":"menu" %>"><spring:message code="menu.configuration"/></div>
+					</a>
+					<ul>
+						<li>
+								<a href="listManagement.do?dival=0">
+									<div id="_user" class="<%=request.getRequestURL().indexOf("user.jsp")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.user"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="listManagement.do?dival=1">
+									<div id="_instance" class="<%=request.getRequestURL().indexOf("device.jsp")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.instance"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="listManagement.do?dival=3">
+									<div id="_global" class="<%=request.getRequestURL().indexOf("global.jsp")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.global"/></div>
+								</a>
+							</li>
+							<li>
+								<a href="listManagement.do?dival=2">
+									<div id="_threshold" class="<%=request.getRequestURL().indexOf("critical.jsp")>0?"sub_menu_gradient":"sub_menu" %>"><spring:message code="menu.event"/></div>
+								</a>
+							</li>
+					</ul>
+				</li>
 			<%}%>
 			<li class="last right"><a href="http://monad.citsoft.net/" target="_blank"><img src="${pageContext.request.contextPath}/img/help_icon_txt<spring:message code="common.img"/>.png" height="25" alt="<spring:message code="common.help"/>"></a></li>
 		</ul>

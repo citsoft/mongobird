@@ -51,4 +51,8 @@
    <ref bean="messageSourceAccessor"/>
   </property>
  </bean>
+ 
+ <bean id="mongobirdLicenseManager" class="net.cit.tetrad.common.MongobirdLicenseManager">
+    <property name="operations" ref="operations" />
+ </bean>
 </beans>

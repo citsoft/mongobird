@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Aller Regular';
+  font-style: bold;
+  font-weight: 661;
+  src: url(fonts/aller/Aller_Rg.eot);
+  src: url(fonts/aller/Aller_Rg.eot?#iefix) format('embedded-opentype'),
+       url(fonts/aller/Aller_Rg.woff2) format('woff2'),
+       url(fonts/aller/Aller_Rg.woff) format('woff'),
+       url(fonts/aller/Aller_Rg.ttf) format('truetype');
+}

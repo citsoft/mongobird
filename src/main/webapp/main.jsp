@@ -460,6 +460,8 @@
 				</table>
 			</div>
 			</form>
+			     <!-- License information View -->
+                <jsp:include page="/footer.jsp" flush="false"/>
 		</div>
 		<!-- // content end -->
 		<div class="clear">
@@ -468,8 +470,7 @@
 	<!-- // container end  -->
 	
 	<!-- footer start -->
-	<div id="footer">&nbsp;
-	</div>
+	<div id="footer" style="">&nbsp;</div>
 	<!-- // footer end -->
 </div>
 </body>

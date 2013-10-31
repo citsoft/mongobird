@@ -68,8 +68,8 @@ input.box.focus{background:none;}
 
 /* login area start */
 #login {width:1280px; height:768px;}
-.h1_login {float:left; margin:200px 15px 17px 321px; text-align:left;}
-.h2_login {float:left; padding-left:12px; margin:200px 0 14px 0; background:url(../img/bg_login_bar.gif) 0 7px no-repeat;}
+.h1_login {float:left; text-align:left; padding-right: 10px;}
+.h2_login {float:left; padding-left:12px; background:url(../img/bg_login_bar.gif) 0 7px no-repeat;}
 .login_box {float:left; width:629px; height:190px; margin:0 0 0 321px; background:url(../img/bg_loginbox.gif) 0 0 no-repeat;}
 .p_login {float:left; width:113px; height:52px; margin:69px 0 0 148px; padding:0; background:url(../img/bar_gray.gif) top right no-repeat;}
 .login_input {float:left; width:225px; margin:69px 0 0 25px; color:#747474;}
@@ -391,3 +391,7 @@ div.scroll_box2{
 }
 
 .textmiddle {vertical-align:middle;}
+
+.login_license {float:right; padding:13px 4px 0 0;}
+.footer_license {text-align:right; padding-top: 10px; }
+.login_header {float:left; width:629px; height:40px; margin:205px 0 0 321px; }

@@ -47,7 +47,7 @@
 	<!-- content start -->
 	<div id="content_graph">
 	<h1>
-		<img src="./img/Subtit_daemonDetailed<spring:message code="common.img"/>.png">
+		<img src="./img/graph_subtit04<spring:message code="common.img"/>.png">
 	</h1>
 		<form method="post" name="frm_demon" id="frm_demon">
 		<input type="hidden" id="sdate" name="sdate" value="${comm.sdate}" />
@@ -81,6 +81,8 @@
 				<%@ include file="./dbGraphCommonImage.jsp" %>
 				
 		</form>
+        <!-- License information View -->
+        <jsp:include page="/footer.jsp" flush="false"/>
 	</div>
 </div>
 </body>

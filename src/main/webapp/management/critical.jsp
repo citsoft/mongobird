@@ -380,6 +380,8 @@
 				<a href="#"><img src="./img/btn_cancel<spring:message code="common.img"/>.gif" width="42" height="20" alt="<spring:message code="common.cancel"/>" id="setFormCancelButton"></a>
 			</div>
 			</form>
+			<!-- License information View -->
+            <jsp:include page="/footer.jsp" flush="false"/>
 		</div>
 		<!-- // content end -->
 		<div class="clear">

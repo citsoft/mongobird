@@ -304,7 +304,6 @@
 					</tbody>
 				</table>
 			</form>
-			<div class="fr" style="margin:5px;border:5px;">${releaseVersionInfo}</div>
 			<table class="tb_list_06" >
 				<colgroup>
 					<col width="200">
@@ -333,6 +332,8 @@
 					<td></td>
 				</tr>
 			</table>
+			<!-- License information View -->
+            <jsp:include page="/footer.jsp" flush="false"/>
 		</div>
 		
 		<!-- // content end -->

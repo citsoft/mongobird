@@ -15,22 +15,28 @@
 */
 package net.cit.tetrad.resource;
 
-import static net.cit.tetrad.common.ColumnConstent.*;
+import static net.cit.tetrad.common.ColumnConstent.ADMIN;
+import static net.cit.tetrad.common.ColumnConstent.MAV_USER;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.io.Writer;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import net.cit.tetrad.common.ColumnConstent;
 import net.cit.tetrad.common.Config;
+import net.cit.tetrad.common.MongobirdLicenseManager;
+import net.cit.tetrad.common.PropertiesNames;
 import net.cit.tetrad.model.CommonDto;
-import net.cit.tetrad.model.Global;
 import net.cit.tetrad.model.User;
 import net.cit.tetrad.utility.StringUtils;
+import net.citsoft.communication.DistrCommunication;
+import net.citsoft.communication.DistrCommunicationException;
+import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,10 +47,25 @@ public class LoginResource extends DefaultResource{
 
 	private Logger log = Logger.getLogger(this.getClass());
 	
+	private MongobirdLicenseManager licenseManager;
+	
+	public void setLicenseManager(MongobirdLicenseManager licenseManager) {
+		this.licenseManager = licenseManager;
+	}
+
 	@RequestMapping("/loginView.do")
 	public ModelAndView loginView()throws Exception{
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("login");
+		
+		if (Config.LICENSEKEY == null) {
+			String licensekey = licenseManager.getLicensekey();
+			Config.LICENSEKEY = licenseManager.convertLicensekey(licensekey);
+			Config.LICENSETYPE = licenseManager.getLicenseType(licensekey);
+		}				
+		mav.addObject("releaseVersion", PropertiesNames.RELEASEVERSIONINFO);
+		mav.addObject("licensekey", Config.LICENSEKEY);
+		mav.addObject("licensetype", Config.LICENSETYPE);
 		return mav;
 	}
 	
@@ -66,6 +87,9 @@ public class LoginResource extends DefaultResource{
 			if(count==0){
 				insertSuperUser();
 				mav.setViewName("login");
+				mav.addObject("releaseVersion", PropertiesNames.RELEASEVERSIONINFO);
+				mav.addObject("licensekey", Config.LICENSEKEY);
+				mav.addObject("licensetype", Config.LICENSETYPE);
 			}else{
 				User user = doLogin(dto, mav);
 				HttpSession session = request.getSession();
@@ -114,5 +138,44 @@ public class LoginResource extends DefaultResource{
 		String hashPasswd = managementDao.makePasswd(password);
 		query = loginDao.findUidPasswd(id, hashPasswd);
 		return (User) monadService.getFind(query, User.class);
+	}
+	
+	@RequestMapping(value="/registLicensekey.do")
+	public void registLicensekey(HttpServletRequest request, HttpServletResponse response) {
+		String licensekey = request.getParameter("licensekey");
+		int resultCode = ColumnConstent.REGIST_FAIL_INVALID;
+		try {
+			String useros = System.getProperty("os.name");
+			String userencoding = System.getProperty("file.encoding");
+			String userlanguage = System.getProperty("user.language");
+			
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("version", PropertiesNames.RELEASEVERSIONINFO);
+			jsonObj.put("useros", useros);
+			jsonObj.put("userencoding", userencoding);
+			jsonObj.put("userlanguage", userlanguage);
+			jsonObj.put("licensekey", licensekey);
+			
+			try {
+				if (DistrCommunication.isCommercial("mongobird", jsonObj)) {
+					resultCode = licenseManager.registLicensekey(licensekey);
+					if (resultCode == ColumnConstent.REGIST_SUCCESS) {
+						Config.LICENSETYPE = licenseManager.getLicenseType(licensekey);
+						Config.LICENSEKEY = licenseManager.convertLicensekey(licensekey);
+					}
+				}
+			} catch (DistrCommunicationException.CannotConnectServer e) {
+				resultCode = ColumnConstent.REGIST_FAIL_CANNOTCONNECT;
+			}
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/json");
+			response.setHeader("Cache-Control", "no-cache");
+			Writer writer = response.getWriter();
+			writer.write(Integer.toString(resultCode));
+			writer.flush();
+		}  catch (IOException e) {
+			e.printStackTrace();
+			log.error(e, e);
+		}
 	}
 }

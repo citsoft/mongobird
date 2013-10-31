@@ -706,6 +706,8 @@
 					</table>
 				<div class="btn_area"><a><img id="batchUpdateBtn" src="./img/modifyatOnce_btn<spring:message code="common.img"/>.png"></a></div>
 				</form>
+				<!-- License information View -->
+                <jsp:include page="/footer.jsp" flush="false"/>
 			</div>
 			<!-- // content end -->
 			<div class="clear"></div>

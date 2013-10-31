@@ -420,6 +420,8 @@ if(session.getAttribute("loginAuth").equals(1)||session.getAttribute("loginAuth"
 			<iframe id="dbgraphframe" frameborder="0" src="" width="635" height="245" align="right"></iframe>
 			<iframe id="listframe" frameborder="0" src="" width="635" align="left"></iframe>
 			<iframe id="graphframe" frameborder="0" src="" width="635" height="500" align="right"></iframe>
+			<!-- License information View -->
+			<jsp:include page="/footer.jsp" flush="false"/>
 		</div>
 		<!-- // content end -->
 		<div class="clear">
@@ -428,8 +430,7 @@ if(session.getAttribute("loginAuth").equals(1)||session.getAttribute("loginAuth"
 	<!-- // container end  -->
 	
 	<!-- footer start -->
-	<div id="footer">&nbsp;
-	</div>
+	<div id="footer">&nbsp;</div>
 	<!-- // footer end -->
 </div>
 </body>

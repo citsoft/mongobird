@@ -26,7 +26,9 @@
 		<property name="rrdInitializer" ref="tetradRrdInitializer" />
 		<property name="mongoStatusToMonitor" ref="mongoStatusToMonitor" />
 	</bean>
-	<bean id="loginResource" class="net.cit.tetrad.resource.LoginResource" />
+	<bean id="loginResource" class="net.cit.tetrad.resource.LoginResource">
+	    <property name="licenseManager" ref="mongobirdLicenseManager" />
+	</bean>
 	<bean id="mainResource" class="net.cit.tetrad.resource.MainResource" />
 	<bean id="subResource" class="net.cit.tetrad.resource.SubResource" />
 	<bean id="commandResource" class="net.cit.tetrad.resource.CommandResource" />

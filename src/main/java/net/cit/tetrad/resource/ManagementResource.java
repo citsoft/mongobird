@@ -601,6 +601,9 @@ public class ManagementResource extends DefaultResource {
 	public void mongosResearch(HttpServletRequest request, HttpServletResponse response, CommonDto commDto) throws Exception{
 		String authUser = Utility.isNull(commDto.getAuthUser());
 		String authPasswd = Utility.isNull(commDto.getAuthPasswd());
+		String tempIp = Utility.isNull(commDto.getIp());
+		boolean loopbackCheck = commDto.isLoopbackCheck();
+		
 		boolean authCheck = false;
 		Mongo mongo = null;
 		List<Map<String, Object>> resultLst = new ArrayList<Map<String, Object>>();
@@ -619,6 +622,7 @@ public class ManagementResource extends DefaultResource {
 			}
 			readMongos = mongoStatusToMonitor.readMongoShards(mongo, "mongos", "config");
 			readMongoShards = mongoStatusToMonitor.readMongoShards(mongo, "shards", "config");
+			
 			readConfigDb = mongoStatusToMonitor.readMongoStatus(mongo, new Device(), "getCmdLineOpts").get("parsed_configdb");
 			mongo.close();
 
@@ -627,8 +631,8 @@ public class ManagementResource extends DefaultResource {
 			for(Object mongosObj : readMongos){
 				mongoIdNum++;
 				Map<String, Object> statusMap = (Map<String, Object>) mongosObj;
-				
 				String[] splitName = ((String) statusMap.get("_id")).split(":");
+				
 				boolean isExistCheck = false;
 				if(isExistDeviceIpPort(splitName[0], splitName[1]) != null)isExistCheck = true;
 				statusMap.put("isExistCheck", isExistCheck);
@@ -646,8 +650,12 @@ public class ManagementResource extends DefaultResource {
 				Map<String, Object> shardMap = (Map<String, Object>) shardObj;
 				String[] host = ((String) shardMap.get("host")).split("/");
 				String[] hostLst = host[1].split(",");
-				
 					String[] ipPortSplit = hostLst[0].split(":");
+					
+					if(ipPortSplit[0].equals("127.0.0.1") || ipPortSplit[0].equals("localhost")){
+						ipPortSplit[0] = tempIp;
+					}
+					
 					mongo = new Mongo(ipPortSplit[0], Integer.parseInt(ipPortSplit[1]));
 					if(authCheck){
 						db = mongo.getDB("admin");
@@ -660,6 +668,11 @@ public class ManagementResource extends DefaultResource {
 						Map<String, Object> statusMap = (Map<String, Object>) status;
 						
 						String[] splitName = ((String) statusMap.get("name")).split(":");
+						
+						if(loopbackCheck == true && (splitName[0].equals("127.0.0.1") || splitName[0].equals("localhost"))){
+							splitName[0] = tempIp;
+						}
+						
 						boolean isExistCheck = false;
 						if(isExistDeviceIpPort(splitName[0], splitName[1]) != null)isExistCheck = true;
 						statusMap.put("isExistCheck", isExistCheck);
@@ -681,6 +694,11 @@ public class ManagementResource extends DefaultResource {
 				Map<String, Object> statusMap = new HashMap<String, Object>();
 				
 				String[] splitName = configStr.split(":");
+				
+				if(loopbackCheck == true && (splitName[0].equals("127.0.0.1") || splitName[0].equals("localhost"))){
+					splitName[0] = tempIp;
+				}
+				
 				boolean isExistCheck = false;
 				if(isExistDeviceIpPort(splitName[0], splitName[1]) != null)isExistCheck = true;
 				statusMap.put("isExistCheck", isExistCheck);

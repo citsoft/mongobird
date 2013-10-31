@@ -65,6 +65,7 @@ public class CommonDto {
 
 	private String type;	
 	private int groupCode;
+	private String groupCodes;
 	private int deviceCode;	
 	private int userCode;
 	private String type_gubun;
@@ -76,6 +77,7 @@ public class CommonDto {
 	private int hddsize=0;
 	private String authUser;
 	private String authPasswd;
+	private boolean loopbackCheck;
 	
 	//critical
 	private int criticalvalue;	
@@ -130,6 +132,14 @@ public class CommonDto {
 	private String dstype;
 	private String title;
 	private boolean isFinishedInitailRrd = false;
+	
+	public boolean isLoopbackCheck() {
+		return loopbackCheck;
+	}
+
+	public void setLoopbackCheck(boolean loopbackCheck) {
+		this.loopbackCheck = loopbackCheck;
+	}
 
 	public String getSelectDate() {
 		return selectDate;
@@ -200,6 +210,15 @@ public class CommonDto {
 	public void setGroupCode(int groupCode) {
 		this.groupCode = groupCode;
 	}	
+	
+	public String getGroupCodes() {
+		return groupCodes;
+	}
+
+	public void setGroupCodes(String groupCodes) {
+		this.groupCodes = groupCodes;
+	}
+
 	public String getIp() {
 		return ip;
 	}

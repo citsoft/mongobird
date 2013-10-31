@@ -240,14 +240,10 @@ function init(){
 					<table class="tb_list_01">
 						<thead>
 							<tr>
-								<th colspan="2"><spring:message code="daemons.daemoninfo"/> </th>
+								<th colspan="2">mongos </th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td><spring:message code="daemons.type"/> : </td>
-								<td>mongos</td>
-							</tr>
 							<tr>
 								<td>IP : </td>
 								<td><input type="text" name="ip" id="ip" size="20" maxlength="50" style='ime-mode:disabled'/></td>
@@ -256,6 +252,16 @@ function init(){
 								<td>Port : </td>
 								<td><input type="text" name="port" id="port" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/></td>
 							</tr>
+						</tbody>
+					</table>
+					
+						<table class="tb_list_01">
+						<thead>
+							<tr>
+								<th colspan="2"><spring:message code="daemons.default"/> </th>
+							</tr>
+						</thead>
+						<tbody>
 							<tr>
 								<td><spring:message code="daemons.memory"/> : </td>
 								<td><input type="text" name="memorysize" id="memorysize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/></td>
@@ -264,9 +270,29 @@ function init(){
 								<td><spring:message code="daemons.hard"/> : </td>
 								<td><input type="text" name="hddsize" id="hddsize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/></td>
 							</tr>
+						</tbody>
+					</table>
+						<table class="tb_list_01">
+						<thead>
 							<tr>
-								<td colspan="2"><input type="checkbox" id="authCheck" name="authCheck"> with auth</td>
+								<th colspan="2"><spring:message code="daemons.options"/> </th>
 							</tr>
+						</thead>
+						<tbody>
+							<tr><td colspan="2"><input type="checkbox" id="loopbackCheck" name="loopbackCheck" checked="checked"> <spring:message code="daemons.enableLoopback"/></td></tr>
+							<tr>
+								<td colspan="2"><input type="checkbox" id="authCheck" name="authCheck"> <spring:message code="daemons.enableAuth"/></td>
+							</tr>
+						</tbody>
+					</table>
+					
+						<table class="tb_list_01">
+						<thead>
+							<tr>
+								<th colspan="2"><spring:message code="daemons.authorization"/></th>
+							</tr>
+						</thead>
+						<tbody>
 							<tr>
 								<td>admin user : </td>
 								<td><input type="text" name="authUser" id="authUser" size="20" maxlength="100" style='ime-mode:disabled'></td>
@@ -282,6 +308,8 @@ function init(){
 							</tr>
 						</tbody>
 					</table>
+					
+					
 				</form>
 			</div>
 			<div id="contents">

@@ -98,6 +98,8 @@ $(document).ready(function() {
 			</div>
 				<%@ include file="./lockGraphCommonImage.jsp" %>
 		</form>
+        <!-- License information View -->
+        <jsp:include page="/footer.jsp" flush="false"/>
 	</div>
 </div>
 </body>

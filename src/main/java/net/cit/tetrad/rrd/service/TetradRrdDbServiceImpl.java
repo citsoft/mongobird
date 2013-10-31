@@ -59,8 +59,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.cit.tetrad.common.ColumnConstent;
+import net.cit.tetrad.common.Config;
 import net.cit.tetrad.common.DateUtil;
 import net.cit.tetrad.common.Utility;
 import net.cit.tetrad.model.Alarm;
@@ -447,9 +450,15 @@ public class TetradRrdDbServiceImpl implements TetradRrdDbService {
 			try {
 				// 데몬의 데이터베이스 리스트 취득
 				List<String> dbNames = mongo.getDatabaseNames();
+				Pattern patt = Pattern.compile(Config.DBNAME_PATTERN);
 				for (String databaseName : dbNames) {
-					// 운영 관리할 데이터베이스에 대한 RrdDb 데이타 입력
+					// 패턴에 맞는 DB만 RrdDB 및 Mongodb에 insert
+					Matcher m = patt.matcher(databaseName);
+					if (!m.matches()) {
+						continue;
+					}
 					
+					// 운영 관리할 데이터베이스에 대한 RrdDb 데이타 입력					
 					dbStatusFromMongo = insertTetradRrdDb(mongo, device, databaseName, serverResult);
 					DbStatus dbstats = new DbStatus();
 					BeanUtils.populate(dbstats, dbStatusFromMongo);

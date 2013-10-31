@@ -34,7 +34,7 @@ function setGraph(){
 }
 
 function getDbLst(){
-	var groupCode = $('input:radio[name=groupCode]:checked').val();
+	var groupCode = $('input:radio[name=groupCodes]:checked').val();
 	var type_gubun = $('#type_gubun').val();
 	$.ajax({
 		type:'POST',
@@ -64,8 +64,7 @@ function goSearch(){
 
 $(document).ready(function() {
 	getDbLst();
-	
-	$('#frm_demon input:radio[name=groupCode]').change(function (event) {
+	$('#frm_demon input:radio[name=groupCodes]').change(function (event) {
 		getDbLst();
 	});
 });

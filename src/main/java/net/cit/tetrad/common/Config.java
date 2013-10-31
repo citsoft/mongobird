@@ -41,4 +41,10 @@ public class Config {
 			map.put(key, -1);
 		}
 	}
+	
+	/**라이센스 관련 전역 변수 추가 */
+	public static String LICENSEKEY = "";
+	public static String LICENSETYPE = "";
+	
+	public static String DBNAME_PATTERN = ".*";
 }

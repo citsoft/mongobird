@@ -62,7 +62,12 @@
 				<ul>
 					<li class="end"><b><img src="./img/graph_subtit02_slt01<spring:message code="common.img"/>.png"></b></li>
 					<c:forEach var="i" items="${groupLst}">
-						<li><input type="radio" id="groupCode" name="groupCode" value="${i.idx}" <c:if test="${i.idx==comm.groupCode}" >checked</c:if> />  ${i.uid}</li>
+						<li><input type="radio" id="groupCode" name="groupCodes" value="${i.idx}" <c:if test="${i.idx==comm.groupCodes}" >checked</c:if> />  ${i.uid}</li>
+					</c:forEach>
+					<br/>
+					<li class="end"><b><img src="./img/graph_subtit03_slt01<spring:message code="common.img"/>.png"></b></li>
+					<c:forEach var="i" items="${typeModelLst}">
+						<li><input type="radio" id="type" name="groupCodes" value="${i.groupList}" <c:if test="${i.groupList==comm.groupCodes}" >checked</c:if> />  ${i.name}</li>
 					</c:forEach>
 					<li class="noline"></li>
 					<li class="end"><b><img src="./img/lockgraph_subtit02_sub01<spring:message code="common.img"/>.png"></b></li>
@@ -79,6 +84,8 @@
 				<%@ include file="./lockGraphCommonImage.jsp" %>
 				
 		</form>
+		<!-- License information View -->
+        <jsp:include page="/footer.jsp" flush="false"/>
 	</div>
 </div>
 </body>

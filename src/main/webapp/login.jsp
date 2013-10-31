@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!--
 /**
@@ -24,8 +25,10 @@
 <title><spring:message code="main.title"/></title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/common_analytics.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+<link href="${pageContext.request.contextPath}/css/jquery.smartPop.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-latest.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/commonUtil.js"></script>
+<script src="${pageContext.request.contextPath}/js/jquery.smartPop.js" type="text/javascript"></script>    
 <script type="text/javascript">
 	$(document).ready( function() {
 		$('#btn_login').click( function(event) {goCheck();return false;});
@@ -61,12 +64,29 @@
 			window.open("popup_login.do","Login","width=562,height=300,menubar=no,toolbar=no,location=no,status=no,resizable=no,scrollbars=no,top="+top+", left="+left);
 		}
 	}
+	
+	function openLayerdPop(dsname, devicecode, collname, dbname, title) {
+	    $.smartPop.open({ background: "gray", width: 300, height: 100, url: "./registLicense.jsp"});                
+	}
 </script>
 </head>
 <body id="login" onload='init()'>
-<div id="wrap_login">
-	<h1 class="h1_login"><a href="#"><img src="./img/mm_loginTitle.png" alt="<spring:message code="login.monadmanagementsystem"/>"></a></h1>
-	<h2 class="h2_login"><img src="./img/logo_mongoDB_login.png" width="82" height="30" alt="mongoDB"></h2>
+<div id="wrap_login">	
+	<div class="login_header">
+		<h1 class="h1_login"><a href="#"><img src="./img/mm_loginTitle.png" alt="<spring:message code="login.monadmanagementsystem"/>"></a></h1>
+	    <h2 class="h2_login"><img src="./img/logo_mongoDB_login.png" width="82" height="30" alt="mongoDB"></h2>
+	    <span class="login_license">
+	       mongobird v${releaseVersion} | 
+	       <c:choose>
+	        <c:when test="${licensekey eq null or licensekey eq ''}">
+	            <a href="javascript:openLayerdPop();">non-commercial version </a>
+	         </c:when>
+	         <c:otherwise>
+	             ${licensetype} version
+	         </c:otherwise>
+	       </c:choose>
+	    </span>	
+	</div>
 	<form method="post" id="g_login" name="g_login" class="login_box">  
 		<fieldset>  
 		<legend>login</legend> 
@@ -77,9 +97,9 @@
 			<li class="login_lb"><label class="i_label"><spring:message code="login.password"/></label></li>  
 			<li><input type="password" name="passwd" id="passwd" maxlength="100" style='ime-mode:disabled' ></li> 
 		</ul>
-		<span class="btn_login">  
+		<span class="btn_login" >  
 			<input value="로그인" type="image" src="./img/btn_login<spring:message code="common.img"/>.gif" id="btn_login">  
-		</span>   
+		</span>
 		</fieldset> 
 	</form>
 	<div class="login_copyright">COPYRIGHT(C) Cardinal Info Tech. ALL RIGHTS RESERVED</div>

@@ -219,4 +219,13 @@ public class ColumnConstent {
 	public final static String TOTAL_TOTALDBLOCKSTIMELOCKEDMICROS_W_SUM = "totalDbLocksTimeLockedMicros_w_sum";
 	
 	public final static String RRD_SYNC_PERIOD = "rrdSyncPeriod";
+	
+	/** License 관련 상수 */
+	public final static String LICENSE_FILE = ".mongobird";
+	
+	public final static int REGIST_SUCCESS = 10000;
+	public final static int REGIST_FAIL_INVALID = 40000;
+	public final static int REGIST_FAIL_CANNOTCONNECT = 50000;
+	
+	public final static String LICENSE_PATTERN = "([A-Z0-9]{4})-([A-Z0-9]{4})-([A-Z0-9]{4})-([A-Z0-9]{4})-([A-Z0-9]{4})";
 }	

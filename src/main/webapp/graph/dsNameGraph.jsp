@@ -134,8 +134,10 @@ $(document).ready(function() {
 					</li>
 				</ul>
 			</div>
-				<%@ include file="./graphCommonImage.jsp" %>
+			<%@ include file="./graphCommonImage.jsp" %>
 		</form>
+		<!-- License information View -->
+		<jsp:include page="/footer.jsp" flush="false"/>
 	</div>
 </div>
 </body>

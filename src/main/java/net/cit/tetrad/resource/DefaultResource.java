@@ -18,6 +18,8 @@ package net.cit.tetrad.resource;
 import static net.cit.tetrad.common.ColumnConstent.*;
 import static net.cit.tetrad.common.PropertiesNames.*;
 import net.cit.tetrad.command.service.TetradCommandService;
+import net.cit.tetrad.common.Config;
+import net.cit.tetrad.common.PropertiesNames;
 import net.cit.tetrad.dao.management.AdminDao;
 import net.cit.tetrad.dao.management.IndexDao;
 import net.cit.tetrad.dao.management.LoginDao;
@@ -85,6 +87,9 @@ public class DefaultResource {
 		mav.addObject("tablenm", TABLENAME);
 		mav.addObject("mongoVer", mongoVer);
 		mav.addObject("mainRefreshPeriodMinute", mainDao.mainRefreshPeriodMinute());
+		mav.addObject("licensekey", Config.LICENSEKEY);
+		mav.addObject("licensetype", Config.LICENSETYPE);
+		mav.addObject("releaseVersion", PropertiesNames.RELEASEVERSIONINFO);
 		return mav;
 	}
 }

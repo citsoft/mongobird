@@ -25,7 +25,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <link rel="STYLESHEET" type="text/css" href="${pageContext.request.contextPath}/css/dhtmlx/dhtmlxchart.css">
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dhtml_graph.css">
+<!-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dhtml_graph.css"> -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery.basic.tooltip.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery.showLoading.css">
@@ -87,7 +87,15 @@ function getShardsInfo(collectionName){
 				$('#databaseTB tbody').append(tb);
 			}else if(collectionName == settings){
 				tb = "Chunks";
-				$('#chunksTH').append(tb+" ("+jsonData.aaData[0].value+"MB)");
+				var valueOfAaData="";
+				
+				try{
+					valueOfAaData = jsonData.aaData[0].value; 
+				}catch(e){
+					valueOfAaData = "";
+				}finally{
+					$('#chunksTH').append(tb+" ("+valueOfAaData+"MB)");
+				}
 			}
 		},
 		error:function(xhr,textStatus, errorThrown){
@@ -374,6 +382,8 @@ $(document).ready(function() {
 					</table>
 				</div>				
 			</form>
+			<!-- License information View -->
+            <jsp:include page="/footer.jsp" flush="false"/>
 		</div>
 	</div>
 </div>

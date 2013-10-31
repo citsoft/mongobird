@@ -1,0 +1,9 @@
+@font-face {
+  font-family: 'Kopub Light';
+  font-style: bold;
+  font-weight: 661;
+  src: url(fonts/kopub/KoPubDotumLight.eot);
+  src: url(fonts/kopub/KoPubDotumLight.eot?#iefix) format('embedded-opentype'),
+       url(fonts/kopub/KoPubDotumLight.woff) format('woff'),
+       url(fonts/kopub/KoPubDotumLight.ttf) format('truetype');
+}

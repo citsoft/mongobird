@@ -399,6 +399,8 @@
 				<div class="paginav" id="divPaging"></div>
 		
 		<iframe id="eventframe" frameborder="0" scrolling="no" src="" width="1280" ></iframe>
+		<!-- License information View -->
+        <jsp:include page="/footer.jsp" flush="false"/>
 		</div>
 		<!-- // content end -->
 		<div class="clear">

@@ -80,6 +80,8 @@
 				<%@ include file="./dbGraphCommonImage.jsp" %>
 				
 		</form>
+        <!-- License information View -->
+        <jsp:include page="/footer.jsp" flush="false"/>
 	</div>
 </div>
 </body>
