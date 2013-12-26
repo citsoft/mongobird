@@ -62,6 +62,7 @@
 			var left = (screen.availWidth - 512) / 2;
 		    var top = (screen.availHeight - 300) / 2;
 			window.open("popup_login.do","Login","width=562,height=300,menubar=no,toolbar=no,location=no,status=no,resizable=no,scrollbars=no,top="+top+", left="+left);
+			window.location.href = "loginView.do";
 		}
 	}
 	
@@ -70,7 +71,7 @@
 	}
 </script>
 </head>
-<body id="login" onload='init()'>
+<body id="login" onload = 'init()'>
 <div id="wrap_login">	
 	<div class="login_header">
 		<h1 class="h1_login"><a href="#"><img src="./img/mm_loginTitle.png" alt="<spring:message code="login.monadmanagementsystem"/>"></a></h1>

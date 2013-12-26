@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServlet;
 import net.cit.tetrad.common.Config;
 import net.cit.tetrad.common.MongobirdLicenseManager;
 import net.cit.tetrad.common.PropertiesNames;
-import net.cit.tetrad.dao.management.MainDao;
 import net.cit.tetrad.rrd.utils.TetradRrdConfig;
 import net.cit.tetrad.rrd.utils.TetradRrdDbPool;
 import net.citsoft.communication.DistrCommunication;
@@ -70,6 +69,9 @@ public class InitializeServlet extends HttpServlet {
 				
 				TotalInfoScheduling totalInfoSchedul = new TotalInfoScheduling();
 				totalInfoSchedul.run();				
+				
+				Thread checkingMongo = new Thread(new ConnectMongoHandlerThread());
+				checkingMongo.start();
 			}
 		} catch (Exception ex) {
 			logger.error(ex, ex);

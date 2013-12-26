@@ -70,6 +70,7 @@ import net.cit.tetrad.model.Alarm;
 import net.cit.tetrad.model.Device;
 import net.cit.tetrad.model.User;
 import net.cit.tetrad.resource.MailResource;
+import net.cit.tetrad.rrd.batch.MongoInMemory;
 import net.cit.tetrad.rrd.batch.ReInitializeMongoInMemory;
 import net.cit.tetrad.rrd.bean.DbStatus;
 import net.cit.tetrad.rrd.bean.GraphDefInfo;
@@ -572,7 +573,11 @@ public class TetradRrdDbServiceImpl implements TetradRrdDbService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			logger.error(e, e);
-		} 
+			if (mongo == null) {
+				insertConnectionTimeoutError(device);
+				throw new MongoException("Mongo Object is null");
+			}
+		}		
 		logger.info("end insrt rrd");
 	}
 	

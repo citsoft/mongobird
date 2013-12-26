@@ -41,7 +41,7 @@ rrd.xml_path:/usr/local/temp/tetrad/rrd/xml/
 rrd.img_path:/usr/local/temp/tetrad/rrd/img/
 
 rrd.default_log_generation_interval:10
-rrd.default_log_retention_period:30
+rrd.default_log_retention_period:7
 rrd.default_main_page_reload_interval:300
 rrd.startTime:201203170000
 rrd.endTime:201203172359

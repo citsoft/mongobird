@@ -18,19 +18,19 @@ package net.cit.tetrad.rrd.batch;
 import static net.cit.tetrad.common.ColumnConstent.RRD_SYNC_PERIOD;
 
 import java.io.IOException;
-import java.util.concurrent.ConcurrentMap;
 
 import net.cit.tetrad.common.Config;
 import net.cit.tetrad.model.Device;
 import net.cit.tetrad.rrd.service.TetradRrdDbService;
+import net.cit.tetrad.rrd.utils.MongoWrapper;
 import net.cit.tetrad.rrd.utils.TetradRrdConfig;
 import net.cit.tetrad.rrd.utils.TetradRrdDbPool;
 
 import org.apache.log4j.Logger;
-import org.rrd4j.core.RrdBackendFactory;
 import org.rrd4j.core.RrdNioBackendFactory;
 
 import com.mongodb.Mongo;
+import com.mongodb.MongoException;
 
 public class TetradInputThread extends Thread {
 	
@@ -52,8 +52,7 @@ public class TetradInputThread extends Thread {
 
 	public void run() {
 		Device newDevice = null;
-		Mongo mongo = null;
-		
+		MongoWrapper mongoWrapper = null;
 		try {
 			
 			for ( ; ; ) {				
@@ -73,11 +72,14 @@ public class TetradInputThread extends Thread {
 					if (isDeviceAlive(newDevice)) {
 						logger.info(deviceIdx + ", Input Start!!!");
 						
-						mongo = MongoInMemory.getMongoGroup().get(newDevice.getIdx());
+						mongoWrapper = MongoInMemory.getMongoGroup().get(newDevice.getIdx());
+						mongo = mongoWrapper.getMongo();
 						logger.debug("logGenSeconds = " + logGenerationIntervalSeconds);
 						tetradRrdDbService.insertTetradRrdDb(mongo, newDevice);
 					}
-				} catch (Exception e) {
+				}catch (MongoException e) { 
+					MongoInMemory.putToReconnectingMongo(mongoWrapper);
+				}catch (Exception e) {
 					closeConnection();
 					throwException();
 				} finally {

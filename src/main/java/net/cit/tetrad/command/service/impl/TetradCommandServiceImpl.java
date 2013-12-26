@@ -26,6 +26,7 @@ import net.cit.tetrad.model.Device;
 import net.cit.tetrad.rrd.batch.DeviceInMemory;
 import net.cit.tetrad.rrd.batch.MongoInMemory;
 import net.cit.tetrad.rrd.dao.MongoStatusToMonitor;
+import net.cit.tetrad.rrd.utils.MongoWrapper;
 
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
@@ -41,8 +42,8 @@ public class TetradCommandServiceImpl implements TetradCommandService{
 		try {
 			ConcurrentMap<Integer, Device> deviceGroup = DeviceInMemory.getDeviceGroup();
 			Device curDevice = deviceGroup.get(deviceIdx);
-			ConcurrentMap<Integer, Mongo> mongoGroup = MongoInMemory.getMongoGroup();
-			mongo = mongoGroup.get(curDevice.getIdx());
+			ConcurrentMap<Integer, MongoWrapper> mongoGroup = MongoInMemory.getMongoGroup();
+			mongo = mongoGroup.get(curDevice.getIdx()).getMongo();
 		} catch (Exception e) {
 //			e.printStackTrace();
 		}

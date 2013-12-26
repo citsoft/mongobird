@@ -21,6 +21,7 @@ import java.util.concurrent.ConcurrentMap;
 import net.cit.tetrad.model.Device;
 import net.cit.tetrad.resource.ManagementResource;
 import net.cit.tetrad.rrd.service.TetradRrdDbService;
+import net.cit.tetrad.rrd.utils.MongoWrapper;
 
 import org.apache.log4j.Logger;
 
@@ -47,8 +48,8 @@ public class TetradInstallThread extends Thread {
 			tetradRrdDbService.createTetradRrdDb(device);
 
 			// 데몬에 생성되어 있는 데이터베이스 리스트 위득
-			ConcurrentMap<Integer, Mongo> mongoGroup = MongoInMemory.getMongoGroup();
-			mongo = mongoGroup.get(device.getIdx());
+			ConcurrentMap<Integer, MongoWrapper> mongoGroup = MongoInMemory.getMongoGroup();
+			mongo = mongoGroup.get(device.getIdx()).getMongo();
 			
 			List<String> deviceNames = mongo.getDatabaseNames();
 			for (String databaseName : deviceNames) {

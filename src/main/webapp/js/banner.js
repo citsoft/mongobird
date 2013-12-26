@@ -64,7 +64,7 @@ function defaultJson(){
 		    "data": [
 		        {
 		            "title":"mongoextensions",
-		            "url":"../mongobird/mongo-extension.html" 
+		            "url":"./mongobird/mongo-extensions.html" 
 		        }
 		    ]
 		};

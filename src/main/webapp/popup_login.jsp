@@ -53,7 +53,7 @@ h2 {margin:25px 0 0 36px; padding-left:10px; background:url(./img/ico_dot.gif) 0
 <body>
 <div id="wrap" class="w561">
 	<div id="header">
-		<h1><img src="./img/tit_login.gif" width="119" height="22" alt="로그인 메시지"></h1>
+		<h1><img src="./img/tit_login<spring:message code = "common.img"/>.gif" width="119" height="22" alt="로그인 메시지"></h1>
 	</div>
 	<div id="content">
 		<a href="" onClick="self.close()" class="popup_close"><img src="./img/ico_x.gif" width="7" height="6" alt="X"></a>

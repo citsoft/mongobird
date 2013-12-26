@@ -80,12 +80,12 @@
 			</c:if>
 			<c:if test="${comm.type_gubun == 'deviceDb'}">
 				<div class="graph_area_graph" id="graph_area_graph"></div>
-				<fieldset class="share_graph_area_left">
-						<div class="graph_area_graph" id="dbSize_graph_area"></div>
-				</fieldset>
-<!-- 				<fieldset class="share_graph_area_right"> -->
-						<div class="graph_area_graph" id="index_graph_area"></div>
-<!-- 				</fieldset> -->
+			<fieldset class="share_graph_area_left" >
+				<div class="graph_area_graph" id="dbSize_graph_area"></div>
+			</fieldset>
+			<fieldset class="share_graph_area_right">
+				<div class="graph_area_graph" id="index_graph_area"></div>
+			</fieldset>
 			</c:if>
 		</fieldset>
 </div>

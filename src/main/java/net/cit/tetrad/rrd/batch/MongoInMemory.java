@@ -15,23 +15,24 @@
 */
 package net.cit.tetrad.rrd.batch;
 
-import java.net.UnknownHostException;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentMap;
 
 import net.cit.tetrad.model.Device;
 import net.cit.tetrad.rrd.dao.DataAccessObjectForMongo;
+import net.cit.tetrad.rrd.utils.MongoWrapper;
 
 import com.mongodb.DB;
-import com.mongodb.Mongo;
-import com.mongodb.MongoException;
 
 public class MongoInMemory {	
-	private DataAccessObjectForMongo dataAccessObjectForMongo;	
-	private static Mongo mongo = null;
-	public static ConcurrentMap<Integer, Mongo> mongoGroup = new ConcurrentHashMap<Integer, Mongo>(); 	
+	private DataAccessObjectForMongo dataAccessObjectForMongo;
+	private static MongoWrapper mongoWrapper;
+	public static ConcurrentMap<Integer, MongoWrapper> mongoGroup = new ConcurrentHashMap<Integer, MongoWrapper>(); 	
+	public static ConcurrentLinkedQueue<MongoWrapper> toReconnectingMongos = new ConcurrentLinkedQueue<MongoWrapper>(); 	
 	
+
 	public void setDataAccessObjectForMongo(
 			DataAccessObjectForMongo dataAccessObjectForMongo) {
 		this.dataAccessObjectForMongo = dataAccessObjectForMongo;
@@ -41,38 +42,50 @@ public class MongoInMemory {
 		List<Device> deviceLst = dataAccessObjectForMongo.readDeviceList();
 		for(Device device : deviceLst){
 			setMongo(device.getIp(), Integer.parseInt(device.getPort()), device.getAuthUser(), device.getAuthPasswd());
-			mongoGroup.putIfAbsent(device.getIdx(), mongo);
+			mongoGroup.putIfAbsent(device.getIdx(), mongoWrapper);
 		}
 	}
 	
-	public static ConcurrentMap<Integer, Mongo> getMongoGroup() {
+	public static ConcurrentMap<Integer, MongoWrapper> getMongoGroup() {
 		return mongoGroup;
 	}
 	
 	public static void addMongoIntoMap(Device device) {
 		setMongo(device.getIp(), Integer.parseInt(device.getPort()), device.getAuthUser(), device.getAuthPasswd());
-		mongoGroup.putIfAbsent(device.getIdx(), mongo);
+		mongoGroup.putIfAbsent(device.getIdx(), mongoWrapper);
 	}
 	
 	public static void updateMongoMap(Device device) {
 		setMongo(device.getIp(), Integer.parseInt(device.getPort()), device.getAuthUser(), device.getAuthPasswd());
-		mongoGroup.replace(device.getIdx(), mongo);
+		mongoGroup.replace(device.getIdx(), mongoWrapper);
 	}
 	
 	public static void deleteMongoMap(int idx) {		
 		mongoGroup.remove(idx);
 	}
 	
-	public static Mongo setMongo(String ip, int port, String authUser, String authPasswd){
+	public static MongoWrapper setMongo(String ip, int port, String authUser, String authPasswd){
 		try {
-			mongo = new Mongo(ip, port);
-			DB db = mongo.getDB("admin");
+			mongoWrapper = new MongoWrapper();
+			mongoWrapper.connect(ip, port);
+			
+			DB db = mongoWrapper.getMongo().getDB("admin");
 			if(!authUser.equals("") && !authPasswd.equals("")){
 				boolean auth = db.authenticate(authUser, authPasswd.toCharArray());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return mongo;
+		return mongoWrapper;
+	}
+	
+	public static ConcurrentLinkedQueue<MongoWrapper> getToReconnectingMongos() {
+		return toReconnectingMongos;
+	}
+	
+	public static void putToReconnectingMongo(MongoWrapper mongoWrapper) {
+		if (!toReconnectingMongos.contains(mongoWrapper)) {
+			toReconnectingMongos.add(mongoWrapper);
+		}
 	}
 }
