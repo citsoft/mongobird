@@ -28,6 +28,8 @@ import com.mongodb.DBObject;
 public interface MonadService {
 
 	public void updateMulti(Query query, Update update, String collectionName);
+	
+	public void updateMulti(Query query, Update update, String collectionName, boolean upsert);
 
 	public long getCount(Query query, Class<?> className);
 

@@ -60,7 +60,7 @@ mail.defaultEncoding:UTF-8
 mail.starttles_enable:true
 mail.auth:true
 
-mail.from:yournotimail@yourmailhost.com
+mail.from:Edit your email address
 ######################################################
 log4j
 ######################################################

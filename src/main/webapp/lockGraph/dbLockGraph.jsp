@@ -34,6 +34,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <%@ include file="./lockGraphCommon.jsp" %>
@@ -60,9 +61,9 @@ $(document).ready(function() {
 <div id="container">
 	<!-- content start -->
 	<div id="content_graph">
-	<h1>
-		<img src="./img/Subtit_DBLockDetailed<spring:message code="common.img"/>.png">
-	</h1>
+		<div class="graph_sub_menu">
+			<spring:message code="menu.lock" /> > <spring:message code="menu.db" />
+		</div>
 	<form method="post" name="frm_demon" id="frm_demon">
 		<input type="hidden" id="sdate" name="sdate" value="${comm.sdate}" />
 		<input type="hidden" id="edate" name="edate" value="${comm.edate}" />

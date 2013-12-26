@@ -56,10 +56,14 @@ if (request.getRequestURL().indexOf("sub_page")>0){
 }
 %>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/aller.css"/>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/kopub.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/lato.css"/>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/nanum.css"/>
 
 <style>
+
+ A:link{text-decoration:none}
+ A:visited{text-decoration:none}
+
 #nav ul {
 	display: none;
 	position: absolute;
@@ -74,16 +78,28 @@ if (request.getRequestURL().indexOf("sub_page")>0){
 
 <% String lo = request.getHeader("accept-language"); %>
 
+.arrow{
+	text-align: right;
+	display: inline-block;
+	width: 10px;
+}
+
+.label_of_arrow{
+	text-align: left;
+	display: inline-block;
+	width: 115px;
+}
+
 
 .menu {
 	<%
 	if(!lo.startsWith("ko")){
 %>
-	font-family: 'Aller Regular';
+	font-family: 'Lato Reg';  
 <%}else{%>
-	font-family: 'Kopub Light';
+	font-family: 'Nanum Reg'; 
 <%}%>
-	font-size: 1.25em;
+	font-size: 1.4em;
 	font-weight: bold;
 	padding-top:7px;
 	text-align: center;
@@ -106,11 +122,11 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9de00', end
 	<%
 	if(!lo.startsWith("ko")){
 %>
-	font-family: 'Aller Regular';
+	font-family: 'Lato Reg';
 <%}else{%>
-	font-family: 'Kopub Light';
+	font-family: 'Nanum Reg';
 <%}%>
-font-size: 1.25em;
+font-size: 1.4em;
 font-weight: bold;
 padding-top:7px;
 text-align: center;
@@ -132,9 +148,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a9de00', end
 	<%
 	if(!lo.startsWith("ko")){
 %>
-	font-family: 'Aller Regular';
+	font-family: 'Lato Reg';
 <%}else{%>
-	font-family: 'Kopub Light';
+	font-family: 'Nanum Reg';
 <%}%>
 font-size: 1.25em;
 font-weight: bold;
@@ -142,41 +158,51 @@ padding-top:7px;
 text-align: center;
 color: white;
 height:25px;
-width:120px;
+width:100px;
 }
 
 .sub_menu {
 		<%
 	if(!lo.startsWith("ko")){
 %>
-	font-family: 'Aller Regular';
+	font-family: 'Lato Reg';
 <%}else{%>
-	font-family: 'Kopub Light';
+	font-family: 'Nanum Reg';
 <%}%>
-	font-size: 1.17em;
+	font-size: 1.4em;
 	font-weight: bold;
 	text-align: left;
 	background-color: #383838;
 	color: white;
-	height:21px;
+	height:26px;
 	width:132px;
 	padding-top:3px;
 	padding-left:13px;
+}
+
+.sub_menu_mid{
+<%
+	if(!lo.startsWith("ko")){
+%>
+	font-family: 'Lato Reg';
+<%}else{%>
+	font-family: 'Nanum Reg';
+<%}%>
+	background-color: #383838;
+	height:26px;
+	width:132px;
+	margin: 0px; border: solid 1px red; padding: 0px;
 }
 
 .middle_menu_arrow{
 	<%
 	if(!lo.startsWith("ko")){
 %>
-	font-family: 'Aller Regular';
+	font-family: 'Lato Reg';
 <%}else{%>
-	font-family: 'Kopub Light';
+	font-family: 'Nanum Reg';
 <%}%>
-	font-size: 1.10em;
-	text-align: left;
-	height:21px;
-	color: white;
-	margin 0px; border: 0px; padding: 0px;
+	margin: 0px; border: 0px; padding: 0px;
 }
 
 .sub_menu_gradient {
@@ -193,15 +219,15 @@ width:120px;
 		<%
 	if(!lo.startsWith("ko")){
 %>
-	font-family: 'Aller Regular';
+	font-family: 'Lato Reg';
 <%}else{%>
-	font-family: 'Kopub Light';
+	font-family: 'Nanum Reg';
 <%}%>
-	font-size: 1.17em;
+	font-size: 1.4em;
 	font-weight: bold;
 	text-align: left;
 	color: white;
-	height:21px;
+	height:26px;
 	width:132px;
 	padding-top:3px;
 	padding-left:13px;
@@ -226,9 +252,8 @@ $(function(){
 			});	
 		})();
 }});
-
 var mouserenter=function(id){
-	mouseHover(id,'#7F5959');
+	mouseHover(id,'#7d7d7d');
 };
 
 var mouseleave = function(id){
@@ -240,19 +265,12 @@ var mouseHover = function(id,bgc){
 	<%
 	if(!lo.startsWith("ko")){
 	%>
-		div.css('font-family','Aller Regular');
+		div.css('font-family','Lato Reg');
 	<%}else{%>
-		div.css('font-family','Kopub Light');
+		div.css('font-family','Nanum Reg');
 	<%}%>
-	div.css('font-size','1.17em');
-	div.css('font-weight','bold');
-	div.css('text-align','left');
+	div.css('font-size','1.4em');
 	div.css('background-color',bgc);
-	div.css('color','white');
-	div.css('height','21px');
-	div.css('width','132px');
-	div.css('padding-top','3px');
-	div.css('padding-left','13px');
 };
 </script>
 
@@ -308,14 +326,11 @@ var mouseHover = function(id,bgc){
 				<ul>
 					<li>  
 						<a href="dsNameGraphView.do">
-							<div id='normal_status' class="<%=request.getRequestURL().indexOf("dsNameGraph")>0||request.getRequestURL().indexOf("multiGraph")>0
+							<div  id='normal_status' class="<%=request.getRequestURL().indexOf("dsNameGraph")>0||request.getRequestURL().indexOf("multiGraph")>0
   ||request.getRequestURL().indexOf("groupGraph")>0||request.getRequestURL().indexOf("deviceGraph")>0?"sub_menu_gradient":"sub_menu" %>">
-  							<table class="middle_menu_arrow">
-  								<tr>
-  									<td width="99%"><spring:message code="menu.normal_status"/></td>
-  									<td width="1%">></td>
-  								</tr>
-  							</table>
+  
+ 					<label class='label_of_arrow'><spring:message code="menu.normal_status"/></label><label class='arrow'>></label>
+ 
   							</div>
 						</a>
 						<ul>
@@ -345,12 +360,8 @@ var mouseHover = function(id,bgc){
 						<a href="multiGraphView.do">
 							<div id='_db'class="<%=request.getRequestURL().indexOf("allDb")>0||request.getRequestURL().indexOf("deviceDb")>0?"sub_menu_gradient":"sub_menu" %>">
 							
-							<table class="middle_menu_arrow">
-  								<tr>
-  									<td width="99%"><spring:message code="menu.db"/></td>
-  									<td width="1%">></td>
-  								</tr>
-  							</table>
+							<label class='label_of_arrow'><spring:message code="menu.db"/></label><label class='arrow'>></label>
+  							
   							</div>
 						</a>
 						<ul>
@@ -370,12 +381,9 @@ var mouseHover = function(id,bgc){
 						<a href="groupGraphView.do">
 							<div id='_Lock' class="<%=request.getRequestURL().indexOf("deviceLock")>0||request.getRequestURL().indexOf("dbLock")>0
   ||request.getRequestURL().indexOf("groupLock")>0?"sub_menu_gradient":"sub_menu" %>">
-  							<table class="middle_menu_arrow">
-  								<tr>
-  									<td width="99%"><spring:message code="menu.lock"/></td>
-  									<td width="1%">></td>
-  								</tr>
-  							</table>
+  							
+  							<label class='label_of_arrow'><spring:message code="menu.lock"/></label><label class='arrow'>></label>
+  							
   							</div>
 						</a>
 						<ul>

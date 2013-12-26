@@ -23,7 +23,7 @@ function regist(){
             	 }
              },
              error:function(xhr, textStatus, errorThrown){
-            	 printMessage("text-error", "mongoowl returned error information for request.");
+            	 printMessage("text-error", "mongobird returned error information for request.");
              }
          });
     }

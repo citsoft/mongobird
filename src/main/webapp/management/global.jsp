@@ -21,6 +21,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <%@ include file="./manageCommon.jsp" %>
@@ -42,7 +43,7 @@
 				for(var i=0;i<jsonData.aaData.length;i++){
 					var uid = jsonData.aaData[i].uid;
 					if(uid=="logKeepPeriodDay"){
-						$('#logKeepPeriodDay').text(jsonData.aaData[i].value +" <spring:message code="global.day"/>");
+						$('#logKeepPeriodDay').text(jsonData.aaData[i].value +" <spring:message code="global.days"/>");
 					}else if(uid=="hostname"){
 						$('#hostnameView').text(jsonData.aaData[i].value);
 						$('#hostname').val(jsonData.aaData[i].value);
@@ -273,7 +274,7 @@
 										</option>
 									</c:forEach>
 								</select>
-								<spring:message code="global.sec"/>
+								<spring:message code="global.secs"/>
 <!-- 								<div id="mainRefreshPeriodMinute"></div> -->
 <!-- 								<input type="text" id="mainRefreshPeriodMinute" name="mainRefreshPeriodMinute" maxlength="5" OnKeyPress='num_only(event)'> 초 -->
 							</td>
@@ -297,8 +298,8 @@
 						<tr>
 							<td class="lb tableFiguresLeft2">MongoDB Version</td>
 							<td class="rb tableFiguresLeft2" colspan="3">
-								<input type="radio" id="mongo_version" name="mongo_version" value="2">2.0 &nbsp;&nbsp;&nbsp;
-								<input type="radio" id="mongo_version" name="mongo_version" value="2.2">2.2(over)
+								<input type="radio" id="mongo_version" name="mongo_version" value="2">&nbsp;&nbsp;2.0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="radio" id="mongo_version" name="mongo_version" value="2.2">&nbsp;&nbsp;over 2.2
 							</td>
 						</tr>
 					</tbody>
@@ -322,11 +323,11 @@
 					<span><input type="hidden" id="startDateStr" value="${startDateStr}"/>${startDateStr}</span>
 						<c:if test="${deleteState == false}">
 							~ <input type="text" id="endDateStr" name="endDateStr" value="<c:out value="${endDateStr}"/>"/>
-							<input type="button" value='<spring:message code="global.startDeletelog"/>'  onClick="deleteDateCheck()"/>
+							<input type="button" value='<spring:message code="global.startDeletelog"/>'  onClick="deleteDateCheck()" style="padding-left:10px; padding-right:10px;"/>
 						</c:if>
 						<c:if test="${deleteState == true}">
 							~ <span>${endDateStr}</span>
-							<input type="button" value='<spring:message code="global.stopDeletelog"/>'  onClick="deleteLogStop()"/>
+							<input type="button" value='<spring:message code="global.stopDeletelog"/>'  onClick="deleteLogStop()" style="padding-left:10px; padding-right:10px;"/>
 						</c:if>
 					</td>
 					<td></td>

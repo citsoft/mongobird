@@ -135,7 +135,7 @@
                 var smartPop_content        = $('<div />').attr('id', 'smartPop_content');
                 var smartPop_close          = $('<div />').attr('id', 'smartPop_close');
                 var smartPop_loading        = $('<div />').attr('id', 'smartPop_loading');
-                var smartPop_frame          = $('<iframe />').attr({ id: 'smartPop_frame', frameBorder: 0, scrolling: 'no' });
+                var smartPop_frame          = $('<iframe />').attr({ id: 'smartPop_frame', frameBorder: 0, scrolling: 'no', name: 'smartPop_frame' });
                 
                 smartPop_top.append(smartPop_close).append(smartPop_top_content).appendTo(smartPop_container);
                                 

@@ -84,14 +84,14 @@ public class CommonDto {
 	private int warningvalue;	
 	private int infovalue;
 	private String unit;
+	private String groupBind;
+	private String[] groupBindLst;
 	
 	//user
 	private String passwd;
 	private String username;
 	private String email;
-	private String mobileFirst;
-	private String mobileSecond;
-	private String mobileThird;
+	private String mobile;
 	private int authority=0;
 	
 	//global
@@ -641,28 +641,12 @@ public class CommonDto {
 		this.graph_period = graph_period;
 	}
 
-	public String getMobileFirst() {
-		return mobileFirst;
+	public String getMobile() {
+		return mobile;
 	}
 
-	public void setMobileFirst(String mobileFirst) {
-		this.mobileFirst = mobileFirst;
-	}
-
-	public String getMobileSecond() {
-		return mobileSecond;
-	}
-
-	public void setMobileSecond(String mobileSecond) {
-		this.mobileSecond = mobileSecond;
-	}
-
-	public String getMobileThird() {
-		return mobileThird;
-	}
-
-	public void setMobileThird(String mobileThird) {
-		this.mobileThird = mobileThird;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
 
 	public int getLoginUserCode() {
@@ -913,4 +897,19 @@ public class CommonDto {
 		this.enlarge = enlarge;
 	}
 	
+	public String getGroupBind(){
+		return groupBind;
+	}
+	
+	public void setGroupBind(String groupBind){
+		this.groupBind = groupBind;
+	}
+	
+	public String[] getGroupBindLst(){
+		return groupBindLst;
+	}
+	
+	public void setGroupBindLst(String[] groupBindLst){
+		this.groupBindLst = groupBindLst;
+	}
 }

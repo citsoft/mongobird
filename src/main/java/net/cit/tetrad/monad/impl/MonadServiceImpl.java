@@ -61,6 +61,11 @@ private Operations operations;
 	}
 	
 	@Override
+	public void updateMulti(Query query, Update update, String collectionName, boolean upsert) {
+		operations.updateMulti(query, update, collectionName, upsert);
+	}
+	
+	@Override
 	public long getCount(Query query,Class<?> className) {
 		long cnt=operations.count(query, className);
 		return cnt;

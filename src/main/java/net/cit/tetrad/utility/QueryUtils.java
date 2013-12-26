@@ -36,7 +36,7 @@ public class QueryUtils {
 	 */
 	public static Query setIdx(int idx){
 		Query query = new Query();
-		if(idx!=0)query.addCriteria(Criteria.where(IDX).is(idx));
+		query.addCriteria(Criteria.where(IDX).is(idx));
 		return query;
 	}
 	
@@ -141,11 +141,12 @@ public class QueryUtils {
 		return query;
 	}
 	
-	public static Query setConfirm(int groupCode, int deviceCode, String type,int alarm){
+	public static Query setConfirm(int groupCode, int deviceCode, String type,int alarm , String groupBind){
 		Query query = new Query();
 		if(groupCode != 0)query.addCriteria(Criteria.where("groupCode").is(groupCode));
 		if(deviceCode != 0)query.addCriteria(Criteria.where("deviceCode").is(deviceCode));
 		if(!Utility.isNull(type).equals(""))query.addCriteria(Criteria.where("cri_type").is(type));
+		if(!Utility.isNull(groupBind).equals(""))query.addCriteria(Criteria.where("groupBind").is(groupBind));
 		query.addCriteria(Criteria.where("alarm").is(alarm));
 		query.addCriteria(Criteria.where("confirm").is(0));
 		return query;
@@ -203,6 +204,15 @@ public class QueryUtils {
 	
 	public static Query setType(Query query, String type) {
 		query.addCriteria(Criteria.where(CLRITICAL_TYPE).is(type));
+		return query;
+	}
+	public static Query setgroupBind(Query query, String groupBind){
+		query.addCriteria(Criteria.where("groupBind").is(groupBind));
+		return query;
+	}
+	
+	public static Query setGroupCnt(Query query, int groupCnt){
+		query.addCriteria(Criteria.where("groupCnt").is(groupCnt));
 		return query;
 	}
 }

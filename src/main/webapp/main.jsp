@@ -22,6 +22,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
@@ -404,18 +405,18 @@
 				<caption>메인 디비 상태</caption>
 					<colgroup>
 						<col width="79">
+						<col width="65">
+						<col width="65">
 						<col width="136">
-						<col width="65">
-						<col width="65">
 						<col width="90">
 						<col width="76">
 					</colgroup>
 					<thead id="alarm_critical_header">
 						<tr>
 						<th><spring:message code="common.date"/></th>
-						<th>IP : Port</th>
 						<th><spring:message code="common.group"/></th>
 						<th><spring:message code="common.daemon"/></th>
+						<th>IP : Port</th>
 						<th><spring:message code="common.criticaltype"/></th>
 					<th><spring:message code="common.figure"/>/
 									<spring:message code="common.criticalvalue"/></th>
@@ -435,18 +436,18 @@
 				<caption>메인 디비 상태</caption>
 					<colgroup>
 						<col width="79">
+						<col width="65">
+						<col width="65">
 						<col width="136">
-						<col width="65">
-						<col width="65">
 						<col width="90">
 						<col width="76">
 					</colgroup>
 					<thead id="alarm_warning_header">
 						<tr>
 						<th><spring:message code="common.date"/></th>
-						<th>IP : Port</th>
 						<th><spring:message code="common.group"/></th>
 						<th><spring:message code="common.daemon"/></th>
+						<th>IP : Port</th>
 						<th><spring:message code="common.criticaltype"/></th>
 						<th><spring:message code="common.figure"/>/
 									<spring:message code="common.criticalvalue"/></th>

@@ -25,6 +25,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <%@ include file="./manageCommon.jsp" %>
@@ -77,7 +78,7 @@ var UPDATE_MODE = "updateMode";
 	            { "sClass": "tableFiguresLeft", "mDataProp": "email" },
 	            {
 	            	"fnRender": function ( oObj ) {
-	            		return  oObj.aData.mobileFirst + "-" +  oObj.aData.mobileSecond + "-" + oObj.aData.mobileThird ;
+	            		return  oObj.aData.mobile;
 	            	}
 	            },
 	            { 
@@ -85,7 +86,7 @@ var UPDATE_MODE = "updateMode";
 	            		if(oObj.aData.authority == 0){
 	            			return "<spring:message code="users.user"/>";
 	            		}else if(oObj.aData.authority == 1){
-	            			return "<spring:message code="users.sysop"/>";
+	            			return "<spring:message code="users.admin"/>";
 	            		}else if(oObj.aData.authority == 2){
 	            			return "Admin";
 	            		}
@@ -137,9 +138,7 @@ var UPDATE_MODE = "updateMode";
 				$('#setForm #uid').val(data.uid).attr('readonly',true);
 				$('#setForm #username').val(data.username);
 				$('#setForm #email').val(data.email);
-				$('#setForm #mobileFirst').val(data.mobileFirst);
-				$('#setForm #mobileSecond').val(data.mobileSecond);
-				$('#setForm #mobileThird').val(data.mobileThird);
+				$('#setForm #mobile').val(data.mobile);
 				$('#originalAuth').val(data.authority);
 
 			    $radios.removeAttr('disabled');
@@ -250,12 +249,6 @@ var UPDATE_MODE = "updateMode";
 			}else if($.trim($('input:text[name=email]').val())==''){
 				alert("<spring:message code="users.writeemail"/>");
 				$('input:text[name=email]').focus();
-			}else if($.trim($('input:text[name=mobileSecond]').val())==''){
-				alert("<spring:message code="users.writemobilenumber"/>");
-				$('input:text[name=mobileSecond]').focus();
-			}else if($.trim($('input:text[name=mobileThird]').val())==''){
-				alert("<spring:message code="users.writemobilenumber"/>");
-				$('input:text[name=mobileThird]').focus();
 			}else if(originalAuth!=1 && $radios.filter('[value=1]').is(':checked')==true && auth >= 5){
 				alert("<spring:message code="users.maxsysop"/>");
 			}else{
@@ -284,12 +277,6 @@ var UPDATE_MODE = "updateMode";
 			}else if($.trim($('input:text[name=email]').val())==''){
 				alert("<spring:message code="users.writeemail"/>");
 				$('input:text[name=email]').focus();
-			}else if($.trim($('input:text[name=mobileSecond]').val())==''){
-				alert("<spring:message code="users.writemobilenumber"/>");
-				$('input:text[name=mobileSecond]').focus();
-			}else if($.trim($('input:text[name=mobileThird]').val())==''){
-				alert("<spring:message code="users.writemobilenumber"/>");
-				$('input:text[name=mobileThird]').focus();
 			}else if($radios.filter('[value=1]').is(':checked')==true && auth >= 5){
 				alert("<spring:message code="users.maxsysop"/>");
 			}else{
@@ -351,7 +338,7 @@ var UPDATE_MODE = "updateMode";
 			<form id = "listForm">
 			<div class="top_area">
 				<span class="fl"><a href="#"><img id="delete" src="./img/btn_seldelete<spring:message code="common.img"/>.gif" height="20" alt="선택삭제"></a>&nbsp;<label id="list_total"></label></span>
-				<span class="fr"><img src="./img/ico_square.gif" width="3" height="3" alt="ico"><label> <spring:message code="users.clickid"/></label></span>
+ 				<span class="fr"><%--<img src="./img/ico_square.gif" width="3" height="3" alt="ico"><label> <spring:message code="users.clickid"/></label>--%></span> 
 			</div>
 				<table id="list" border="0" class="tb_list_05" summary="메인 테이블 05">
 					<caption>메인 테이블 05</caption>
@@ -387,58 +374,43 @@ var UPDATE_MODE = "updateMode";
 				<table  border="0" class="tb_list_06" summary="테이블 06">
 					<caption>테이블 06</caption>
 					<colgroup>
-						<col width="135">
-						<col width="80">
-						<col width="189">
-						<col width="80">
-						<col width="">	 
+						<col width="200">
+						<col width="150">
+						<col width="">
+<%-- 						<col width="100"> --%>
+<%-- 						<col width="">	  --%>
 					</colgroup>
 					<tbody>
 						<tr>
-							<th><spring:message code="users.userinfo"/></th>
+							<th rowspan="6"><spring:message code="users.userinfo"/></th>
 							<td><spring:message code="login.id"/> </td>
-							<td><input type="text" name="uid" id="uid" maxlength="100" OnKeyPress='num_eng(event)' style='ime-mode:disabled'></td>
-							<td><spring:message code="login.password"/></td>
-<!-- 							<td class="rb lf"><input type="password" class="box" id="passwd" name="passwd" maxlength="100" style='ime-mode:disabled' onfocus="this.className='box focus'" onBlur="if(this.value.length==0){this.className='box';}else{this.className='box focus';}"></td> -->
-							<td class="rb lf"><input type="password" id="passwd" name="passwd" maxlength="100" style='ime-mode:disabled'></td>
+							<td class="rb lf"><input type="text" name="uid" id="uid" maxlength="150" OnKeyPress='num_eng(event)' style='ime-mode:disabled' size="30"></td>
 						</tr>
-					</tbody>
-				</table>
-				<table  border="0" class="tb_list_06" summary="테이블 06">
-					<caption>테이블 06</caption>
-						<colgroup>
-						<col width="135">
-						<col width="80">
-						<col width="189">
-						<col width="80">
-						<col width="">	 
-					</colgroup>
-					<tbody>
 						<tr>
-							<th rowspan="2"><spring:message code="users.additionalinfo"/></th>
+								<td><spring:message code="login.password"/></td>
+<!-- 							<td class="rb lf"><input type="password" class="box" id="passwd" name="passwd" maxlength="100" style='ime-mode:disabled' onfocus="this.className='box focus'" onBlur="if(this.value.length==0){this.className='box';}else{this.className='box focus';}"></td> -->
+								<td class="rb lf"><input type="password" id="passwd" name="passwd" maxlength="150" style='ime-mode:disabled' size="30"></td>
+							</tr>
+						
+						<tr>
 							<td><spring:message code="users.name"/></td>
-							<td><input type="text" id="username" name="username" maxlength="50"></td>
+							<td class="rb lf"><input type="text" id="username" name="username" maxlength="50" size="30" ></td>
+						</tr>
+						<tr>
 							<td><spring:message code="users.email"/></td>
-							<td class="rb lf"><input type="text" id="email" name="email" maxlength="100" style='ime-mode:disabled'></td>
+							<td class="rb lf"><input type="text" id="email" name="email" maxlength="150" style='ime-mode:disabled' size="30"></td>
 						</tr>
 						<tr>
 							<td><spring:message code="users.mobilephone"/></td>
-							<td>
-								<select id="mobileFirst" name="mobileFirst">
-									<option value="010">010</option>
-									<option value="011">011</option>
-									<option value="016">016</option>
-									<option value="017">017</option>
-									<option value="018">018</option>
-									<option value="019">019</option>
-								</select>
-								-<input type="text" id="mobileSecond" name="mobileSecond" maxlength="4" size="5" OnKeyPress='num_only(event)' style='ime-mode:disabled'>
-								-<input type="text" id="mobileThird" name="mobileThird" maxlength="4" size="5" OnKeyPress='num_only(event)' style='ime-mode:disabled'>
+							<td class="rb lf">
+								<input type="text" id="mobile" name="mobile" maxlength="150" size="30">
 							</td>
+						</tr>
+						<tr>
 							<td><spring:message code="users.permission"/></td>
 							<td class="rb lf">
 								<input type="radio" id="rdoAuth" name="rdoAuth" value="0"/> <label><spring:message code="users.user"/></label>&nbsp;&nbsp;
-								<input type="radio" id="rdoAuth" name="rdoAuth" value="1"/> <label><spring:message code="users.sysop"/></label>&nbsp;&nbsp;
+								<input type="radio" id="rdoAuth" name="rdoAuth" value="1"/> <label><spring:message code="users.admin"/></label>&nbsp;&nbsp;
 								<input type="radio" id="rdoAuth" name="rdoAuth" value="2"/> <label id="authority_label">Admin</label>
 							</td>
 						</tr>

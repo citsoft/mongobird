@@ -1,5 +1,6 @@
 /*******************************************************************************
  * "mongobird" is released under a dual license model designed to developers 
+
  * and commercial deployment.
  * 
  * For using OEMs(Original Equipment Manufacturers), ISVs(Independent Software
@@ -14,6 +15,32 @@
  * please see "http://www.gnu.org/licenses/"
  ******************************************************************************/
 //하단 좌측 심각 리스트
+
+	function figureCheck(criType,value,figure,realValue,realFigure ){
+//         var value = parseFloat( oObj.aData.cri_value );
+//         var figure = parseFloat( oObj.aData.figure );
+//         var realValue = parseFloat( oObj.aData.real_cri_value );
+//         var realFigure = parseFloat( oObj.aData.real_figure );
+//         var criType = oObj.aData.cri_type;
+        var returnValue = "";
+        if(criType == "Connection_refused"){
+                returnValue = "-";
+        }else if(criType == "connections_current"){
+                returnValue = decimal(figure)+"/"+decimal(value);
+        }else if(criType == "mem_resident"){
+                returnValue = decimal(figure)+"/"+decimal(value);
+        }else if(criType == "dbDataSize"){
+                returnValue = decimal(figure)+"/"+ decimal(value);
+        }else if(criType == "diff_extra_info_page_faults"){
+                returnValue = exFormat(figure)+"/"+exFormat(value);
+        }else if(criType == "diff_globalLock_lockTime" || criType == "diff_locks_timeLockedMicros_R" || criType == "diff_locks_timeLockedMicros_W" || criType == "diff_db_sum_locks_timeLockedMicros_r" || criType == "diff_db_sum_locks_timeLockedMicros_w"){
+                returnValue = exFormat(microSecondsFormat(figure))+"/"+ exFormat(microSecondsFormat(value));
+        }else{
+                returnValue = figure +"/"+ value;
+        }
+        return returnValue;
+	}
+	
 	$(document).ready( function() {
 	    var oTableCriticalEvent;
 	    oTableCriticalEvent = $('#alarm_critical').dataTable( {
@@ -32,21 +59,37 @@
 	    	"sAjaxSource":'alarmList.do?alarm=1',
 			"aoColumns": [
 	            { "sClass": "lb", "mDataProp": "reg_date" },
-	            {
-	            	"fnRender": function ( oObj ) {
-	            		return oObj.aData.ip+":"+oObj.aData.port;
-	            	}
-	            },
+
 	            {
 	            	"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
-	            		return groupCodeTable.getItem(parseFloat( oObj.aData.groupCode ) );
+	            		if(oObj.aData.groupBind == ""){
+												var str = groupCodeTable.getItem( parseFloat( oObj.aData.groupCode ) );
+							        return !str?"&nbsp;":str;
+											}else{
+												var str = oObj.aData.groupBind;
+					            return !str?"&nbsp;":str;
+											}
 	            	}
 	            },
 	            {
 	            	"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
 	            		var str = deviceCodeTable.getItem(parseFloat( oObj.aData.deviceCode ) );
-	            		return !str?"&nbsp;":str;
+	            		var decodes = "";
+	            		for(var i = 0 ; i < oObj.aData.subLst.length ; i++){
+	            			decodes += deviceCodeTable.getItem(parseFloat( oObj.aData.subLst[i].deviceCode ) ) + "/ ";
+	            							}
+	            		return !str?"<a href='#' class='deco_none' title='"+ toolTip_title(decodes) +"'>"+"("+deviceCodeTable.getItem(parseFloat( oObj.aData.subLst[0].deviceCode ) )+")..." :str;
 	            	}
+	            },
+	            {
+	            	"sClass" : "tableFiguresLeft", "fnRender": function ( oObj ) {
+	            		var ip = oObj.aData.ip;
+	            		var ips = "";
+	            		for(var i = 0 ; i <oObj.aData.subLst.length; i++){
+	            			ips += oObj.aData.subLst[i].ip + " : " + oObj.aData.subLst[i].port + "/ ";
+	            							}
+	            		return !ip?"<a href='#' class='deco_none' title='"+ toolTip_title(ips) +"'>"+"("+oObj.aData.subLst[0].ip + " : " + oObj.aData.subLst[0].port + ") ...":oObj.aData.ip+":"+oObj.aData.port;
+					}
 	            },
 	            {
 	            	"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
@@ -56,41 +99,60 @@
 	            },
 	            {
 	            	"sClass": "rb tableFigures", "fnRender": function ( oObj ) {
-                        var value = parseFloat( oObj.aData.cri_value );
-                        var figure = parseFloat( oObj.aData.figure );
-                        var realValue = parseFloat( oObj.aData.real_cri_value );
-                        var realFigure = parseFloat( oObj.aData.real_figure );
-                        var criType = oObj.aData.cri_type;
-                        var returnValue = "";
-                        if(criType == "Connection_refused"){
-                                returnValue = "-";
-                        }else if(criType == "connections_current"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
-                                					+decimal(figure)+"/"+decimal(value)
-                                					+"</a>";
-                        }else if(criType == "mem_resident"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure, "MB")+" / "+toolTip_title(realValue, "MB")+"\">"
-                                					+decimal(figure)+"/"+decimal(value)
-                                					+"</a>";
-                        }else if(criType == "dbDataSize" || criType == "dbFileSize"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+sizeFormat(parseFloat(realFigure))+" / "+sizeFormat(parseFloat(realValue))+"\">"
-                                					+decimal(figure)+"/"+ decimal(value)
-                                					+"</a>";
-                        }else if(criType == "diff_extra_info_page_faults"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
-                                					+exFormat(figure)+"/"+exFormat(value)
-                                					+"</a>" ;
-                        }else if(criType == "diff_globalLock_lockTime" || criType == "diff_locks_timeLockedMicros_R" || criType == "diff_locks_timeLockedMicros_W" || criType == "diff_db_sum_locks_timeLockedMicros_r" || criType == "diff_db_sum_locks_timeLockedMicros_w"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"μs")+" / "+toolTip_title(realValue,"μs")+"\">"
-                                					+exFormat(microSecondsFormat(figure))+"/"+ exFormat(microSecondsFormat(value))
-                                					+"</a>" ;
-                        }else{
-                                returnValue = figure +"/"+ value;
-                        }
-                        return returnValue;
+	            		
+
+	            		if(oObj.aData.figure==""){
+	            			var value = parseFloat(oObj.aData.subLst[0].cri_value);
+	            			var figure = parseFloat( oObj.aData.subLst[0].figure );
+	            			var realValue = parseFloat( oObj.aData.subLst[0].real_cri_value );
+	            			var realFigure = parseFloat( oObj.aData.subLst[0].real_figure );
+	            			var criType = oObj.aData.subLst[0].cri_type;
+	            			
+	            			var returnValue = figureCheck(criType,value,figure,realValue,realFigure );
+	            			return "("+returnValue+") ...";
+	            		}else{
+	            			var value = parseFloat( oObj.aData.cri_value );
+	                        var figure = parseFloat( oObj.aData.figure );
+	                        var realValue = parseFloat( oObj.aData.real_cri_value );
+	                        var realFigure = parseFloat( oObj.aData.real_figure );
+	                        var criType = oObj.aData.cri_type;
+	                        var returnValue = "";
+	                        if(criType == "Connection_refused"){
+	                                returnValue = "-";
+	                        }else if(criType == "connections_current"){
+	                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
+	                                					+decimal(figure)+"/"+decimal(value)
+	                                					+"</a>";
+	                        }else if(criType == "mem_resident"){
+	                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure, "MB")+" / "+toolTip_title(realValue, "MB")+"\">"
+	                                					+decimal(figure)+"/"+decimal(value)
+	                                					+"</a>";
+	                        }else if(criType == "dbDataSize" || criType == "dbFileSize"){
+	                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+sizeFormat(parseFloat(realFigure))+" / "+sizeFormat(parseFloat(realValue))+"\">"
+	                                					+decimal(figure)+"/"+ decimal(value)
+	                                					+"</a>";
+	                        }else if(criType == "diff_extra_info_page_faults"){
+	                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
+	                                					+exFormat(figure)+"/"+exFormat(value)
+	                                					+"</a>" ;
+	                        }else if(criType == "diff_globalLock_lockTime" || criType == "diff_locks_timeLockedMicros_R" || criType == "diff_locks_timeLockedMicros_W" || criType == "diff_db_sum_locks_timeLockedMicros_r" || criType == "diff_db_sum_locks_timeLockedMicros_w"){
+	                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"μs")+" / "+toolTip_title(realValue,"μs")+"\">"
+	                                					+exFormat(microSecondsFormat(figure))+"/"+ exFormat(microSecondsFormat(value))
+	                                					+"</a>" ;
+	                        }else{
+	                                returnValue = figure +"/"+ value;
+	                        										}
+	                        return returnValue;
+	            						}
 	            	}
 	            }
 	        ],
+	 	   "fnRowCallback" : function( nRow, aData, iDisplayIndex,aaData ){
+					if(aData.subLst != ""){
+						$(nRow).children().each(function(){$(this).addClass('group_selected');});//&&&&&
+					}
+			    	return nRow;
+		        },
 	    	//마우스 오버 시 라인 색이 바뀌도록
 			"fnDrawCallback": function(){
 				//setTipByTableName("alarm_critical");
@@ -147,20 +209,37 @@
 	    	"sAjaxSource":'alarmList.do?alarm=2',
 			"aoColumns": [
 	            { "sClass": "lb", "mDataProp": "reg_date" },
-	            {
-	            	"fnRender": function ( oObj ) {
-	            		return oObj.aData.ip+":"+oObj.aData.port;
-	            	}
-	            },
+
 	            {
 	            	"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
-	            		return groupCodeTable.getItem(oObj.oSettings.fnFormatNumber( parseFloat( oObj.aData.groupCode ) ));
+	            		if(oObj.aData.groupBind == ""){
+												var str = groupCodeTable.getItem( parseFloat( oObj.aData.groupCode ) );
+							        return !str?"&nbsp;":str;
+											}else{
+												var str = oObj.aData.groupBind;
+					            return !str?"&nbsp;":str;
+											}
 					}
 	            },
 	            {
 	            	"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
-	            		return deviceCodeTable.getItem(oObj.oSettings.fnFormatNumber( parseFloat( oObj.aData.deviceCode ) ));
+	            		var str = deviceCodeTable.getItem(parseFloat( oObj.aData.deviceCode ) );
+	            		var decodes = "";
+	            		for(var i = 0 ; i < oObj.aData.subLst.length ; i++){
+	            			decodes += deviceCodeTable.getItem(parseFloat( oObj.aData.subLst[i].deviceCode ) ) + "/ ";
+	            							}
+	            		return !str?"<a href='#' class='deco_none' title='"+ toolTip_title(decodes) +"'>"+"("+deviceCodeTable.getItem(parseFloat( oObj.aData.subLst[0].deviceCode ) )+")..." :str;
 					}
+	            },
+	            {
+	            	"sClass" : "tableFiguresLeft", "fnRender": function ( oObj ) {
+	            		var ip = oObj.aData.ip;
+	            		var ips = "";
+	            		for(var i = 0 ; i <oObj.aData.subLst.length; i++){
+	            			ips += oObj.aData.subLst[i].ip + " : " + oObj.aData.subLst[i].port + "/ ";
+	            							}
+	            		return !ip?"<a href='#' class='deco_none' title='"+ toolTip_title(ips) +"'>"+"("+oObj.aData.subLst[0].ip + " : " + oObj.aData.subLst[0].port + ") ...":oObj.aData.ip+":"+oObj.aData.port;
+	            							}
 	            },
 	            {
 	            	"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
@@ -205,6 +284,13 @@
 	            	}
 	            }
 	        ],
+	   
+	   "fnRowCallback" : function( nRow, aData, iDisplayIndex,aaData ){
+				if(aData.subLst != ""){
+					$(nRow).children().each(function(){$(this).addClass('group_selected');});//&&&&&
+				}
+		    	return nRow;
+	        },
 	    	//마우스 오버 시 라인 색이 바뀌도록
 			"fnDrawCallback": function(){
 				//setTipByTableName("alarm_warning");
@@ -217,6 +303,7 @@
 				}else{
 					$('table#alarm_warning td').eq(0).attr('class', 'lb rb');
 				}
+
 			}
 	    });
 	    setInterval(function() { oTableWarningEvent.fnDraw(); }, mainRefreshPeriodMinute); 

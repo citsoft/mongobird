@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Lato Reg';
+  font-style: bold;
+  font-weight: 661;
+  src: url(fonts/lato/Lato-Reg.eot);
+  src: url(fonts/lato/Lato-Reg.eot?#iefix) format('embedded-opentype'),
+       url(fonts/lato/Lato-Reg.woff2) format('woff2'),
+       url(fonts/lato/Lato-Reg.woff) format('woff'),
+       url(fonts/lato/Lato-Reg.ttf) format('truetype');
+}

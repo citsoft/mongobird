@@ -33,6 +33,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <%@ include file="./lockGraphCommon.jsp" %>

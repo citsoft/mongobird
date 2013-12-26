@@ -35,6 +35,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <script type="text/javascript">
@@ -300,23 +301,31 @@ $(document).ready(function() {
 							<input type="radio" id="hourStep" name="graph_step" value="hour" <c:if test="${comm.graph_step=='hour'}" >checked</c:if> ><label>1hour</label>&nbsp;&nbsp;
 				</form>
 					<div class="demon_detail_margin">
-						<h2>
-							<img src="./img/daemon_subtit05<spring:message code="common.img"/>.png">&nbsp;
-							<a id="dbgraph_area_btn">
-								<span><img src="./img/arrow_down.png" width="18" height="18"></span>
-								<span style="display: none"><img src="./img/arrow_up.png" width="18" height="18"></span>
-							</a>
-						</h2>			
+						<div style="vertical-align:top;">
+							<div class="post_name">
+								<img src="./img/daemon_subtit05<spring:message code="common.img"/>.png">
+							</div>
+							<div class="post_icon">
+								<a id="dbgraph_area_btn">
+									<span><img src="./img/arrow_down.png" width="18" height="18"></span>
+									<span style="display: none"><img src="./img/arrow_up.png" width="18" height="18"></span>
+								</a>
+							</div>	
+						</div>&nbsp;
 						<div class="dbgraph_area hidden" id="dbgraph_area"></div>
 					</div>
 					<div class="demon_detail_margin">
-						<h2>
-							<img src="./img/daemon_subtit_lock<spring:message code="common.img"/>.png">&nbsp;
-							<a id="lockGraph_area_btn">
-								<span><img src="./img/arrow_down.png" width="18" height="18"></span>
-								<span style="display: none"><img src="./img/arrow_up.png" width="18" height="18"></span>
-							</a>
-						</h2>			
+						<div style="vertical-align:top;">
+							<div class="post_name">
+								<img src="./img/daemon_subtit_lock<spring:message code="common.img"/>.png">
+							</div>
+							<div class="post_icon">
+								<a id="lockGraph_area_btn">
+									<span><img src="./img/arrow_down.png" width="18" height="18"></span>
+									<span style="display: none"><img src="./img/arrow_up.png" width="18" height="18"></span>
+								</a>
+							</div>
+						</div>&nbsp;				
 						<div class="hidden" id="lockGraph_area">
 							<div class="dbgraph_area" id="sysLockGraph_area"></div>			
 							<div class="dbgraph_area" id="dbLockSumGraph_area"></div>			

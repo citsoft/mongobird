@@ -154,7 +154,7 @@ $(document).ready(function() {
 		
 		var tooltipJson = {
 				position:'bottom center',
-				opacity:1,
+				opacity:0.7,
 			    delay: 0, 
 			    track: true,
 			    fade: 250

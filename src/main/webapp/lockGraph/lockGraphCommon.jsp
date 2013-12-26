@@ -89,3 +89,25 @@ var mainRefreshPeriodMinute = ${mainRefreshPeriodMinute};
 		return $.format.date(value, "yyyy-MM-dd HH:mm");
 	}
 	</script>
+	
+<link rel="stylesheet" href="/tetrad/css/nanum.css">
+<link rel="stylesheet" href="/tetrad/css/lato.css">
+
+<% String lo2 = request.getHeader("accept-language"); %>
+
+<style type="text/css">
+	#content_graph div.graph_sub_menu{
+		<%
+	if(!lo2.startsWith("ko")){
+%>
+	font-family: 'Lato Reg';  
+<%}else{%>
+	font-family: 'Nanum Reg'; 
+<%}%>
+		font-size: 1.5em;
+		font-weight: bold;
+		padding-top: 10px;
+		text-align: left;
+		color: black;
+	}
+</style>

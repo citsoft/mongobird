@@ -27,9 +27,7 @@ public class User{
 	private String passwd;
 	private String username;
 	private String email;
-	private String mobileFirst;
-	private String mobileSecond;
-	private String mobileThird;
+	private String mobile;
 	private int authority=0;
 	
 	public String getPasswd() {
@@ -80,22 +78,11 @@ public class User{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getMobileFirst() {
-		return mobileFirst;
+	public String getMobile() {
+		return mobile;
 	}
-	public void setMobileFirst(String mobileFirst) {
-		this.mobileFirst = mobileFirst;
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
 	}
-	public String getMobileSecond() {
-		return mobileSecond;
-	}
-	public void setMobileSecond(String mobileSecond) {
-		this.mobileSecond = mobileSecond;
-	}
-	public String getMobileThird() {
-		return mobileThird;
-	}
-	public void setMobileThird(String mobileThird) {
-		this.mobileThird = mobileThird;
-	}
+
 }

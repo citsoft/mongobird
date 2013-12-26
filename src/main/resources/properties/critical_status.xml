@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
-<CriticalInfo>   
-<!--     <critical type="mem_resident"> -->
-<!-- 		<unit>percent</unit> -->
-<!--         <criticalvalue>70</criticalvalue> -->
-<!--         <warningvalue>50</warningvalue> -->
-<!--         <infovalue>30</infovalue> -->
-<!--         <version>both</version> -->
-<!--         <deviceType>mongod</deviceType> -->
-<!-- 	</critical> -->
-<!--     <critical type="dbDataSize"> -->
-<!-- 		<unit>percent</unit> -->
-<!--         <criticalvalue>70</criticalvalue> -->
-<!--         <warningvalue>50</warningvalue> -->
-<!--         <infovalue>30</infovalue> -->
-<!--         <version>both</version> -->
-<!--         <deviceType>mongod</deviceType> -->
-<!-- 	</critical> -->
+<CriticalInfo>
     <critical type="dbFileSize">
 		<unit>percent</unit>
         <criticalvalue>70</criticalvalue>
@@ -42,10 +26,10 @@
         <deviceType>mongod</deviceType>
 	</critical>
     <critical type="connections_current">
-					<unit>percent</unit>
-        <criticalvalue>70</criticalvalue>
-        <warningvalue>50</warningvalue>
-        <infovalue>30</infovalue>
+		<unit>ex</unit>
+        <criticalvalue>500</criticalvalue>
+        <warningvalue>400</warningvalue>
+        <infovalue>300</infovalue>
         <version>both</version>
         <deviceType>both</deviceType>
 	</critical>

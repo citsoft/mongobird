@@ -21,6 +21,7 @@ import static net.cit.tetrad.common.ColumnConstent.COL_DEVICECODE;
 import static net.cit.tetrad.common.ColumnConstent.COL_GROUPCODE;
 import static net.cit.tetrad.common.ColumnConstent.DEVICE_TYPE;
 import static net.cit.tetrad.common.ColumnConstent.IDX;
+import static net.cit.tetrad.common.ColumnConstent.MAV_ALARM;
 import static net.cit.tetrad.common.ColumnConstent.MAV_COMM;
 import static net.cit.tetrad.common.ColumnConstent.MAV_CRITICAL;
 import static net.cit.tetrad.common.ColumnConstent.MAV_DEVICE;
@@ -44,6 +45,7 @@ import static net.cit.tetrad.utility.QueryUtils.setGroupCode;
 import static net.cit.tetrad.utility.QueryUtils.setIdx;
 import static net.cit.tetrad.utility.QueryUtils.setIpPort;
 import static net.cit.tetrad.utility.QueryUtils.setUid;
+import static net.cit.tetrad.utility.QueryUtils.setgroupBind;
 import static net.cit.tetrad.utility.QueryUtils.sortDate;
 
 import java.io.Writer;
@@ -51,8 +53,10 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -115,12 +119,18 @@ public class ManagementResource extends DefaultResource {
 	 * @return
 	 * @throws Exception
 	 */
+	
 	@RequestMapping("/listManagement.do")
 	public ModelAndView listManagement(CommonDto paramDTO) throws Exception{
 		log.debug("start - listManagement()");
 		
 		ModelAndView mav = commMav();
 		int dival = paramDTO.getDival();
+		
+		String grpSelect = "";
+		if (dival == 2) {
+			grpSelect = paramDTO.getGroupSelect();
+		}
 		
 		CommonDto resultDTO = new CommonDto();
 		resultDTO.setDival(dival);
@@ -135,6 +145,7 @@ public class ManagementResource extends DefaultResource {
 		if(tablenm.equals(MAV_GLOBAL)) globalPageSet(mav);
 
 		mav.addObject(MAV_COMM, resultDTO);
+		mav.addObject("bookmark", grpSelect);
 		
 		log.debug("end - listManagement()");
 		return mav;
@@ -346,7 +357,7 @@ public class ManagementResource extends DefaultResource {
 		}
 		
 		int sEcho = Integer.parseInt(Utility.isNullNumber(request.getParameter(REQ_SECHO)));
-		PersonJson result = setPersonJson( sEcho, dto, tablenm, pageNumber, nPerPage);
+		PersonJson result = setPersonGroupJson( sEcho, dto, tablenm, pageNumber, nPerPage);
 		JSONObject jsonObject = JSONObject.fromObject(result);
 		
 		Writer writer = setResponse(response).getWriter();
@@ -356,6 +367,35 @@ public class ManagementResource extends DefaultResource {
 		writer.flush();
 			
 		log.debug("end - list()");
+	}
+	
+	private PersonJson setPersonGroupJson(int sEcho, CommonDto dto,String tablenm,int pageNumber, int nPerPage){
+		Class<?> classname = managementDao.getDtoClassNm(tablenm);
+		String searchGubun = dto.getSearch_gubun();
+		String searchText = dto.getSearch_text();
+		
+		Query query = new Query();
+		if(isSearch(searchGubun, searchText)){
+			query = getSearchQuery(searchGubun, searchText);
+		}else{
+			query.sort().on("groupBind", Order.ASCENDING);
+//			query.sort().on("reg_date", Order.DESCENDING);
+			query.sort().on("groupCode", Order.ASCENDING);
+			query.sort().on("deviceCode", Order.ASCENDING);
+			query.sort().on("reg_date", Order.DESCENDING);
+//			query = sortDate(dto.getLoginAuth(),dto.getLoginUserCode(),tablenm);
+		}
+		
+		int cnt = (int)monadService.getCount(query, classname);
+		List<Object> resultList = monadService.getList(query.skip(pageNumber).limit(nPerPage), classname);
+		
+		PersonJson result = new PersonJson();
+		result.setsEcho(sEcho);
+		result.setiTotalRecords(cnt);
+		result.setiTotalDisplayRecords(cnt);
+		result.setAaData(resultList);
+		
+		return result;
 	}
 	
 	private PersonJson setPersonJson(int sEcho, CommonDto dto,String tablenm,int pageNumber, int nPerPage){
@@ -371,6 +411,7 @@ public class ManagementResource extends DefaultResource {
 		}
 		
 		int cnt = (int)monadService.getCount(query, classname);
+		query.sort().on("groupBind", Order.ASCENDING);
 		List<Object> resultList = monadService.getList(query.skip(pageNumber).limit(nPerPage), classname);
 		
 		PersonJson result = new PersonJson();
@@ -447,7 +488,7 @@ public class ManagementResource extends DefaultResource {
 			if(obj==null){//동일한게 없을 때
 				dto.setIdx(indexDao.createIdx(tablenm));//idx 생성 또는 수정
 				if(tablenm.equals("device")){//device는 등록 시 기본 임계값도 함께 등록
-					if(dto.getGroupSelect().equals("newGroup"))makeGroupCode(dto);//새로운 그룹 선택 시 그룹 추가
+					if(dto.getGroupText()!=null)makeGroupCode(dto);//새로운 그룹 선택 시 그룹 추가
 					if(Utility.isNull(dto.getMessage()).equals(""))makeCritical(dto);
 				}
 				if(Utility.isNull(dto.getMessage()).equals("")){
@@ -937,7 +978,7 @@ public class ManagementResource extends DefaultResource {
 			obj = monadService.getFind(query, classname);//동일한 name 있는지 확인
 			if(tablenm.equals("critical"))obj = null;//임계값은 같은 값이 있을때 무조건 수정으로 들어오기 때문에 동일항목 찾는 과정이 필요 없다.
 			if(obj==null){
-				if(tablenm.equals("device") && dto.getGroupSelect().equals("newGroup"))makeGroupCode(dto);//새로운 그룹 선택 시 그룹 추가
+				if(tablenm.equals("device") && dto.getGroupText()!="")makeGroupCode(dto);//새로운 그룹 선택 시 그룹 추가
 				if(Utility.isNull(dto.getMessage()).equals("")){
 					if(tablenm.equals("device")){
 						Device devInfo = (Device) monadService.getFind(setIdx(dto.getIdx()), classname);
@@ -1038,34 +1079,52 @@ public class ManagementResource extends DefaultResource {
 		Class<?> classname = managementDao.getDtoClassNm(tablenm);
 		Query query=new Query();
 		try{
+			String[] groupBindLst = dto.getGroupBindLst();
+			String groupBind = dto.getGroupBind();
 			int[] idxLst = dto.getIdxLst();
 			int loginUserCode = dto.getLoginUserCode();
-			for(int i=0;i<idxLst.length;i++){
-				int idx = idxLst[i];
-				query = setIdx(idx);
-				if(tablenm.equals("device")) {
-					DeviceInMemory.deleteDeviceMap(idx);
-					MongoInMemory.deleteMongoMap(idx);
-					deleteDevice(idx);
-				}else if(tablenm.equals("group")){
-					Query groupCodeQuery = new Query();
-					groupCodeQuery = setGroupCode(dto);
-					List<Object> resultList = monadService.getList(groupCodeQuery, Device.class);
-					for(int resultIdx = 0; resultIdx<resultList.size(); resultIdx++){
-						Device device = (Device) resultList.get(resultIdx);
-						DeviceInMemory.deleteDeviceMap(device.getIdx());
-						MongoInMemory.deleteMongoMap(device.getIdx());
-						--Config.totalThreadCount;
-					}
-					deleteGroup(dto.getGroupCode());
+			
+			if(groupBindLst != null){
+				for(int i = 0 ; i < groupBindLst.length; i++){
+					String tempgroupBind = groupBindLst[i];
+					unGroupBind(tempgroupBind);
 				}
-				if(tablenm.equals("user")){
-					if(idx != loginUserCode)monadService.delete(query, classname);
-				}else{
-					monadService.delete(query, classname);
-				}
-				Thread.sleep(100);
 			}
+			
+			String groupIdxStr = request.getParameter("groupIdx");
+			if(!StringUtils.isNull(groupIdxStr)){
+				int groupIdx = Integer.parseInt(groupIdxStr);
+				deleteGroupIdx(groupIdx);
+			}
+			
+			if(idxLst != null){
+				for(int i=0;i<idxLst.length;i++){
+					int idx = idxLst[i];
+					query = setIdx(idx);
+					if(tablenm.equals("device")) {
+						DeviceInMemory.deleteDeviceMap(idx);
+						MongoInMemory.deleteMongoMap(idx);
+						deleteSubLstDevice(idx);
+					}else if(tablenm.equals("group")){
+						Query groupCodeQuery = new Query();
+						groupCodeQuery = setGroupCode(dto);
+						List<Object> resultList = monadService.getList(groupCodeQuery, Device.class);
+						for(int resultIdx = 0; resultIdx<resultList.size(); resultIdx++){
+							Device device = (Device) resultList.get(resultIdx);
+							DeviceInMemory.deleteDeviceMap(device.getIdx());
+							MongoInMemory.deleteMongoMap(device.getIdx());
+							--Config.totalThreadCount;
+						}
+						deleteGroup(dto.getGroupCode());
+					}
+					if(tablenm.equals("user")){
+						if(idx != loginUserCode)monadService.delete(query, classname);
+					}else{
+						monadService.delete(query, classname);
+					}
+				}
+			}
+				Thread.sleep(100);
 		}catch(Exception e){
 			log.error(e, e);
 			dto.setMessage("삭제 중 에러 발생");
@@ -1093,9 +1152,55 @@ public class ManagementResource extends DefaultResource {
 		Query query = new Query(Criteria.where("deviceCode").is(deviceCode));
 		monadService.delete(query, Critical.class);
 		monadService.delete(query, COLL_DASHBOARD);
-		monadService.delete(query, COLL_ALARM);
+
 	}
 	
+	private void deleteSubLstDevice(int deviceCode){
+		
+		Query query = new Query(Criteria.where("deviceCode").is(deviceCode));
+		List<Object> objLst = monadService.getList(query, Critical.class);
+		Set<String> groupBindSet = new HashSet<String>();
+		
+		for(Object obj : objLst){
+			String tempGroupBind = ((Critical)obj).getGroupBind();
+			if(tempGroupBind != null){// groupBind가 없다면  
+				groupBindSet.add(tempGroupBind);
+			}
+		}
+		
+		for(String groupBind : groupBindSet){
+			Query q = new Query(Criteria.where("groupBind").is(groupBind));
+			List<Object> objTempLst = monadService.getList(q, Critical.class);
+			Set<Integer> deviceSet = new HashSet<Integer>();
+			
+			for(Object objtemp : objTempLst){
+				int tempDeviceCode = ((Critical)objtemp).getDeviceCode();
+				deviceSet.add(tempDeviceCode);
+			}
+			
+			if(deviceSet.size() <= 2){
+				unGroupBind(groupBind);
+			}
+		}
+		
+		deleteDevice(deviceCode);
+		
+	}
+	
+	private void deleteGroupIdx(int groupIdx){
+		Query q = new Query();
+		q = setIdx(groupIdx);
+//		q = setDeviceCode(0);
+		monadService.delete(q, MAV_ALARM);
+	}
+	
+	private void unGroupBind(String groupBind){
+		Query q = new Query(); 
+		q = setgroupBind(q, groupBind);
+		Update update = new Update();
+		update.unset("groupBind");
+		monadService.updateMulti(q, update, MAV_CRITICAL, false);
+	}
 
 	/**
 	 * confrim 확인 팝업 페이지
@@ -1184,6 +1289,105 @@ public class ManagementResource extends DefaultResource {
 		}
 	}
 	
+	@RequestMapping(value="/popup_event.do", params="!groupText")
+	public ModelAndView popup_event(HttpServletRequest request, HttpServletResponse response, CommonDto dto){
+		log.debug("start - popup_event");
+		ModelAndView mav = new ModelAndView();
+		
+		String parameter = request.getParameter("dataToSend"); 
+
+		mav.addObject("dataToSend", parameter);
+		mav.setViewName(PATH_MANAGEMEMT+"popup_event");
+		log.debug("end - popup_event param : groupBind");
+		return mav;
+	}
+	
+	@RequestMapping(value="/popup_event.do")
+	public ModelAndView popup_event_update(HttpServletRequest request, HttpServletResponse response, CommonDto dto){
+		log.debug("start - popup_event");
+		
+		ModelAndView mav = new ModelAndView();
+		
+		String groupText = dto.getGroupText();
+		String[] strLst = request.getParameter("Lst").split("&");
+		int[] idxLst = new int[strLst.length];
+		
+		for(int i = 0 ; i <strLst.length ; i ++){
+			String[] temp = strLst[i].split("=");
+			idxLst[i] = Integer.valueOf(temp[1]);
+		}
+		
+		Query query = new Query();
+		Update update = new Update();
+		
+		int idx = 0;
+		
+		for(int i = 0 ; i<idxLst.length; i++){
+			idx = idxLst[i];
+			query = setIdx(idx);
+			update.set("idx", idx).set("groupBind", groupText).set("groupCnt", idxLst.length);
+			monadService.update(query, update, Critical.class);
+		}
+		
+		mav.addObject("groupName", groupText);
+		mav.setViewName(PATH_MANAGEMEMT+"popup_event");
+		log.debug("end - popup_event param : groupBind");
+		return mav;
+	}
+	
+	@RequestMapping("/popup_event_list.do")
+	private void popup_event_list(HttpServletRequest request, HttpServletResponse response, CommonDto dto) throws Exception{
+		
+		int[] idxLst = dto.getIdxLst();
+		int idx =0;
+		Query query = new Query();
+		List<Object> critical = new ArrayList<Object>();
+		
+		if(idxLst != null){
+			for(int i = 0 ; i<idxLst.length; i++){
+				idx = idxLst[i];
+				query = setIdx(idx);
+				critical.add(monadService.getFindOne(query, Critical.class, MAV_CRITICAL));
+			}
+			
+			int sEcho = Integer.parseInt(Utility.isNullNumber(request.getParameter(REQ_SECHO)));
+			
+			PersonJson result = new PersonJson();
+			result.setsEcho(sEcho);
+			result.setiTotalRecords(idxLst.length);
+			result.setiTotalDisplayRecords(idxLst.length);
+			result.setAaData(critical);
+			
+			JSONObject jsonObject = JSONObject.fromObject(result);
+			
+			Writer writer = setResponse(response).getWriter();
+			writer.write(jsonObject.toString());
+			
+			log.debug(result.toString());
+			writer.flush();
+		}	
+	}
+	
+	@RequestMapping("/popup_event_count.do")
+	public void popup_event_count(HttpServletRequest request, HttpServletResponse response, CommonDto dto) throws Exception{
+		String groupBind = dto.getGroupBind().trim();
+		 
+		// 이미 동일한 groupBind가 존재하는지 check
+		Query check = new Query();
+		check = setgroupBind(check, groupBind);
+		long count = monadService.getCount(check, Critical.class);
+
+		String countStr = "{ count : " + count + "}";
+		JSONObject jsonObject = JSONObject.fromObject(countStr);
+		
+		Writer writer = setResponse(response).getWriter();
+		writer.write(jsonObject.toString());
+
+		log.debug(countStr.toString());
+		writer.flush();
+		
+	}
+	
 	@RequestMapping("/deleteMongoDateCheck.do")
 	public void deleteMongoDateCheck(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String endStr = request.getParameter("endDateStr");
@@ -1205,3 +1409,5 @@ public class ManagementResource extends DefaultResource {
 		return query;
 	}
 }
+
+

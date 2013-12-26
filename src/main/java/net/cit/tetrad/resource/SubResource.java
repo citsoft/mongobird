@@ -68,9 +68,11 @@ import net.cit.tetrad.rrd.bean.ServerStatus;
 import net.cit.tetrad.rrd.rule.AllStatusRule;
 import net.cit.tetrad.rrd.rule.StatusDatasourceName;
 import net.cit.tetrad.utility.StringUtils;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.log4j.Logger;
+import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Controller;
@@ -97,6 +99,7 @@ public class SubResource extends DefaultResource {
 		log.debug("start - subPageView()");
 		ModelAndView mav = commMav();
 		Query query = new Query();
+		query.sort().on("groupBind", Order.ASCENDING);
 		List<Object> groupLst = monadService.getList(query, Group.class);
 		List<Object> typeLst = new ArrayList<Object>();
 		typeLst = adminDao.typeList();
@@ -711,6 +714,9 @@ public class SubResource extends DefaultResource {
 		
 		mav.addObject("comm",dto);
 		mav.addObject("adto",adto);
+		JSONArray jsonArray = JSONArray.fromObject(adto.getSubLst());
+		mav.addObject("jsondto", jsonArray.toString());
+		mav.addObject("subdto", adto.getSubLst());
 		mav.setViewName("main_alarm_popup");
 		
 		log.debug("end - mainConfirmView()");
@@ -727,13 +733,14 @@ public class SubResource extends DefaultResource {
 	public ModelAndView alarmConfirm(CommonDto dto) throws Exception{
 		log.debug("start - alarmConfirm()");
 		ModelAndView mav = new ModelAndView();
-		
+
 		mav.addObject("comm",dto);
 		mav.setViewName("alarm_popup");
 		
 		log.debug("end - alarmConfirm()");
 		return mav;
 	}
+	
 	
 	/**
 	 * confirm 확인
@@ -754,7 +761,7 @@ public class SubResource extends DefaultResource {
 			if(dto.getDival()==1){//전체 confirm은 그룹명,장비명,항목,구분으로 쿼리를 생성
 				adto = (Alarm) monadService.getFind(query, Alarm.class);
 				query = new Query();
-				query = setConfirm(adto.getGroupCode(), adto.getDeviceCode(), adto.getCri_type(),adto.getAlarm());
+				query = setConfirm(adto.getGroupCode(), adto.getDeviceCode(),adto.getCri_type(),adto.getAlarm(), adto.getGroupBind() );
 			}
 			List<Object> lst = monadService.getList(query, Alarm.class);
 			for(int i=0;i<lst.size();i++){

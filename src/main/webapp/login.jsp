@@ -21,6 +21,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/common_analytics.js"></script>

@@ -15,10 +15,19 @@
  */
 package net.cit.tetrad.resource;
 
+import static net.cit.tetrad.common.ColumnConstent.DBLOCKFILEARR;
+import static net.cit.tetrad.common.ColumnConstent.DEVICECODE;
+import static net.cit.tetrad.common.ColumnConstent.DEVICE_GROUPCODE;
+import static net.cit.tetrad.common.ColumnConstent.DEVICE_TYPE;
+import static net.cit.tetrad.common.ColumnConstent.MYSTATE;
+import static net.cit.tetrad.common.ColumnConstent.PATH_DBGRAPH;
+import static net.cit.tetrad.common.ColumnConstent.PATH_GRAPH;
+import static net.cit.tetrad.common.ColumnConstent.PATH_LOCKGRAPH;
+import static net.cit.tetrad.utility.QueryUtils.setIdx;
+
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,15 +36,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static net.cit.tetrad.common.ColumnConstent.PATH_GRAPH;
-import static net.cit.tetrad.common.ColumnConstent.PATH_LOCKGRAPH;
-import static net.cit.tetrad.common.ColumnConstent.PATH_DBGRAPH;
-import static net.cit.tetrad.common.ColumnConstent.DEVICE_TYPE;
-import static net.cit.tetrad.common.ColumnConstent.DEVICECODE;
-import static net.cit.tetrad.common.ColumnConstent.DEVICE_GROUPCODE;
-import static net.cit.tetrad.common.ColumnConstent.DBLOCKFILEARR;
-import static net.cit.tetrad.common.ColumnConstent.MYSTATE;
-import static net.cit.tetrad.utility.QueryUtils.setIdx;
 import net.cit.tetrad.common.ColumnConstent;
 import net.cit.tetrad.common.DateUtil;
 import net.cit.tetrad.common.Utility;
@@ -292,6 +292,22 @@ public class GraphResource extends DefaultResource {
 		return mav;
 	}
 
+	@RequestMapping("/checkAlarmDevice.do")
+	public void checkAliveDevice(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int deviceCode = Integer.parseInt(request.getParameter("deviceCode"));
+		
+		int result = 1;
+		if(!deviceCheck(deviceCode)){
+			result = -1;
+		}
+		
+		Writer writer = setResponse(response).getWriter();
+		writer.write(result+"");
+		
+		log.debug(result);
+		writer.flush();
+	}
+	
 	@RequestMapping("/eventGraphView.do")
 	public ModelAndView eventGraphView(CommonDto dto) throws Exception {
 		log.debug("start - eventGraphView()");
@@ -301,11 +317,21 @@ public class GraphResource extends DefaultResource {
 			dto.setConsolFun("LAST");
 		if (StringUtils.isNull(dto.getGraph_step()))
 			dto.setGraph_step("sec");
+		if(!deviceCheck(dto.getDeviceCode())){
+			dto.setDeviceCode(-1);
+		}
 		mav.addObject("comm", dto);
-
 		mav.setViewName(PATH_GRAPH + "eventGraph");
 		log.debug("end - eventGraphView()");
 		return mav;
+	}
+	
+	private boolean deviceCheck(int deviceIdx){
+		Device device = null;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("idx").is(deviceIdx));
+		device = (Device)monadService.getFind(query, Device.class);
+		return device == null? false : true;
 	}
 
 	@RequestMapping("/pieGraphView.do")

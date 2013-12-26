@@ -25,6 +25,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>dhtml graph</title>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-latest.js"></script>
@@ -292,8 +293,14 @@ function reflashPage() {
 	document.frm_dhtml.submit();
 }
 
+function init(){
+	 var temp = "${comm.title}";
+	temp = temp.split("_").join("/");
+	$('#top_menu').html(temp);
+	
+}
 </script>
-<body>
+<body onload="init()">
 <form method="POST" name="frm_dhtml" id="frm_dhtml">
 <input type="hidden" id="dstype" name="dstype" value="${comm.dstype}"/>
 <input type="hidden" id="dsname" name="dsname" value="${comm.dsname}"/>
@@ -310,7 +317,7 @@ function reflashPage() {
 <div id="wrap" class="w586">
 	<div id="header">
 			<div class="title">
-				<h1>${comm.title}</h1>
+				<h1 id="top_menu"></h1>
 			</div>
 			<a href="#" id="pop_close" class="popup_close"><img src="./img/ico_x.gif" width="27" height="21" alt="X"></a>			
 	</div>

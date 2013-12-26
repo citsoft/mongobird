@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServlet;
 import net.cit.tetrad.common.Config;
 import net.cit.tetrad.common.MongobirdLicenseManager;
 import net.cit.tetrad.common.PropertiesNames;
+import net.cit.tetrad.rrd.dao.DataAccessObjectForMongo;
+import net.cit.tetrad.rrd.dao.MultieventMapHelper;
 import net.cit.tetrad.rrd.utils.TetradRrdConfig;
 import net.cit.tetrad.rrd.utils.TetradRrdDbPool;
 import net.citsoft.communication.DistrCommunication;
@@ -53,6 +55,8 @@ public class InitializeServlet extends HttpServlet {
 			
 			DeviceInMemory deviceInMemory = (DeviceInMemory)context.getBean("deviceInMemory");
 			MongoInMemory mongoInMemory = (MongoInMemory)context.getBean("mongoInMemory");
+			DataAccessObjectForMongo daoForMongo = (DataAccessObjectForMongo) context.getBean("dataAccessObjectForMongo");
+			 
 			deviceInMemory.createDeviceGroup();
 			mongoInMemory.createMongoGroup();
 			
@@ -72,6 +76,9 @@ public class InitializeServlet extends HttpServlet {
 				
 				Thread checkingMongo = new Thread(new ConnectMongoHandlerThread());
 				checkingMongo.start();
+				
+				Thread helper = new Thread(new MultieventMapHelper(daoForMongo));
+				helper.start();
 			}
 		} catch (Exception ex) {
 			logger.error(ex, ex);

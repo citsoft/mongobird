@@ -15,6 +15,8 @@
 */
 package net.cit.tetrad.model;
 
+import java.util.List;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
@@ -35,6 +37,8 @@ public class Critical {
 	private String unit;
 	private String version; //monadVersion 구분
 	private String deviceType;
+	private String groupBind;
+	private int groupCnt;
 
 	public int getIdx() {
 		return idx;
@@ -108,5 +112,17 @@ public class Critical {
 	public void setDeviceType(String deviceType) {
 		this.deviceType = deviceType;
 	}	
-
+	public String getGroupBind(){
+		return groupBind;
+	}
+	public void setGroupBind(String groupBind){
+		this.groupBind = groupBind;
+	}
+	public int getGroupCnt() {
+		return groupCnt;
+	}
+	public void setGroupCnt(int groupCnt) {
+		this.groupCnt = groupCnt;
+	}
+	
 }

@@ -22,6 +22,7 @@ import static net.cit.tetrad.common.ColumnConstent.ALARM_CRI_TYPE;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_CRI_VALUE;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_DEVICECODE;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_FIGURE;
+import static net.cit.tetrad.common.ColumnConstent.ALARM_GROUPBIND;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_GROUPCODE;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_IP;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_PORT;
@@ -32,40 +33,40 @@ import static net.cit.tetrad.common.ColumnConstent.ALARM_REG_TIME;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_TYPE;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_UP_DATE;
 import static net.cit.tetrad.common.ColumnConstent.ALARM_UP_TIME;
+import static net.cit.tetrad.common.ColumnConstent.ALARM_SUBLST;
 import static net.cit.tetrad.common.ColumnConstent.COLL_ALARM;
 import static net.cit.tetrad.common.ColumnConstent.COLL_DASHBOARD;
 import static net.cit.tetrad.common.ColumnConstent.COLL_TOTALMONGODINFO;
 import static net.cit.tetrad.common.ColumnConstent.COL_DEVICECODE;
 import static net.cit.tetrad.common.ColumnConstent.DEVICECODE;
-import static net.cit.tetrad.common.ColumnConstent.IDX;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_GLOBALLLOCKTIME;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_PAGEFAULTS;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_ERROR;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_GLOBALLLOCKTIME;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OK;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_PAGEFAULTS;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_REGTIME;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_TYPE;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_ISMASTER;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OPINSERT;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OPDELETE;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OPQUERY;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OPUPDATE;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_OPDELETE;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_OPINSERT;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_OPQUERY;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_OPUPDATE;
-import static net.cit.tetrad.common.ColumnConstent.DBSTATUS_DBNAME;
-import static net.cit.tetrad.common.ColumnConstent.USER_EMAIL;
 import static net.cit.tetrad.common.ColumnConstent.DEVICE_UID;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_LOCKSTIMELOCKEDMICROS_R;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_LOCKSTIMELOCKEDMICROS_W;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_LOCKSTIMELOCKEDMICROS_R;
-import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_LOCKSTIMELOCKEDMICROS_W;
+import static net.cit.tetrad.common.ColumnConstent.IDX;
 import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DBSUMLOCKSLOCKED_R;
 import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DBSUMLOCKSLOCKED_W;
 import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_DBSUMLOCKSLOCKED_R;
 import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_DBSUMLOCKSLOCKED_W;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_GLOBALLLOCKTIME;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_LOCKSTIMELOCKEDMICROS_R;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_LOCKSTIMELOCKEDMICROS_W;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_OPDELETE;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_OPINSERT;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_OPQUERY;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_OPUPDATE;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_DIFF_PAGEFAULTS;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_ERROR;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_GLOBALLLOCKTIME;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_ISMASTER;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_LOCKSTIMELOCKEDMICROS_R;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_LOCKSTIMELOCKEDMICROS_W;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OK;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OPDELETE;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OPINSERT;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OPQUERY;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_OPUPDATE;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_PAGEFAULTS;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_REGTIME;
+import static net.cit.tetrad.common.ColumnConstent.SERVERSTATUS_TYPE;
+import static net.cit.tetrad.common.ColumnConstent.USER_EMAIL;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 import java.util.ArrayList;
@@ -85,7 +86,6 @@ import net.cit.tetrad.model.Global;
 import net.cit.tetrad.model.User;
 import net.cit.tetrad.rrd.bean.DbStatus;
 import net.cit.tetrad.rrd.bean.ServerStatus;
-import net.cit.tetrad.rrd.utils.TetradRrdConfig;
 import net.cit.tetrad.utility.QueryUtils;
 
 import org.apache.log4j.Logger;
@@ -95,7 +95,6 @@ import org.springframework.data.mongodb.core.query.Order;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 
-import com.mongodb.DBCollection;
 import com.mongodb.WriteResult;
 
 public class DataAccessObjectForMongoImpl implements DataAccessObjectForMongo {
@@ -543,7 +542,8 @@ public class DataAccessObjectForMongoImpl implements DataAccessObjectForMongo {
 			query.addCriteria(Criteria.where(ALARM_CONFIRM).is(alarm.getConfirm()));
 			query.addCriteria(Criteria.where(ALARM_DEVICECODE).is(alarm.getDeviceCode()));
 			query.addCriteria(Criteria.where(ALARM_TYPE).is(alarm.getType()));
-			query.addCriteria(Criteria.where(ALARM_CRI_TYPE).is(alarm.getCri_type()));			
+			query.addCriteria(Criteria.where(ALARM_CRI_TYPE).is(alarm.getCri_type()));
+			query.addCriteria(Criteria.where(ALARM_GROUPBIND).is(alarm.getGroupBind()));
 			
 			Alarm alarmInfo = readAlarmInfo(query);
 			if (alarmInfo == null) {
@@ -563,6 +563,8 @@ public class DataAccessObjectForMongoImpl implements DataAccessObjectForMongo {
 			update.set(ALARM_UP_DATE, alarm.getUp_date());
 			update.set(ALARM_UP_TIME, alarm.getUp_time());
 			update.set(ALARM_ALARM, alarm.getAlarm());
+	//		update.set(ALARM_GROUPBIND, alarm.getGroupBind());
+			update.set(ALARM_SUBLST, alarm.getSubLst());
 			update.inc(ALARM_COUNT, 1);
 			
 			wr = operations.updateMulti(query, update, COLL_ALARM, true);

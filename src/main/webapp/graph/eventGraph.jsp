@@ -32,6 +32,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
@@ -48,15 +49,35 @@ var imgLang = "<spring:message code="common.img"/>";
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/sub_alarm_graph.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	
+// 	document.getElementById("groupIdx").value = parent.g_group_idx;
+	
 	var img = '<spring:message code="common.img"/>';
-	var strHtml = "<ul><li class=\"end\"><b><img src=\"./img/event_sub01"+img+".png\"></b></li>"; 
-	for(var i =0; i<parent.g_title.length; i++){
-		var str = "<li><b><input type=\"image\" src=\"./img/ico_square.gif\">  " +parent.g_title[i]+ " : </b>" +parent.g_value[i]+ "</li>";
-		strHtml += str;
-	}
-	strHtml += "</ul>";
-	$('#menu_graph').html(strHtml);
-	goGraph();
+    var strHtml = "<ul><li class=\"end\"><b><img src=\"./img/event_sub01"+img+".png\"></b></li>";
+    if(parent.g_title.length != 0){
+        for(var i =0; i<parent.g_title.length; i++){
+            var str = "<li><b><input type=\"image\" src=\"./img/ico_square.gif\">  " +parent.g_title[i]+ " : </b>" +parent.g_value[i]+ "</li>";
+            strHtml += str;
+        }
+    }else{
+        for(var i =0; i<parent.g_title_sub.length; i++){
+            var str = "<li><b><input type=\"image\" src=\"./img/ico_square.gif\">  " +parent.g_title_sub[i]+ " : </b>" +parent.g_value_sub[i]+ "</li>";
+            strHtml += str;
+        }
+    }
+    
+    strHtml += "</ul>";
+    $('#menu_graph').html(strHtml);
+    goGraph();
+    
+// 	if('${comm.deviceCode}' == '-1'){
+// 		var answer = confirm("<spring:message code='event.nomoreinstance' />");
+// 		if(answer){
+// 			deleteSubAlarm();
+// 		}
+// 	}else{
+		
+// 	}
 });
 
 $(function(){
@@ -64,11 +85,16 @@ $(function(){
 		getDbLst();
 	});
 });
+
+function reload(){
+	alert("test");
+// 	parent.document.
+}
 </script>
 </head>
 <body>
 	<div id="content_graph2"></div>
-	<form method="post" name="frm_demon" id="frm_demon">
+	<form method="post" name="frm_demon" id="frm_demon" onsubmit="reload()">
 		<input type="hidden" id="sdate" name="sdate" value="${comm.sdate}" />
 		<input type="hidden" id="edate" name="edate" value="${comm.edate}" />
 		<input type="hidden" id="deviceCode" name="deviceCode" value="${comm.deviceCode}"/>	
@@ -78,6 +104,7 @@ $(function(){
 		<input type="hidden" id="type_gubun" name="type_gubun" value="event"/>
 		<input type="hidden" id="sortItem" name="sortItem" value="event"/>
 		<input type="hidden" id="graph_period" name="graph_period" value="2h"/>
+<!-- 		<input type="hidden" id="groupIdx" name="groupIdx" value=""/> -->
 		<div id="selectLstFrame"></div>
 			<div id="menu_graph">
 			</div>

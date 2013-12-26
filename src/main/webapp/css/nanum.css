@@ -1,0 +1,10 @@
+@font-face {
+  font-family: 'Nanum Reg';
+  font-style: bold;
+  font-weight: 661;
+  src: url(fonts/nanum/nanum.eot);
+  src: url(fonts/nanum/nanum.eot?#iefix) format('embedded-opentype'),
+       url(fonts/nanum/nanum.woff2) format('woff2'),
+       url(fonts/nanum/nanum.woff) format('woff'),
+       url(fonts/nanum/nanum.ttf) format('truetype');
+}

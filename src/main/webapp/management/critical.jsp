@@ -6,6 +6,7 @@
 	Code.unit.getCode().updateCode(locale);
 	Code.mongodEvent.getCode().updateCode(locale);
 	Code.mongosEvent.getCode().updateCode(locale);
+	Code.mongodEvent2_2.getCode().updateCode(locale);
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!--
@@ -27,52 +28,57 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <%@ include file="./manageCommon.jsp" %>
 <%@ include file="./jquery-dynamicCode.jsp" %>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.smartPop.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery.smartPop.css">
 <script type="text/javascript">
 	var mainRefreshPeriodMinute = ${mainRefreshPeriodMinute};
 </script>
 <script type="text/javascript">
+var bookmark = '${bookmark}';
+
 	$(document).ready( function() {
 	    var oTable;
+			 
 	    oTable = $('#list').dataTable( {
 			//테이블의 페이징 검색 등 부가적인 기능 생략
-			"bPaginate": true,
+			"bPaginate": false,
 			"bLengthChange": false,
 			"bFilter": false,
 			"bSort": false,
 			"bInfo": false,
 			"bAutoWidth": false,
-			"iDisplayLength": 13 ,
-			
-			"sPaginationType": "full_numbers",
-			"oLanguage" :{
-				"oPaginate":{
-					"sFirst": " <img src=\"./img/img_pre_end.gif\" width=\"11\" height=\"12\" border=\"0\" alt=\"<spring:message code="common.first"/>\"/ class=\"textmiddle\"> ",
-					"sPrevious": " <img src=\"./img/img_pre.gif\" width=\"11\" height=\"12\" border=\"0\" alt=\"<spring:message code="common.back"/>\"/ class=\"textmiddle\"> ",
-					"sNext": " <img src=\"./img/img_next.gif\" width=\"11\" height=\"12\" border=\"0\" alt=\"<spring:message code="common.next"/>\"/ class=\"textmiddle\"> ", 
-					"sLast": " <img src=\"./img/img_next_end.gif\" width=\"11\" height=\"12\" border=\"0\" alt=\"<spring:message code="common.last"/>\"/ class=\"textmiddle\">"
-				}
-			},			
+			"sScrollY" : "240px",
+			"bScrollCollapse" : true,
+			"iDisplayLength": 13 ,		
 			"bProcessing":true,
 	        "bServerSide":true,
 	        "bRetrieve":true,
             "cache": false,
 	    	"sAjaxSource":'list.do?dival=${comm.dival}',
 			"aoColumns": [
+			          
 				{ 
-					"sClass": "lb", "fnRender": function ( oObj ) {
+									"sClass": "lb", "fnRender": function ( oObj ) {
 				     
-				        return '<input type="checkbox" name="idxLst" value="'+oObj.aData.idx+'"/>';
+				        return oObj.aData.groupBind==""?'<input type="checkbox" name="idxLst" value="'+oObj.aData.idx+'"/>':"&nbsp;";
 					}
 				},
 				{
-					"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
-	            		var str = groupCodeTable.getItem(oObj.oSettings.fnFormatNumber( parseFloat( oObj.aData.groupCode ) ));
-	            		return !str?"&nbsp;":str;
-	            	}
+						"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
+							// groupBind 이름이 있다면 groupBind를 hidden으로 추가
+								if(oObj.aData.groupBind == ""){
+									var str = groupCodeTable.getItem(oObj.oSettings.fnFormatNumber( parseFloat( oObj.aData.groupCode ) ));
+									return !str?"&nbsp;":str;
+								}else{
+									var str = "<input type='hidden' value='@"+oObj.aData.groupBind+"'>"+"<img src='./img/ico-m-indent.gif' width='10px' height='10px'>&nbsp;"+ groupCodeTable.getItem(oObj.oSettings.fnFormatNumber( parseFloat( oObj.aData.groupCode ) ));
+									return !str?"&nbsp;":str;
+								}
+					}
 	            },
 	            {
 	            	"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
@@ -93,7 +99,7 @@
 	            	}
 	            },
 	            {
-	            	"fnRender": function ( oObj ) {
+	            	"sClass": "tableFigures2", "fnRender": function ( oObj ) {
 	            		if(oObj.aData.unit=='seconds'){
 		            		return oObj.oSettings.fnFormatNumber( microSecondsFormat(parseFloat( oObj.aData.criticalvalue )) );
 	            		}else{
@@ -102,7 +108,7 @@
 	            	}
 	            },
 	            {
-	            	"fnRender": function ( oObj ) {
+	            	"sClass": "tableFigures2", "fnRender": function ( oObj ) {
 	            		if(oObj.aData.unit=='seconds'){
 		            		return oObj.oSettings.fnFormatNumber( microSecondsFormat(parseFloat( oObj.aData.warningvalue )) );
 	            		}else{
@@ -111,7 +117,7 @@
 	            	}
 	            },
 	            {
-	            	"sClass": "rb", "fnRender": function ( oObj ) {
+	            	"sClass": "tableFigures2 rb", "fnRender": function ( oObj ) {
 	            		if(oObj.aData.unit=='seconds'){
 		            		return oObj.oSettings.fnFormatNumber( microSecondsFormat(parseFloat( oObj.aData.infovalue )) );
 	            		}else{
@@ -119,9 +125,12 @@
 	            		}
 	            	}
 	            }
+	            
+	            
 	        ],
 			//마우스 오버 시 라인 색이 바뀌도록
-			"fnDrawCallback": function(){
+			"fnDrawCallback": function( oObj ){
+				
 				var oSettings = oTable.fnSettings();
 				var iTotalRecords = oSettings.fnRecordsTotal();
 				var iLength = oSettings._iDisplayLength;
@@ -133,24 +142,50 @@
             	}
 				if(iTotalRecords > 0){
 			      	$('table#list td').bind('mouseenter', function () { $(this).parent().children().each(function(){$(this).addClass('row_selected');}); });
+			      	
 			      	$('table#list td').bind('mouseleave', function () { $(this).parent().children().each(function(){$(this).removeClass('row_selected');}); });
 				}else{
 					$('table#list td').eq(0).attr('class', 'lb rb');
 				}
-			}
+				
+				var before = "";
+				
+				for(i = 0 ; i < oObj.aoData.length ; i ++){
+					var flag = true;	
+					var str = oObj.aoData[i].nTr.innerHTML;
+					var strar = str.split('@');
+					if(strar.length > 1){
+						if(flag){
+							var temp = strar[1].split("\"");
+							if(before != temp[0]){
+								$(oObj.aoData[i].nTr).before("<tr><td class='lb'><a name='"+temp[0]+"'></a><input type='checkbox' id='groupBind' name='groupBind' value='"+temp[0]+"'/></td><td class='tableFiguresLeft'>"+"<img src='./img/minus.png'>&nbsp;"+temp[0]+"</td><td class='tableFiguresLeft'></td><td class='tableFiguresLeft'><spring:message code='event.multievent' /></td><td></td><td></td><td></td><td class='rb'></td></tr>");
+								before = temp[0];	
+							}
+						}
+					}
+				}
+			    if (bookmark != undefined) {
+			        window.location.hash="#"+bookmark;			    	
+			    }
+			}	
 	    });
 	    
 	    jQuery.fn.dataTableExt.oPagination.iFullNumbersShowPages = 10;
 	    
 	    $('#checkAll').click(function(){//checkAll 체크 박스 클릭 시 모두 체크 되도록
+	    	var test = $('#list input:checkbox');
 			if ($('#checkAll').attr('checked')) {
-				$('input', oTable.fnGetNodes()).attr('checked', true);
+				//$('input', oTable.fnGetNodes()).attr('checked', true);
+				$('#list input:checkbox').attr('checked', true);
 		    }else{
-		    	$('input', oTable.fnGetNodes()).removeAttr('checked');
+		    	$('#list input:checkbox').attr('checked', false);
 		    }
 	    });
 	    
+
+	    
 		$("#list tbody").delegate("tr", "click", function() {//리스트 클릭 시 정보 창으로 내용이 전송되도록
+
 			var position = oTable.fnGetPosition(this); // getting the clicked row position
 			var data = oTable.fnGetData(position);
 			if(position!=null){
@@ -175,11 +210,33 @@
 		}
 		
 		$('#listForm').submit( function(event) {//체크박스 선택 후 삭제 되도록
+
 			var answer = confirm("<spring:message code="common.wanttodelete"/>");
 			if (answer){
 				event.preventDefault();
 				var url = "delete.do?dival=${comm.dival}";
-				var dataToSend = $('input:checkbox', oTable.fnGetNodes()).serialize();
+// 				var dataToSend = $('input:checkbox', oTable.fnGetNodes()).serialize();
+				
+				var dataToSend = "";
+				var test = $('#list input:checkbox');
+				var temp_val = new Array();
+				
+				for(var i = 0 ; i < test.length ; i ++){
+					if(test[i].checked == true){
+	 					temp_val.push(test[i].value);
+					}
+				}
+				
+				for(var i = 0 ; i <temp_val.length ; i++){
+					//isNaN 숫자 false 리턴
+					if(i!=0) dataToSend += "&";
+					if(isNaN(temp_val[i])){
+						dataToSend += "groupBindLst="+temp_val[i];
+					}else{
+						dataToSend += "idxLst="+temp_val[i];
+					}
+				}
+				
 				if(dataToSend==""){
 					alert("<spring:message code="common.nolist"/>");
 				}else{
@@ -192,8 +249,68 @@
 					var typeOfData = 'html';
 					$.get(url,dataToSend,callback,typeOfData);
 				}
-			}else{}
+			}else{
+				return false;
+			}
 		});
+		
+		$('#divBtn').click( function(event){
+			var dataToSend = $('input:checkbox', oTable.fnGetNodes()).serialize();
+			var hiddendata = document.getElementById("dataToSend");
+			hiddendata.value = dataToSend;
+			
+			var test = $('#list input:checkbox');
+			var temp_val = new Array();
+			var flag = false;
+			
+			for(var i = 0 ; i < test.length ; i ++){
+				if(test[i].checked == true){
+ 					temp_val.push(test[i].value);
+				}
+			}
+			
+			for(var i = 0 ; i <temp_val.length ; i++){
+				//isNaN 숫자 false 리턴
+				if(isNaN(temp_val[i])){
+					flag = true ; break;
+				}
+			}
+			
+			if(temp_val.length == 1){
+				if(flag) {alert("<spring:message code="event.nonestedevent"/>"); flag=false;}
+				else alert("<spring:message code="event.morechooseone"/>");	
+			}else if(flag){
+				alert("<spring:message code="event.nonestedevent"/>");
+				flag=false;
+			}else if(dataToSend==""){
+				alert("<spring:message code="common.nolist"/>");
+			}else{
+				var callback = function(dataReceived){
+					oTable.fnDraw();
+					$('#setForm').each(function(){
+						this.reset();
+					});
+				};
+// 				window.open("","popup_event","width=800,height=200,menubar=no,toolbar=no,location=no,status=no,resizable=no,scrollbars=no");
+//				$.smartPop.open({ background: "gray", width: 820, height:400, url: "about:blank" });
+				$.smartPop.open({ background: "gray", width: 820, height:400, url: "management/popup_group_event_init.jsp" });
+			}
+
+		});
+		
+		window.addEventListener('message', function(event) {
+		    if (event.data == 'MSG_SMARTPOP_FRAME_SUBMIT') {
+		    	smartPopFrameSubmit();
+		    }
+		});
+		
+		function smartPopFrameSubmit(){
+			//alert("smartPopFrameSubmit: "+document.getElementById("smartPop_frame").name);
+			window.document.listForm.method = "post";
+			window.document.listForm.action = "popup_event.do";
+			window.document.listForm.target = "smartPop_frame";
+			window.document.listForm.submit();
+		}
 		
 		$('#setForm').submit( function(event) {
 			event.preventDefault();
@@ -257,6 +374,7 @@
 		getDaemonArray(0,0);
 		mongod_onload();
 		mongos_onload();
+	
 	}
 
 	function initEventCode(){
@@ -279,6 +397,10 @@
 		}
 	}
 	
+	function fnGroupDetails( oTable, nTr){
+		
+	}
+	
 </script>
 </head>
 <body id="index" onload="init()">
@@ -292,20 +414,22 @@
 		<div id="content_m">
 			<div class="top_area">
 				<span class="fl"><a href="#"><img src="./img/btn_seldelete<spring:message code="common.img"/>.gif" height="20" alt="<spring:message code="common.selecteddelete"/>" id="listFormSubmitButton"></a>&nbsp;<label id="list_total"></label></span>
-				<span class="fr"><img src="./img/ico_square.gif" width="3" height="3" alt="ico"> <spring:message code="critical.clickdaemon"/></span>
+				<span class="fr"><%-- <img src="./img/ico_square.gif" width="3" height="3" alt="ico"> <spring:message code="critical.clickdaemon"/>--%></span> 
 			</div>
+			<div>
 			<form name="listForm" id="listForm">
+			<input type = "hidden" name="dataToSend" id="dataToSend" value="">
 				<table id="list" border="0" class="tb_list_07" summary="테이블 07">
 					<caption>임계값 관리</caption>
 					<colgroup>
 						<col width="44">
-						<col width="177">
+						<col width="150">
 						<col width="176">
-						<col width="154">
 						<col width="178">
-						<col width="120">
-						<col width="81">
-						<col width="116">
+						<col width="154">
+						<col width="105">
+						<col width="105">
+						<col width="105">
 					</colgroup>
 					<thead>
 					<tr>
@@ -328,7 +452,9 @@
 						</tr>
 					</tbody>
 				</table>
+				<div class="pagbtn" id="divBtn" ><a href="#"><img src="./img/btn_event_group_definition<spring:message code="common.img"/>.gif" id = "divBtn"></a></div>
 			</form>
+			</div>
 			<form method="post" name="setForm" id="setForm">
 			<input type="hidden" id="dival" name="dival" value="${comm.dival}"/>
 			<input type="hidden" id="idx" name="idx" value="${comm.idx}"/>
@@ -348,29 +474,29 @@
 							<th rowspan="3"><spring:message code="critical.informationofcriticalvalue"/></th>
 							<td><spring:message code="common.group"/></td>
 							<td class="lf">
-								<select name="groupCode" id ="groupCode"></select>
+								<select name="groupCode" id ="groupCode" tabindex="1"></select>
 							</td>
 							<th rowspan="3"><spring:message code="common.criticalvalue"/></th>
-							<td>[<spring:message code="common.danger"/>] </td>
-							<td class="rb lf"><input type="text" id="criticalvalue" name="criticalvalue" maxlength="10" OnKeyPress='num_only(event)' style='ime-mode:disabled'></td>
+							<td><spring:message code="common.danger"/> </td>
+							<td class="rb lf"><input type="text" id="criticalvalue" name="criticalvalue" maxlength="10" OnKeyPress='num_only(event)' style='ime-mode:disabled' tabindex="4"></td>
 						</tr>
 						<tr>
 							<td><spring:message code="common.daemon"/></td>
 							<td class="lf">
-								<select name="deviceCode" id="deviceCode"></select>
+								<select name="deviceCode" id="deviceCode" tabindex="2"></select>
 							</td>
-							<td>[<spring:message code="common.warning"/>] </td>
-							<td class="rb lf"><input type="text" id="warningvalue" name="warningvalue" maxlength="10" OnKeyPress='num_only(event)' style='ime-mode:disabled'></td>
+							<td><spring:message code="common.warning"/> </td>
+							<td class="rb lf"><input type="text" id="warningvalue" name="warningvalue" maxlength="10" OnKeyPress='num_only(event)' style='ime-mode:disabled' tabindex="5"></td>
 						</tr>
 						<tr>
 							<td><spring:message code="common.criticaltype"/> </td>
 							<td class="lf">
-								<select name="common_type" id="common_type" ></select>
-								<select name="mongos_type" id="mongos_type" ></select>
-								<select name="mongod_type" id="mongod_type" ></select>
+								<select name="common_type" id="common_type" tabindex="3"></select>
+								<select name="mongos_type" id="mongos_type" tabindex="3"></select>
+								<select name="mongod_type" id="mongod_type" tabindex="3"></select>
 							</td>
-							<td>[<spring:message code="critical.normal"/>]</td>
-							<td class="rb lf"><input type="text" id="infovalue" name="infovalue" maxlength="10" OnKeyPress='num_only(event)' style='ime-mode:disabled'></td>
+							<td><spring:message code="critical.normal"/></td>
+							<td class="rb lf"><input type="text" id="infovalue" name="infovalue" maxlength="10" OnKeyPress='num_only(event)' style='ime-mode:disabled' tabindex="6"></td>
 						</tr>
 					</tbody>
 				</table>

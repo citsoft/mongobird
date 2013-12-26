@@ -36,6 +36,7 @@ public class ColumnConstent {
 	public static final String MAV_USER = "user";
 	public static final String MAV_TYPE = "type";
 	public static final String MAV_COMM = "comm";
+	public static final String MAV_ALARM = "alarm";
 	
 	/** 임계값 지정을 위한 상수*/
 	public static final String UNIT_PER = "percent";
@@ -178,6 +179,8 @@ public class ColumnConstent {
 	public final static String ALARM_UP_TIME = "up_time";
 	public final static String ALARM_ALARM = "alarm";
 	public final static String ALARM_COUNT = "count";
+	public final static String ALARM_GROUPBIND="groupBind";
+	public final static String ALARM_SUBLST="subLst";
 	
 	public final static String USER_EMAIL = "email";
 	

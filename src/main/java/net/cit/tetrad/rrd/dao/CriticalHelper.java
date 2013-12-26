@@ -15,7 +15,11 @@
 */
 package net.cit.tetrad.rrd.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.cit.tetrad.common.ColumnConstent;
 import net.cit.tetrad.model.Alarm;
@@ -28,18 +32,12 @@ import org.apache.log4j.Logger;
 public class CriticalHelper {	
 	private static Logger logger = Logger.getLogger(CriticalHelper.class);
 	
-	private DataAccessObjectForMongo daoForMongo;
-	
-//	private boolean existCritical = false;	
+	private DataAccessObjectForMongo daoForMongo;	
 	private boolean isSubGraphhrule = false;
 	
 	private int deviceCode;
 	private Device device; 
 	private Map<String, Object> serverStatusInfoGroup;
-	
-//	double criticalValue;
-//	double warningValue;
-//	double infoValue;
 	double figure = 0;
 	
 	long standard = 0;
@@ -151,10 +149,66 @@ public class CriticalHelper {
 		return target * (percent/100d);
 	}
 	
+	List<Critical> findCriticalInfo(Map<String, List<Critical>> groupBindCritical, String criticalkey){
+		
+		List<Critical> criticalLst = new ArrayList<Critical> ();
+		
+		criticalLst = groupBindCritical.get(criticalkey);
+		
+		return criticalLst;
+	}
 
-	public void settingAlarm(String dsName, Critical critical, Alarm alarm) {
+	private double getCriteriaValue(String dsName, String unit, int stdValue) {
+		double value = 0;
+		
+		value = stdValue;
+		if (unit.equals("percent")) {
+			double criteriaValue = getCriteriaValue(dsName);
+			value = getPercentValue(criteriaValue, stdValue);
+
+			this.standard = (long) criteriaValue;
 			
-//		setCriticalLevel(critical, dsName);
+		} else if (unit.equals("seconds")) {
+			if (isSubGraphhrule) { // 그래프에 임계치 선을 그릴경우 miliseconds로 환산해야하기때문에 이 로직이 들어감..
+				value = value / MILISECONDS;
+			} 
+		}
+		return value;
+	}
+
+	public void settingGroupAlarm(Map<String, List<Critical>> groupBindCriticals, Map<String,List<Alarm>> alarmMap) {		
+	
+		Set<String> keyset = groupBindCriticals.keySet();
+		
+		for(String key : keyset){
+			List<Critical> criticalLst = groupBindCriticals.get(key);
+			List<Alarm> checkAlarm = new ArrayList<Alarm>();
+			
+			for(int i = 0 ; i< criticalLst.size() ; i++){
+				Critical critical = criticalLst.get(i);
+				Alarm alarm = new Alarm();
+				settingAlarm(critical.getType(), critical, alarm);
+				alarm.setGroupCnt(critical.getGroupCnt());
+				checkAlarm.add(alarm);
+			}
+			
+			boolean flag = false;
+			for(int i = 0 ; i< checkAlarm.size() ; i++){
+				if(checkAlarm.get(i).getAlarm()==0){ flag= false; break;}
+				else {flag = true; continue;}
+			}
+			
+			if(flag==true){
+				for(int i = 0 ; i < checkAlarm.size() ; i++){
+					checkAlarm.get(i).setGroupBind(key);
+					checkAlarm.get(i).setCri_type(criticalLst.get(i).getType());
+					alarmMap.put(key, checkAlarm);					
+				}
+			}
+		}
+	}
+	
+	public void settingAlarm(String dsName, Critical critical, Alarm alarm) {		
 		boolean existCritical = false;	
 		double criticalValue = 0;
 		double warningValue = 0;
@@ -163,89 +217,38 @@ public class CriticalHelper {
 			String unit = critical.getUnit();
 			existCritical = true;
 
-			criticalValue = critical.getCriticalvalue(); 
-			warningValue = critical.getWarningvalue();
-			infoValue = critical.getInfovalue();
-			
-			if (unit.equals("percent")) {
-				double criteriaValue = getCriteriaValue(dsName);
-				
-				criticalValue = getPercentValue(criteriaValue, critical.getCriticalvalue());
-				warningValue = getPercentValue(criteriaValue, critical.getWarningvalue());
-				infoValue = getPercentValue(criteriaValue, critical.getInfovalue());
-
-				this.standard = (long) criteriaValue;
-				
-			} else if (unit.equals("seconds")) {
-				if (isSubGraphhrule) { // 그래프에 임계치 선을 그릴경우 miliseconds로 환산해야하기때문에 이 로직이 들어감..
-					
-					criticalValue = criticalValue / MILISECONDS;
-					warningValue = warningValue / MILISECONDS;
-					infoValue = infoValue / MILISECONDS;
-				} 
-			}
-		}
-		
+			criticalValue =  getCriteriaValue(dsName, unit, critical.getCriticalvalue());
+			warningValue =  getCriteriaValue(dsName, unit, critical.getWarningvalue());
+			infoValue =  getCriteriaValue(dsName, unit, critical.getInfovalue());
+		}		
 		double dsValue = convertToDouble(serverStatusInfoGroup.get(dsName));
 		
 		int alramType = 0; 
 		double limitValue = 0;
 		double real_limitValue = 0;
 		
-		if(existCritical){
-			if (dsValue > criticalValue) {
-				alramType = ColumnConstent.ALRAM_CRITICAL;
-				limitValue = critical.getCriticalvalue();
-				real_limitValue = criticalValue;
-			} else if (dsValue > warningValue) {
-				alramType = ColumnConstent.ALRAM_WARNING;
-				limitValue = critical.getWarningvalue();
-				real_limitValue = warningValue;
-			} else if (dsValue > infoValue) {
-				alramType = ColumnConstent.ALRAM_INFO;
-				limitValue = critical.getInfovalue();
-				real_limitValue = infoValue;
+			if(existCritical){
+				if (dsValue > criticalValue) {
+					alramType = ColumnConstent.ALRAM_CRITICAL;
+					limitValue = critical.getCriticalvalue();
+					real_limitValue = criticalValue;
+				} else if (dsValue > warningValue) {
+					alramType = ColumnConstent.ALRAM_WARNING;
+					limitValue = critical.getWarningvalue();
+					real_limitValue = warningValue;
+				} else if (dsValue > infoValue) {
+					alramType = ColumnConstent.ALRAM_INFO;
+					limitValue = critical.getInfovalue();
+					real_limitValue = infoValue;
+				}
 			}
-		}
-
+		
 		alarm.setAlarm(alramType);
 		alarm.setCri_value(limitValue);		
 		alarm.setFigure(getFigure(critical.getUnit(), dsValue));
 		alarm.setReal_cri_value(real_limitValue);
 		alarm.setReal_figure(dsValue);
 	}
-
-//	public void setCriticalLevel(Critical critical, String dsName) {
-//		
-//		if (critical != null) {
-//			String unit = critical.getUnit();
-//			existCritical = true;
-//
-//			this.criticalValue = critical.getCriticalvalue(); 
-//			this.warningValue = critical.getWarningvalue();
-//			this.infoValue = critical.getInfovalue();
-//			
-//			if (unit.equals("percent")) {
-//				double criteriaValue = getCriteriaValue(dsName);
-//				
-//				this.criticalValue = getPercentValue(criteriaValue, critical.getCriticalvalue());
-//				this.warningValue = getPercentValue(criteriaValue, critical.getWarningvalue());
-//				this.infoValue = getPercentValue(criteriaValue, critical.getInfovalue());
-//
-//				this.standard = (long) criteriaValue;
-//				
-//			} else if (unit.equals("seconds")) {
-//				if (isSubGraphhrule) { // 그래프에 임계치 선을 그릴경우 miliseconds로 환산해야하기때문에 이 로직이 들어감..
-//					
-//					this.criticalValue = criticalValue / MILISECONDS;
-//					this.warningValue = warningValue / MILISECONDS;
-//					this.infoValue = infoValue / MILISECONDS;
-//				} 
-//			}
-//		} else {
-//			existCritical = false;
-//		}
-//	}
 	
 	private double getFigure(String unit, double dsValue) {
 		double figure = dsValue;
@@ -254,15 +257,4 @@ public class CriticalHelper {
 		}
 		return figure;
 	}
-	
-//	public void setCriticalLevel(String dsName) {
-//		Critical critical = getCriticalInfo(dsName);
-//		
-//		this.isSubGraphhrule = true;
-//		setCriticalLevel(critical, dsName);
-//	}
-	
-//	public boolean existCritical() {
-//		return existCritical;
-//	}
 }

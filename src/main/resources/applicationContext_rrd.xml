@@ -60,7 +60,10 @@
 	
 	<bean id="criticalOperation" class="net.cit.tetrad.rrd.dao.CriticalOperation">
 		<property name="daoForMongo" ref="dataAccessObjectForMongo" />
+		<property name="multieventMap" ref="multieventMap" />
 	</bean>
+	
+	<bean id="multieventMap" class="net.cit.tetrad.rrd.dao.MultieventMap"></bean>
 	
 	<bean id="indexDao" class="net.cit.tetrad.dao.management.impl.IndexDaoImpl">
 		<property name="monadService" ref="monadService" />

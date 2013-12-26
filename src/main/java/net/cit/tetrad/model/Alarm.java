@@ -15,6 +15,8 @@
 */
 package net.cit.tetrad.model;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.core.index.Indexed;
 
 public class Alarm {
@@ -40,6 +42,10 @@ public class Alarm {
 	private String up_time;
 	private int alarm;	
 	private int count=0;
+	private String groupBind;
+	private List<Alarm> subLst;
+	private int groupCnt;
+	private long grpAttrIncidentTime;
 	
 	public int getIdx() {
 		return idx;
@@ -161,5 +167,29 @@ public class Alarm {
 	public void setReal_cri_value(double real_cri_value) {
 		this.real_cri_value = real_cri_value;
 	}	
-
+	public String getGroupBind(){
+		return groupBind;
+	}
+	public void setGroupBind(String groupBind){
+		this.groupBind = groupBind;
+	}
+	public List<Alarm> getSubLst(){
+		return subLst;
+	}
+	public void setSubLst(List<Alarm> subLst){
+		this.subLst = subLst;
+	}	
+	public int getGroupCnt() {
+		return groupCnt;
+	}
+	public void setGroupCnt(int groupCnt) {
+		this.groupCnt = groupCnt;
+	}
+	public long getGrpAttrIncidentTime() {
+		return grpAttrIncidentTime;
+	}
+	public void setGrpAttrIncidentTime(long grpAttrIncidentTime) {
+		this.grpAttrIncidentTime = grpAttrIncidentTime;
+	}
+	
 }

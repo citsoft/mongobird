@@ -22,6 +22,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
@@ -36,6 +37,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.smartPop.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.basic.tooltip.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.showLoading.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/json2.js"></script>
 <script type="text/javascript">
 	var mainRefreshPeriodMinute = ${mainRefreshPeriodMinute};
 </script>
@@ -69,6 +71,54 @@
 		}
 		document.form.action="subAlarmView.do";
 	    document.form.submit();
+	}
+	
+	function fnFormatDetails( oTable, position, number ){
+		var aData = oTable.fnGetData( position );
+		var sOut = "<table id='list_"+number+"' class='tb_list_04_1' border='0'>";
+		sOut+= '<colgroup><col width="44"><col width="83"><col width="78"><col width="85"><col width="92"><col width="92"><col width="158"><col width="108"><col width="89"><col width="63"><col width="77"><col width="89"></colgroup>';
+		sOut+= '<tbody>';
+		for(var i = 0 ; i < aData.subLst.length ; i++){
+			sOut+= "<tr class='odd'><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class='tableFiguresLeftArrow'><img src='./img/ico-m-indent.gif' width='10px' height='10px'>&nbsp;"+aData.groupBind+"</td><td class='tableFiguresLeft'>"+deviceCodeTable.getItem( parseFloat( aData.subLst[i].deviceCode ) )+"</td><td>"+aData.subLst[i].ip + " : " + aData.subLst[i].port+"</td><td class='tableFiguresLeft'>"+eventCodeTable.getItem( aData.subLst[i].cri_type )+"</td><td class='tableFigures'>"+figureConvert (i, aData)+"</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
+		}
+		sOut+="</tbody></table>";
+
+		return sOut;
+	}
+	
+	function figureConvert (index, aData) {
+        var value = parseFloat( aData.subLst[index].cri_value );
+        var figure = parseFloat( aData.subLst[index].figure );
+        var realValue = parseFloat( aData.subLst[index].real_cri_value );
+        var realFigure = parseFloat( aData.subLst[index].real_figure );
+        var criType = aData.subLst[index].cri_type;
+        var returnValue = "";
+        if(criType == "Connection_refused"){
+                returnValue = "-";
+        }else if(criType == "connections_current"){
+                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
+                					+decimal(figure)+"/"+decimal(value)
+                					+"</a>";
+        }else if(criType == "mem_resident"){
+                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure, "MB")+" / "+toolTip_title(realValue, "MB")+"\">"
+                					+decimal(figure)+"/"+decimal(value)
+                					+"</a>";
+        }else if(criType == "dbDataSize" || criType == "dbFileSize"){
+                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+sizeFormat(parseFloat(realFigure))+" / "+sizeFormat(parseFloat(realValue))+"\">"
+                					+decimal(figure)+"/"+ decimal(value)
+                					+"</a>";
+        }else if(criType == "diff_extra_info_page_faults"){
+                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
+                					+exFormat(figure)+"/"+exFormat(value)
+                					+"</a>" ;
+        }else if(criType == "diff_globalLock_lockTime" || criType == "diff_locks_timeLockedMicros_R" || criType == "diff_locks_timeLockedMicros_W" || criType == "diff_db_sum_locks_timeLockedMicros_r" || criType == "diff_db_sum_locks_timeLockedMicros_w"){
+                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"μs")+" / "+toolTip_title(realValue,"μs")+"\">"
+                					+exFormat(microSecondsFormat(figure))+"/"+ exFormat(microSecondsFormat(value))
+                					+"</a>" ;
+        }else{
+                returnValue = figure +"/"+ value;
+        }
+        return returnValue=="0/0"?"&nbsp;":returnValue;
 	}
 	
 	$(document).ready( function() {
@@ -115,8 +165,14 @@
 				{ "mDataProp": "up_time" },                 
 				{
 					"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
-	            		var str = groupCodeTable.getItem( parseFloat( oObj.aData.groupCode ) );
-	            		return !str?"&nbsp;":str;
+											if(oObj.aData.groupBind == ""){
+													var str = groupCodeTable.getItem( parseFloat( oObj.aData.groupCode ) );
+								        return !str?"&nbsp;":str;
+											}else{
+												var str = "<img id='details_open' src='./img/plus.png'>&nbsp"+oObj.aData.groupBind;
+						            			return !str?"&nbsp;":str;
+											}
+	            		
 	            	}
 	            },
 	            {
@@ -127,49 +183,50 @@
 	            },
 				{
 	            	"fnRender": function ( oObj ) {
-	            		return oObj.aData.ip + " : " + oObj.aData.port;
+	            		var ip = oObj.aData.ip;
+	            		return !ip?"&nbsp;":oObj.aData.ip+":"+oObj.aData.port;
 	            	}
 	            },
 	            {
 	            	"sClass": "tableFiguresLeft", "fnRender": function ( oObj ) {
 	            		var str = eventCodeTable.getItem( oObj.aData.cri_type );
 	            		return !str?"&nbsp;":str;
-	            	}
+	            							}
 	            },
 				{
 	            	"sClass": "tableFigures", "fnRender": function ( oObj ) {
-                        var value = parseFloat( oObj.aData.cri_value );
-                        var figure = parseFloat( oObj.aData.figure );
-                        var realValue = parseFloat( oObj.aData.real_cri_value );
-                        var realFigure = parseFloat( oObj.aData.real_figure );
-                        var criType = oObj.aData.cri_type;
-                        var returnValue = "";
-                        if(criType == "Connection_refused"){
-                                returnValue = "-";
-                        }else if(criType == "connections_current"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
-                                					+decimal(figure)+"/"+decimal(value)
-                                					+"</a>";
-                        }else if(criType == "mem_resident"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure, "MB")+" / "+toolTip_title(realValue, "MB")+"\">"
-                                					+decimal(figure)+"/"+decimal(value)
-                                					+"</a>";
-                        }else if(criType == "dbDataSize" || criType == "dbFileSize"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+sizeFormat(parseFloat(realFigure))+" / "+sizeFormat(parseFloat(realValue))+"\">"
-                                					+decimal(figure)+"/"+ decimal(value)
-                                					+"</a>";
-                        }else if(criType == "diff_extra_info_page_faults"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
-                                					+exFormat(figure)+"/"+exFormat(value)
-                                					+"</a>" ;
-                        }else if(criType == "diff_globalLock_lockTime" || criType == "diff_locks_timeLockedMicros_R" || criType == "diff_locks_timeLockedMicros_W" || criType == "diff_db_sum_locks_timeLockedMicros_r" || criType == "diff_db_sum_locks_timeLockedMicros_w"){
-                                returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"μs")+" / "+toolTip_title(realValue,"μs")+"\">"
-                                					+exFormat(microSecondsFormat(figure))+"/"+ exFormat(microSecondsFormat(value))
-                                					+"</a>" ;
-                        }else{
-                                returnValue = figure +"/"+ value;
-                        }
-                        return returnValue;
+	                    var value = parseFloat( oObj.aData.cri_value );
+	                    var figure = parseFloat( oObj.aData.figure );
+	                    var realValue = parseFloat( oObj.aData.real_cri_value );
+	                    var realFigure = parseFloat( oObj.aData.real_figure );
+	                    var criType = oObj.aData.cri_type;
+	                    var returnValue = "";
+	                    if(criType == "Connection_refused"){
+	                            returnValue = "-";
+	                    }else if(criType == "connections_current"){
+	                            returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
+	                            					+decimal(figure)+"/"+decimal(value)
+	                            					+"</a>";
+	                    }else if(criType == "mem_resident"){
+	                            returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure, "MB")+" / "+toolTip_title(realValue, "MB")+"\">"
+	                            					+decimal(figure)+"/"+decimal(value)
+	                            					+"</a>";
+	                    }else if(criType == "dbDataSize" || criType == "dbFileSize"){
+	                            returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+sizeFormat(parseFloat(realFigure))+" / "+sizeFormat(parseFloat(realValue))+"\">"
+	                            					+decimal(figure)+"/"+ decimal(value)
+	                            					+"</a>";
+	                    }else if(criType == "diff_extra_info_page_faults"){
+	                            returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"")+" / "+toolTip_title(realValue,"")+"\">"
+	                            					+exFormat(figure)+"/"+exFormat(value)
+	                            					+"</a>" ;
+	                    }else if(criType == "diff_globalLock_lockTime" || criType == "diff_locks_timeLockedMicros_R" || criType == "diff_locks_timeLockedMicros_W" || criType == "diff_db_sum_locks_timeLockedMicros_r" || criType == "diff_db_sum_locks_timeLockedMicros_w"){
+	                            returnValue = "<a href=\"#\" class=\"deco_none\" title=\""+toolTip_title(realFigure,"μs")+" / "+toolTip_title(realValue,"μs")+"\">"
+	                            					+exFormat(microSecondsFormat(figure))+"/"+ exFormat(microSecondsFormat(value))
+	                            					+"</a>" ;
+	                    }else{
+	                            returnValue = figure +"/"+ value;
+	                    }
+	                    return returnValue=="0/0"?"&nbsp;":returnValue;
 	            	}
 	            },
 	            {
@@ -214,6 +271,8 @@
 	    	    	$(nRow).children().each(function(){$(this).addClass('row_stop_demon_status');});
 				}
 		    	return nRow;
+
+				
     	    },
 	    	"fnDrawCallback": function ( oSettings ) {
 				setTipByTableName("list");
@@ -238,45 +297,164 @@
 	            for ( var i=0 ; i<iLen ; i++ ){
 					$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1+iStart );
 				}
-	        },
-	        "aaSorting": [[ 1, 'asc' ]]
+	    
+	        }
 	    });
 		
 		jQuery.fn.dataTableExt.oPagination.iFullNumbersShowPages = 10;
-		
+
+		$("img#details_open").live("mousedown", function(){
+			var selectNode = this.offsetParent.parentNode;
+			var position = oTable.fnGetPosition(selectNode);
+
+			if(position != null){
+				var aData = oTable.fnGetData(position);
+				g_group_idx = oTable.fnGetData(position).idx;
+                
+				if(oTable.fnGetData(position).groupBind != ""){
+					if(fnIsOpen(selectNode)){
+						oTable.fnClose(selectNode);
+						$(this).attr('src', './img/plus.png;');
+					}else{
+						oTable.fnOpen(selectNode, fnFormatDetails( oTable, position,  g_group_idx), "sub_row");
+						$(this).attr('src', './img/minus.png;');
+						$('table#list_'+g_group_idx+' td').bind('mouseenter', function () { $(this).parent().children().each(function(){$(this).addClass('row_selected');}); });
+						$('table#list_'+g_group_idx+' td').bind('mouseleave', function () { $(this).parent().children().each(function(){$(this).removeClass('row_selected');}); });
+						
+						$('table#list_'+g_group_idx+' tbody').delegate("tr", "click", function(){
+						
+							g_title_sub = new Array();
+							g_value_sub = new Array();
+							//function 추가							
+							for(var i = 1 ; i < 9 ; i++){
+								var title = $("#list thead tr th:eq(" +i+ ")").text();
+								g_title_sub.push(title);
+								var value = getsubLstData(aData, this.rowIndex, i);
+								g_value_sub.push(value);
+							}
+							var selectDate = oTable.fnGetData(position).subLst[this.rowIndex].reg_date;
+							var selectTime = (oTable.fnGetData(position).subLst[this.rowIndex].up_time).split(":");
+							var selectHour = selectTime[0];
+							var selectMin = selectTime[1];
+							var deviceCode = oTable.fnGetData(position).subLst[this.rowIndex].deviceCode;
+							var alarmIdx = oTable.fnGetData(position).idx;
+							eventGraphView(deviceCode, selectDate, selectHour, selectMin, alarmIdx);
+						});
+					}
+				}
+			}
+
+		});
+			
 		/* Add a click handler to the rows (e.which==1 left click / e.which==3 right click) */
-		$("#list tbody").delegate("tr", "mousedown", function(e) {
+		$("table#list tbody").delegate("tr", "click", function(e) {
 			g_title = new Array();
 			g_value = new Array();
-
-			for(var i=1; i<11;i++){
-				var title = $("#list thead tr th:eq(" +i+ ")").text();
-				g_title.push(title);
-				var value = $("td:eq(" +i+ ")", this).text();
-				if(i==9)value = $("td:eq(" +i+ ")", this).html();
-				g_value.push(value);
-			}
-
+			g_json_title = new Array();
+			g_json_value = new Array();
+			var temp;
 			var position = oTable.fnGetPosition(this); // getting the clicked row position
-			if(position!=null){
-				var selectDate = oTable.fnGetData(position).reg_date;
-				var selectTime = (oTable.fnGetData(position).up_time).split(":");
-				var selectHour = selectTime[0];
-				var selectMin = selectTime[1];
-				var deviceCode = oTable.fnGetData(position).deviceCode;
-				
-     	$('.row_demon_graph').removeClass('row_demon_graph');
-    		$("td", this).addClass('row_demon_graph');
-				var param = "?selectDate="+selectDate+"&selectHour="+selectHour+"&selectMin="+selectMin+"&deviceCode="+deviceCode;
-				var url = "eventGraphView.do"+param;
-				$('#eventframe').attr("src", url);
-				$('#eventframe').show();
+			aData = oTable.fnGetData(position);
+			g_group_idx = aData.idx;
+			if(aData.groupBind!=""){
+				g_div = aData.subLst.length; 
+				var cnt = g_div -1;
+				for(var i = 1; i<11 ; i ++){
+					if(i==9 && cnt > 0) {i=4; --cnt ;} 
+					var title = $("#list thead tr th:eq(" +i+ ")").text();
+					g_title.push(title);
+					if(i>=4 && i <9){
+						var value = "";
+						switch(i){
+						case 4 : value = groupCodeTable.getItem( parseFloat( aData.subLst[cnt].groupCode ) ); break;
+						case 5 : value = deviceCodeTable.getItem( parseFloat( aData.subLst[cnt].deviceCode ) ); break;
+						case 6 : value = aData.subLst[cnt].ip + " : " + aData.subLst[cnt].port; break;
+						case 7 : value = eventCodeTable.getItem( aData.subLst[cnt].cri_type ); break;
+						case 8 : value = figureConvert (cnt, aData); temp = value.split(">"); temp = temp[1].split("<"); value = temp[0]; break;
+						}
+						g_json_title.push(title);
+						if(value == undefined) { value='"undefined"';};
+						g_json_value.push(value);
+					}else{
+						var value = $("td:eq(" +i+ ")", this).text();
+						if(i==9)value = $("td:eq(" +i+ ")", this).html();
+						g_value.push(value);
+					}
+				}
+			}else{
+				for(var i=1; i<11;i++){
+					var title = $("#list thead tr th:eq(" +i+ ")").text();
+					g_title.push(title);
+					var value = $("td:eq(" +i+ ")", this).text();
+					if(i==9)value = $("td:eq(" +i+ ")", this).html();
+					g_value.push(value);
+				}
 			}
+			
+			if(position != null){
+				if(oTable.fnGetData(position).groupBind == ""){
+					var selectDate = oTable.fnGetData(position).reg_date;
+					var selectTime = (oTable.fnGetData(position).up_time).split(":");
+					var selectHour = selectTime[0];
+					var selectMin = selectTime[1];
+					var deviceCode = oTable.fnGetData(position).deviceCode;
+					var alarmIdx = oTable.fnGetData(position).idx;
+	     	$('.row_demon_graph').removeClass('row_demon_graph');
+	    		$("td", this).addClass('row_demon_graph');
+	    		 eventGraphView(deviceCode, selectDate, selectHour, selectMin, alarmIdx);
+				}
+			}
+
+			var obj_arr=[];
+			
+			for(var i = 0 ; i < g_json_value.length ; i ++){
+				g_json_value[i] = g_json_value[i].split("\"").join("\'");
+				obj_arr.push(["<b>"+g_json_title[i]+"</b>" + " : " + g_json_value[i]]);
+			}
+			
+			json_str = JSON.stringify(obj_arr);
+
 		});
+		
+		function fnIsOpen( nTr ){
+			var oSettings = oTable.fnSettings(nTr);
+			var aoOpenRows = oSettings.aoOpenRows;
+			
+			for(var i= 0 ; i<aoOpenRows.length ; i ++){
+				if(aoOpenRows[i].nParent == nTr){
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		function getsubLstData(aData, index, position){
+			switch(position){
+			case 1 : return aData.subLst[index].reg_date; break;
+			case 2 : return aData.subLst[index].reg_time; break;
+			case 3 : return aData.subLst[index].up_time; break;
+			case 4 : return groupCodeTable.getItem( parseFloat( aData.subLst[index].groupCode ) ); break;
+			case 5 : return deviceCodeTable.getItem( parseFloat( aData.subLst[index].deviceCode ) ); break;
+			case 6 : return aData.subLst[index].ip + " : " + aData.subLst[index].port; break;
+			case 7 : return eventCodeTable.getItem( aData.subLst[index].cri_type ); break;
+			case 8 : return figureConvert (index, aData); temp = value.split(">"); temp = temp[1].split("<"); value = temp[0];break;
+			
+			}
+		}
+		
+		
 	});
 	
 	var g_title;
 	var g_value;
+	var g_title_sub;
+	var g_value_sub;
+	var g_div;
+	var g_json_title;
+	var g_json_value;
+	var json_str;
+	var g_group_idx;
+	var g_multi_attr_idx;
 	
 	function init(sdate,edate){
 		document.form.sdate.value=sdate;
@@ -290,6 +468,50 @@
 	      objFrm.style.height=frameHeight + "px";
 	     }
 	  }
+	
+	   
+    function eventGraphView(deviceCode, selectDate, selectHour, selectMin, alarmIdx){
+        var param = "?selectDate="+selectDate+"&selectHour="+selectHour+"&selectMin="+selectMin+"&deviceCode="+deviceCode;
+        $.ajax({
+            type:'GET',
+            url : 'checkAlarmDevice.do' + param,
+//             data : {"selectHour":selectHour, "selectMin":selectMin, "deviceCode":deviceCode},
+            dataType:'html',
+            success:function(json,textStatus){
+                if(json == -1){
+                	 $('#eventframe').hide();    
+                    var answer = confirm("<spring:message code='event.nomoreinstance' />");
+                    if(answer){
+                        deleteSubAlarm(alarmIdx);
+                    };
+                } else {
+                    var param = "?selectDate="+selectDate+"&selectHour="+selectHour+"&selectMin="+selectMin+"&deviceCode="+deviceCode;
+                    var url = "eventGraphView.do"+param;
+                    $('#eventframe').attr("src", url);
+                    $('#eventframe').show();    
+                }
+            },
+            error:function(xhr,textStatus, errorThrown){
+//                 this.location.reload();
+            }
+        });
+    }
+    
+    function deleteSubAlarm(alarmIdx){
+        var data = $('#frm_demon').serialize();
+        $.ajax({
+            type:'POST',
+            url : 'delete.do',
+            data : "groupIdx="+ alarmIdx,
+            dataType:'html',
+            success:function(json,textStatus){
+                parent.location.reload();
+            },
+            error:function(xhr,textStatus, errorThrown){
+                parent.location.reload();
+            }
+        });
+    }
 </script>
 </head>
 <body id="index" onload='init("${comm.sdate}","${comm.edate}")'>

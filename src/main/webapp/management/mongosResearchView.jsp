@@ -24,6 +24,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <style type="text/css">
@@ -52,24 +53,26 @@ h1 {width:1030px; margin:39px 0 0 20px; padding-bottom:25px; border-bottom:1px s
 .tb_list_01 thead th{ height:28px; border-bottom:2px solid #cfcfcf; font-size:14px; text-align:left;}
 .tb_list_01 tbody td{ height:28px; border-bottom:1px dotted #cfcfcf; }
 .tb_list_01 tbody td.noline { border:0; text-align:right;}
+.tb_list_01 tbody td.rt {text-align:right; padding-right:5px;}
 
 #contents { position:relative; padding:10px 5px 0 10px; width:760px; float:left; background:url(./img/bg_graph_bar.gif) top left no-repeat; background-size:1px 100%;}
-.tb_list_02 { width:730px; }
+.tb_list_02 { width:730px; table-layout:fixed;}
 .tb_list_02 thead th{ height:35px; background:#5C5C5C; color:#FFF; }
-.tb_list_02 td:nth-child(1), th:nth-child(1) { width: 30px; }
-.tb_list_02 td:nth-child(2), th:nth-child(2) { width: 100px; }
-.tb_list_02 td:nth-child(3), th:nth-child(3) { width: 150px; }
-.tb_list_02 td:nth-child(4), th:nth-child(4) { width: 90px; }
-.tb_list_02 td:nth-child(5), th:nth-child(5) { width: 110px; }
-.tb_list_02 td:nth-child(6), th:nth-child(6) { width: 80px; }
-.tb_list_02 td:nth-child(7), th:nth-child(7) { width: 80px; }
-.tb_list_02 td:nth-child(8), th:nth-child(8) { width: 80px; }
+.tb_list_02 td:nth-child(1) { width: 19px; }
+.tb_list_02 td:nth-child(2) { width: 90px; }
+.tb_list_02 td:nth-child(3) { width: 140px; }
+.tb_list_02 td:nth-child(4) { width: 80px; }
+.tb_list_02 td:nth-child(5) { width: 100px; }
+.tb_list_02 td:nth-child(6) { width: 70px; }
+.tb_list_02 td:nth-child(7) { width: 65px; }
+.tb_list_02 td:nth-child(8) { width: 64px; }
 .tb_list_02 tbody td{ height:28px; border-bottom:1px dotted #cfcfcf; padding:0 5px; }
 .tb_list_02 tbody td.rb {border-right:1px dotted #cfcfcf;}
 .tb_list_02 tbody td.lb {border-left:1px dotted #cfcfcf;}
+.tb_list_02 tbody td.rt {text-align:right; padding-right:10px;}
 
 .event_frm {margin:10px 0 0 22px; font-size:11px;}
-.btn_area {margin:10px 0 0 0; display:inline-block; padding-top:5px; width:720px; text-align:right;}
+.btn_area {margin:10px 0 0 0; display:inline-block; padding-top:5px; width:740px; text-align:right;}
 
 </style>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/jquery.showLoading.css">
@@ -114,7 +117,7 @@ function mongosResearch(){
 						typeStr = jsonData.aaData[i].typeStr;
 						isExist = jsonData.aaData[i].isExistCheck;
 					if(isExist){
-						tb += '<tr><td class="lb">-</td><td>'+groupNameStr+'</td><td>'+uidStr+'</td><td>'+typeStr+'</td><td>'+ipStr+'</td><td>'+portStr+'</td><td>'+memorysizeStr+'</td><td class="rb">'+hddsizeStr+'</td></tr>';
+						tb += '<tr><td class="lb">-</td><td>'+groupNameStr+'</td><td>'+uidStr+'</td><td>'+typeStr+'</td><td>'+ipStr+'</td><td class="rt">'+portStr+'</td><td class="rt">'+memorysizeStr+'</td><td class="rt rb">'+hddsizeStr+'</td></tr>';
 					}else{
 						ckBoxVal = groupNameStr +"|"+ uidStr +"|"+ typeStr +"|"+ ipStr +"|"+ portStr +"|"+ memorysizeStr +"|"+ hddsizeStr +"|"+ authUserStr +"|"+ authPasswdStr;
 						tb += '<tr><td class="lb"><input type="checkbox" id="researchLst" name="researchLst" value="'+ckBoxVal+'"/></td><td>'+groupNameStr+'</td><td>'+uidStr+'</td><td>'+typeStr+'</td><td>'+ipStr+'</td><td>'+portStr+'</td><td>'+memorysizeStr+'</td><td class="rb">'+hddsizeStr+'</td></tr>';
@@ -238,6 +241,10 @@ function init(){
 			<div id="menu">
 				<form method="post" name="setForm" id="setForm">
 					<table class="tb_list_01">
+						<colgroup>
+							<col width="50">
+							<col width="">
+						</colgroup>
 						<thead>
 							<tr>
 								<th colspan="2">mongos </th>
@@ -245,17 +252,21 @@ function init(){
 						</thead>
 						<tbody>
 							<tr>
-								<td>IP : </td>
+								<td class="rt">IP</td>
 								<td><input type="text" name="ip" id="ip" size="20" maxlength="50" style='ime-mode:disabled'/></td>
 							</tr>
 							<tr>
-								<td>Port : </td>
+								<td class="rt">Port</td>
 								<td><input type="text" name="port" id="port" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/></td>
 							</tr>
 						</tbody>
 					</table>
 					
 						<table class="tb_list_01">
+							<colgroup>
+								<col width="50">
+								<col width="">
+							</colgroup>
 						<thead>
 							<tr>
 								<th colspan="2"><spring:message code="daemons.default"/> </th>
@@ -263,16 +274,20 @@ function init(){
 						</thead>
 						<tbody>
 							<tr>
-								<td><spring:message code="daemons.memory"/> : </td>
-								<td><input type="text" name="memorysize" id="memorysize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/></td>
+								<td class="rt"><spring:message code="daemons.memory"/></td>
+								<td><input type="text" name="memorysize" id="memorysize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/> GB</td>
 							</tr>
 							<tr>
-								<td><spring:message code="daemons.hard"/> : </td>
-								<td><input type="text" name="hddsize" id="hddsize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/></td>
+								<td class="rt"><spring:message code="daemons.hard"/></td>
+								<td><input type="text" name="hddsize" id="hddsize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/> GB</td>
 							</tr>
 						</tbody>
 					</table>
 						<table class="tb_list_01">
+							<colgroup>
+								<col width="76">
+								<col width="">
+							</colgroup>
 						<thead>
 							<tr>
 								<th colspan="2"><spring:message code="daemons.options"/> </th>
@@ -294,11 +309,11 @@ function init(){
 						</thead>
 						<tbody>
 							<tr>
-								<td>admin user : </td>
+								<td class="rt">admin user</td>
 								<td><input type="text" name="authUser" id="authUser" size="20" maxlength="100" style='ime-mode:disabled'></td>
 							</tr>
 							<tr>
-								<td>password : </td>
+								<td class="rt">password</td>
 								<td><input type="password" name="authPasswd" id="authPasswd" size="20" maxlength="200" style='ime-mode:disabled'></td>
 							</tr>
 							<tr>
@@ -315,6 +330,16 @@ function init(){
 			<div id="contents">
 			<div id="cntView"></div>
 					<table class="tb_list_02" style='padding-top:5px;'>
+					 <colgroup>
+							<col width="30">
+							<col width="100">
+							<col width="150">
+							<col width="90">
+							<col width="110">
+							<col width="80">
+							<col width="80">
+							<col width="85">
+						</colgroup>
 						<thead>
 							<tr style='position:relative;top:expression!(this.offsetParent.scrollTop);"'>
 								<th><input type="checkbox" id="checkAll" name="checkAll"/></th>

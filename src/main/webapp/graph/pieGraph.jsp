@@ -31,6 +31,7 @@
 -->
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/daemonGraph.css">
@@ -41,6 +42,11 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/commonUtil.js"></script>
 	<script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.flot.min.js"></script>
     <script language="javascript" type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.flot.pie.js"></script>
+    <style type="text/css">
+   .demon_detail2 {width:630px; border-top:2px solid #444;}
+   .demon_detail2 div.post_name {width:310px; margin:5px 0 5px 0px; float:left;}
+		.demon_detail2 div.post_icon {width:320px; margin:5px 0 5px 0px; text-align:right; float:left;}
+    </style>
 <script type="text/javascript">
 
 $(document).ready( function() {
@@ -106,17 +112,26 @@ function pie(data){
 </script>
 </head>
 <body>
-		<div class="demon_detail">
-			<h3>
-				<img src="./img/daemon_subtit02<spring:message code="common.img"/>.png">
-				<c:if test="${comm.enlarge != 'enlarge'}">
-					<a id="enlargeView"><img src="./img/search_icon.png" width="19" height="19" ></a>
+			<c:if test="${comm.enlarge != 'enlarge'}">
+				<div class="demon_detail2">
+					<div class="post_name">
+						<img src="./img/daemon_subtit02<spring:message code="common.img"/>.png">
+					</div>
+					<div class="post_icon">
+						<a id="enlargeView"><img src="./img/search_icon.png" width="19" height="19" class="petit_icon"></a>
+					</div>
+					<div id="chartcontainer"class="graph" style="width: 500px;height: 170px;"></div>
+				</div>
 				</c:if>
-			</h3>
-			<c:if test="${comm.enlarge == 'enlarge'}">
-				<a href="#" id="pop_close" class="popup_close" style="margin:10px;"><img src="./img/ico_x.gif" width="27" height="21" alt="X"></a>			
-			</c:if>
-			<div id="chartcontainer"class="graph" style="width: 500px;height: 170px;"></div>
-		</div>
+				<c:if test="${comm.enlarge == 'enlarge'}">
+				 <div class="demon_detail">
+						<h3>
+							<img src="./img/daemon_subtit02<spring:message code="common.img"/>.png">
+						</h3>
+						<a href="#" id="pop_close" class="popup_close" style="margin:10px;"><img src="./img/ico_x.gif" width="27" height="21" alt="X"></a>
+						<div id="chartcontainer"class="graph" style="width: 500px;height: 170px;"></div>
+				 </div>			
+				</c:if>
+<!-- 		</div> -->
 </body>
 </html>

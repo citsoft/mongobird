@@ -110,9 +110,7 @@ public class ManagementDaoImpl implements ManagementDao{
 			sdto.setUsername(dto.getUsername());
 			sdto.setAuthority(dto.getAuthority());
 			sdto.setEmail(dto.getEmail());
-			sdto.setMobileFirst(dto.getMobileFirst());
-			sdto.setMobileSecond(dto.getMobileSecond());
-			sdto.setMobileThird(dto.getMobileThird());
+			sdto.setMobile(dto.getMobile());
 			sdto.setReg_date(DateUtil.getTime());
 			obj=sdto;
 		}
@@ -166,9 +164,7 @@ public class ManagementDaoImpl implements ManagementDao{
 			update.set("uid",dto.getUid());
 			update.set("username",dto.getUsername());
 			update.set("email",dto.getEmail());
-			update.set("mobileFirst",dto.getMobileFirst());
-			update.set("mobileSecond",dto.getMobileSecond());
-			update.set("mobileThird",dto.getMobileThird());
+			update.set("mobile",dto.getMobile());
 			update.set("authority",dto.getAuthority());
 		}else if(dtoClassNm.equals("group")){
 			update.set("uid",dto.getUid());

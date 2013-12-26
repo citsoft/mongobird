@@ -7,6 +7,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title><spring:message code="main.title"/></title>
 <%@ include file="./manageCommon.jsp" %>
@@ -63,14 +64,14 @@
 	            { "sClass": "tableFiguresLeft2", "mDataProp": "uid" },
 	            { "sClass": "tableFiguresLeft2", "mDataProp": "type" },
 	            { "mDataProp": "ip" },
-	            { "mDataProp": "port" },
+	            {  "sClass" : "tableFigures2", "mDataProp": "port" },
 	            {
-	            	"fnRender": function ( oObj ) {
+	            	"sClass" : "tableFigures2", "fnRender": function ( oObj ) {
 	            		return oObj.oSettings.fnFormatNumber( parseFloat( oObj.aData.memorysize ) );
 	            	}
 	            },
 	            {
-	            	"sClass": "rb", "fnRender": function ( oObj ) {
+	            	"sClass": "tableFigures2 rb", "fnRender": function ( oObj ) {
 	            		return oObj.oSettings.fnFormatNumber( parseFloat( oObj.aData.hddsize ) );
 	            	}
 	            }
@@ -120,6 +121,8 @@
 // 			    	jQuery('#list_title').hideLoading();
 			    }); 
 			}
+			
+			
 	    });
 
 	    jQuery.fn.dataTableExt.oPagination.iFullNumbersShowPages = 10;
@@ -157,29 +160,6 @@
     			oTable.fnDraw();
 	    	}
 	    }
-	    
-	    var $radios = $('#setForm input:radio[name=groupSelect]');
-	    
-	    function rdoinit(){
-	        $radios.filter('[value=regGroup]').attr('checked', true);
-	        $('#setForm input:text[name=groupText]').attr('disabled',true);
-	    }
-	  	//그룹선택/추가
-	    if($radios.is(':checked') == false) {
-	    	rdoinit();
-	    }
-
-	    $radios.click(function(){
-	    	$radioChecked = $('#setForm input:radio[name=groupSelect]:checked');
-	    	if($radioChecked.val()=='newGroup'){
-	    		editGroupHide();
-		    	$('#setForm input:text[name=groupText]').removeAttr('disabled');
-// 		        $('#setForm input:select[name=groupList]').attr('disabled',true);
-		  	}else if($radioChecked.val()=='regGroup'){
-		        $('#setForm input:text[name=groupText]').attr('disabled',true);
-// 		        $('#setForm input:select[name=groupList]').removeAttr('disabled');
-		    }
-	  	});
 
 		 $('#authCheck').click(function(){
 			 authCheckFunc();
@@ -202,12 +182,28 @@
 		    }
 	    });
 	    
+		$('#list tbody').delegate("input:checkbox", "click", function(){
+	    	applyCheckFunc();
+	    });
+	    
+	    function applyCheckFunc(){
+	    	if( $('input#idxLst').is(":checked")){
+					$('#batchMemorySize, #batchHddSize').removeAttr('disabled');	
+					$('#batchUpdateBtn').attr('src', "./img/applyAllInstance_btn<spring:message code="common.img" />.png"); // 활성버튼 
+	    	}else{
+	    		$('#batchMemorySize, #batchHddSize').val('');
+	    		$('#batchMemorySize, #batchHddSize').attr('disabled', true);
+	    		$('#batchUpdateBtn').attr('src', "./img/applyAllInstance_btn_disable<spring:message code="common.img" />.png"); // 비활성 버튼
+	    	}
+	    }
+	   
+	    
 		$("#list tbody").delegate("tr", "click", function() {//리스트 클릭 시 정보 창으로 내용이 전송되도록
 			var position = oTable.fnGetPosition(this); // getting the clicked row position
 			var data = oTable.fnGetData(position);
 			if(position!=null){
 				editGroupHide();
-				rdoinit();
+				addGroupHide();
 				$('#setForm #idx').val(data.idx);
 				$('#setForm #groupList').val(data.groupCode);
 				$('#setForm #uid').val(data.uid);
@@ -226,6 +222,7 @@
                 $('#editMode').val(UPDATE_MODE);
 				typeDisabled();
 			};
+			
 			//dbg($('#editMode').val());
 		});
 
@@ -291,11 +288,11 @@
 		});
 
 		function deviceTextNullCheck(fnCallback){
-			$radios = $('#setForm input:radio[name=groupSelect]:checked');
-			if($radios.val()=='regGroup'){
-				$('#setForm #groupCode').val($('#setForm #groupList').val());
-				$('#setForm #groupText').val("-");
-			}
+// 			$radios = $('#setForm input:radio[name=groupSelect]:checked');
+// 			if($radios.val()=='regGroup'){
+// 				$('#setForm #groupCode').val($('#setForm #groupList').val());
+// 				$('#setForm #groupText').val("-");
+// 			}
 			var selectType = $('#setForm #selectType').val();
 			if($('#editMode').val()!=UPDATE_MODE)$('#setForm #type').val(selectType);
 			if($.trim($('input:text[name=uid]').val())==''){
@@ -316,14 +313,14 @@
 			}else if($.trim($('input:text[name=groupText]').val())==''){
 				alert("<spring:message code="daemons.writegroup"/>");
 				$('input:text[name=groupText]').focus();
-			}else if($radios.val()=='regGroup' && $.trim($('#setForm #groupCode').val())==''){
+			}else if($.trim($('#setForm #groupCode').val())==''){
 				alert("<spring:message code="daemons.writegroup"/>");
 				$radios = $('#setForm input:radio[name=groupSelect]');
 		        $radios.filter('[value=newGroup]').attr('checked', true);
 		        $('#setForm #groupCode').val(0);
 		    	$('#setForm input:text[name=groupText]').removeAttr('disabled');
 				$('input:text[name=groupText]').focus();
-			}else if($radios.val()=='newGroup' && $.trim($('#setForm input:text[name=groupText]').val())==''){
+			}else if($.trim($('#setForm input:text[name=groupText]').val())==''){
 				alert("<spring:message code="daemons.writegroup"/>");
 		        $('#setForm #groupCode').val(0);
 				$('input:text[name=groupText]').focus();
@@ -340,7 +337,6 @@
 		
 		function deviceInsertnUpdate(jsonResult){
 			if(jsonResult == "0"){
-				var $radios = $('#setForm input:radio[name=groupSelect]:checked');
 				var url ;
 				if($('#editMode').val()==UPDATE_MODE){
 					url = "update.do";
@@ -349,10 +345,11 @@
 				}
 				var dataToSend = $('#setForm').serialize();
 				var callback = function(dataReceived){
-					if($radios.val()=='newGroup'){
+					if($('groupText').val()!=''){
 						location.reload();
 					}else{
 						editGroupHide();
+						addGroupHide();
 						oTable.fnDraw();//테이블 다시 불러오게ㅋㅎ
 					}
 					clearInputForm();
@@ -429,7 +426,7 @@
 		});
 		
 		$('#editGroup').click( function(event) {
-			rdoinit();
+// 			rdoinit();
 			var groupCodeInt = $('#groupList').val();
 			var groupNameStr = groupCodeTable.getItem( parseFloat( groupCodeInt ) );
 			if(groupCodeInt != null){
@@ -440,36 +437,43 @@
 				alert("<spring:message code="daemons.noGroup"/>");
 			}
 		});
-
+		
 		$('#editGroupOk').click( function(event) {			
-			var answer = confirm("<spring:message code="daemons.editGroup"/>");
 			var groupCodeInt = $('#groupCode').val();
 			var groupNameStr = $('#editGroupText').val();
-			if (answer){
-				if(groupNameStr==""){
-					alert("<spring:message code="daemons.writegroup"/>");
-				}else{
-					$.ajax({
-						type:'POST',
-						url : 'update.do',
-						data : {"dival":4, "idx":groupCodeInt, "uid":groupNameStr},
-						dataType:'html',
-						success:function(json,textStatus){
-							alert("<spring:message code="daemons.editSucc"/>");
-	 						location.reload();
-						},
-						error:function(xhr,textStatus, errorThrown){
-
-						}
-					});
-				}
+			
+			if(groupNameStr==""){
+				alert("<spring:message code="daemons.writegroup"/>");
 			}else{
-				
+				$.ajax({
+					type:'POST',
+					url : 'update.do',
+					data : {"dival":4, "idx":groupCodeInt, "uid":groupNameStr},
+					dataType:'html',
+					success:function(json,textStatus){
+						alert("<spring:message code="daemons.editSucc"/>");
+ 						location.reload();
+					},
+					error:function(xhr,textStatus, errorThrown){
+
+					}
+				});
 			}
 		});
 		
 		$('#editGroupCancel').click( function(event) {
 			editGroupHide();
+			addGroupHide();
+		});
+		
+		$('#addGroup').click( function(event) {
+// 			rdoinit();
+			addGroupShow();
+		});
+
+		$('#addGroupCancel').click( function(event) {
+			editGroupHide();
+			addGroupHide();
 		});
 		
 		function clearInputForm(){
@@ -485,40 +489,52 @@
 		
 		$('#batchUpdateBtn').click( function() {			
 			jQuery('html').showLoading();
-			var answer = confirm("<spring:message code="daemons.editGroup"/>");
 			var dataToSend = $('input:checkbox', oTable.fnGetNodes()).serialize();
-			if (answer){
-				if(dataToSend==""){
-					alert("<spring:message code="common.nolist"/>");
-				}else if($.trim($('input:text[name=batchHddSize]').val())=='' && $.trim($('input:text[name=batchMemorySize]').val())==''){
-					alert("<spring:message code="daemons.writeModifyAtOnce"/>");
-					$('input:text[name=batchMemorySize]').focus();
-				}else{
-					var batchMemorySize = $('#batchMemorySize').val();
-					var batchHddSize = $('#batchHddSize').val();
-
-					var url = "deviceBatchUpdate.do?batchMemorySize="+batchMemorySize+"&batchHddSize="+batchHddSize;
-					var callback = function(dataReceived){
-						oTable.fnDraw();
-						clearInputForm();
-					};
-					var typeOfData = 'html';
-					$.get(url,dataToSend,callback,typeOfData);
-				}			
-			}
+			
+			if(dataToSend==""){
+				alert("<spring:message code="common.nolist"/>");
+			}else if($.trim($('input:text[name=batchHddSize]').val())=='' && $.trim($('input:text[name=batchMemorySize]').val())==''){
+				alert("<spring:message code="daemons.writeModifyAtOnce"/>");
+				$('input:text[name=batchMemorySize]').focus();
+			}else{
+				var batchMemorySize = $('#batchMemorySize').val();
+				var batchHddSize = $('#batchHddSize').val();
+				
+				$('#batchMemorySize, #batchHddSize').attr('disabled', true);
+				$('#batchUpdateBtn').attr('src', "./img/applyAllInstance_btn_disable<spring:message code="common.img" />.png"); // 비활성 버튼
+				
+				var url = "deviceBatchUpdate.do?batchMemorySize="+batchMemorySize+"&batchHddSize="+batchHddSize;
+				var callback = function(dataReceived){
+					oTable.fnDraw();
+					clearInputForm();
+				};
+				var typeOfData = 'html';
+				$.get(url,dataToSend,callback,typeOfData);
+			}		
 			jQuery('html').hideLoading();	
 		});
 		
 	});
 	
 	function editGroupHide(){
-		$('#lstGroupLabel').show();
+		$('#addGroupLabel').hide();
 		$('#editGroupLabel').hide();
+		$('#lstGroupLabel').show();
 	}
 	
 	function editGroupShow(){
+		$('#addGroupLabel').hide();
 		$('#lstGroupLabel').hide();
 		$('#editGroupLabel').show();
+	}
+	
+	function addGroupHide(){
+		$('#addGroupLabel').hide();
+	}
+	
+	function addGroupShow(){
+		$('#lstGroupLabel').hide();
+		$('#addGroupLabel').show();	
 	}
 	
 	function init(){
@@ -527,6 +543,7 @@
 		}
 
 		editGroupHide();
+		addGroupHide();
 		if('${comm.search_text}'!=""){
 			$('#search_gubun').val('${comm.search_gubun}');
 			makeSubSelect();
@@ -615,7 +632,7 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<th rowspan="5"><spring:message code="daemons.daemoninfo"/></th>
+							<th rowspan="7"><spring:message code="daemons.daemoninfo"/></th>
 							<td><spring:message code="common.daemon"/></td>
 							<td class="lf"><input type="text" id="uid" name="uid" size="20" maxlength="30" style='ime-mode:disabled'></td>
 							<td><spring:message code="daemons.type"/></td>
@@ -643,10 +660,9 @@
 						</tr>
 						<tr>
 							<td>
-								<input type="radio" id="groupSelect" name="groupSelect" value="regGroup"/>
 								<spring:message code="daemons.choosegroup"/>
 							</td>
-							<td class="lf">
+							<td class="lf rb" colspan="3">
 								<label id="lstGroupLabel">
 									<select id="groupList" name="groupList">
 										<c:forEach var="i" items="${group}">
@@ -655,26 +671,28 @@
 											</option>
 										</c:forEach>
 									</select> 
-									<a href="#"><img id="editGroup" src="./img/btn_gedit.gif" height="16"><img id="deleteGroup" src="./img/btn_gdelete.gif" height="16" alt="<spring:message code="daemons.deletegroup"/>"></a>
+									<a href="#"><img id="editGroup" src="./img/btn_gedit.gif" height="16"><img id="deleteGroup" src="./img/btn_gdelete.gif" height="16" alt="<spring:message code="daemons.deletegroup"/>"><img id="addGroup" src="./img/btn_gadd.gif" height="16"></a>
 								</label>
 								<label id="editGroupLabel">
 									<input type="text" id="editGroupText" size="20" maxlength="30" style='ime-mode:disabled'/>
 									<a href="#"><img id="editGroupOk" src="./img/btn_gok.gif" height="16"><img id="editGroupCancel" src="./img/btn_gcancel.gif" height="16"></a>
 								</label>
-							</td>
-							<td>
-								<input type="radio" id="groupSelect" name="groupSelect" value="newGroup"/>
-								<spring:message code="daemons.addgroup"/>
-							</td>
-							<td class="rb lf">								
+								<label id="addGroupLabel">
+<!-- 								<input type="radio" id="groupSelect" name="groupSelect" value="newGroup"/> -->
+<%-- 								<spring:message code="daemons.addgroup"/> --%>
 								<input type="text" id="groupText" name="groupText" size="20" maxlength="30" style='ime-mode:disabled'>
+								<a href="#"><img id="addGroupCancel" src="./img/btn_gcancel.gif" height="16"></a>
+								</label>
 							</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox" id="authCheck" name="authCheck"> with auth</td>
-							<td>admin user : <input type="text" name="authUser" id="authUser" size="20" maxlength="100" style='ime-mode:disabled'></td>
-							<td>password : </td>
-							<td class="rb lf"><input type="password" name="authPasswd" id="authPasswd" size="20" maxlength="200" style='ime-mode:disabled'></td>
+							<td class="rb lf" colspan="4" style="padding-left:20px;"><input type="checkbox" id="authCheck" name="authCheck"> Enable authentication</td>
+							<tr>
+								<td>admin user</td><td colspan="3" class="rb lf"><input type="text" name="authUser" id="authUser" size="20" maxlength="100" style='ime-mode:disabled'></td>
+							</tr>
+							<tr>
+								<td>password</td><td class="rb lf" colspan="3"><input type="password" name="authPasswd" id="authPasswd" size="20" maxlength="200" style='ime-mode:disabled'></td>
+							<tr>
 						</tr>
 					</tbody>
 				</table>
@@ -694,17 +712,17 @@
 							<tr>
 								<th rowspan="2"><spring:message code="daemons.modifyAtOnce"/></th>
 								<td><spring:message code="daemons.memory"/></td>
-								<td><input type="text" id="batchMemorySize" name="batchMemorySize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/> GB</td>
+								<td class="lf"><input type="text" id="batchMemorySize" name="batchMemorySize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled' disabled="disabled"/> GB</td>
 								<td class="rb"></td>
 							</tr>
 							<tr>
 								<td><spring:message code="daemons.hard"/></td>
-								<td><input type="text" id="batchHddSize" name="batchHddSize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled'/> GB</td>
+								<td class="lf"><input type="text" id="batchHddSize" name="batchHddSize" size="20" maxlength="20" OnKeyPress='num_only(event)' style='ime-mode:disabled' disabled="disabled"/> GB</td>
 								<td class="rb"></td>
 							</tr>
 						</tbody>
 					</table>
-				<div class="btn_area"><a><img id="batchUpdateBtn" src="./img/modifyatOnce_btn<spring:message code="common.img"/>.png"></a></div>
+				<div class="btn_area"><a><img id="batchUpdateBtn" src="./img/applyAllInstance_btn_disable<spring:message code="common.img" />.png"></a></div>
 				</form>
 				<!-- License information View -->
                 <jsp:include page="/footer.jsp" flush="false"/>

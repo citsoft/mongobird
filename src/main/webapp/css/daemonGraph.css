@@ -40,9 +40,10 @@ a.deco_none { text-decoration: none;}
 
 /*  데몬 별 상세 레이어 팝업 화면 */
 .demon_detail {position:relative; border-top:2px solid #444;}
-.demon_detail h3 {width:600px; margin:5px 0 5px 0px; }
+.demon_detail h3 {width:600px; margin:5px 0 5px 0px;}
 .demon_detail h2 {width:630px; margin:10px 0 10px 0px; }
 .demon_detail img {vertical-align:middle;}
+/* .demon_detail h3.petit_icon {float:right;} */
 /* .demon_detail h3 {width:100%; margin:17px 0 14px 0; padding-bottom:17px; border-bottom:1px solid #C0C0C0;} */
 /* .demon_detail p {margin:0 0 12px 15px;} */
 .popup_close {position:absolute; top:0; right:0;}
@@ -51,6 +52,9 @@ a.deco_none { text-decoration: none;}
 .demon_detail_margin h3 {width:635px; margin:5px 0 5px 0px; }
 .demon_detail_margin h2 {width:630px; margin:7px 0 7px 0px; }
 .demon_detail_margin img {vertical-align:middle;}
+.demon_detail_margin div.post_name {width:310px; margin:5px 0 5px 0px; float:left; }
+.demon_detail_margin div.post_icon {width:320px; margin:5px 0 5px 0px; text-align:right; float:left; border-bottom:10px;}
+
 /* 그래프 페이지 */
 .graph_area_graph {width:630px; }
 .graph_area_graph img {padding:1px;vertical-align:text-top;}

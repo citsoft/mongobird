@@ -21,7 +21,7 @@ public class ConnectMongoHandlerThread implements Runnable {
 				reconnectMongo.reconnect();
 			}
 			
-			System.out.println("toReconnectingMongos : " + toReconnectingMongos);
+		//	System.out.println("toReconnectingMongos : " + toReconnectingMongos);
 		}
 	}
 }
